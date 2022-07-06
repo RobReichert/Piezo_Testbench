@@ -1,4 +1,4 @@
-// (c) Copyright 1995-2022 Xilinx, Inc. All rights reserved.
+// (c) Copyright 1995-2019 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -46,32 +46,41 @@
 // 
 // DO NOT MODIFY THIS FILE.
 
+//------------------------------------------------------------------------------------
+// Filename:    xl_Constant_stub.sv
+// Description: This HDL file is intended to be used with following simulators only:
+//
+//   Vivado Simulator (XSim)
+//   Cadence Xcelium Simulator
+//   Aldec Riviera-PRO Simulator
+//
+//------------------------------------------------------------------------------------
+`ifdef XILINX_SIMULATOR
+`ifndef XILINX_SIMULATOR_BITASBOOL
+`define XILINX_SIMULATOR_BITASBOOL
+typedef bit bit_as_bool;
+`endif
 
-// IP VLNV: xilinx.com:user:dna_reader:1.0
-// IP Revision: 1
-
-(* X_CORE_INFO = "dna_reader,Vivado 2020.2" *)
-(* CHECK_LICENSE_TYPE = "system_dna_reader_0_0,dna_reader,{}" *)
-(* CORE_GENERATION_INFO = "system_dna_reader_0_0,dna_reader,{x_ipProduct=Vivado 2020.2,x_ipVendor=xilinx.com,x_ipLibrary=user,x_ipName=dna_reader,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED}" *)
-(* IP_DEFINITION_SOURCE = "package_project" *)
-(* DowngradeIPIdentifiedWarnings = "yes" *)
-module system_dna_reader_0_0 (
-  aclk,
-  aresetn,
-  dna_data
+(* SC_MODULE_EXPORT *)
+module system_external_reset_fake_0 (
+  output bit [15 : 0 ] dout
 );
-
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME aclk, ASSOCIATED_RESET aresetn, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 aclk CLK" *)
-input wire aclk;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME aresetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 aresetn RST" *)
-input wire aresetn;
-output wire [56 : 0] dna_data;
-
-  dna_reader inst (
-    .aclk(aclk),
-    .aresetn(aresetn),
-    .dna_data(dna_data)
-  );
 endmodule
+`endif
+
+`ifdef XCELIUM
+(* XMSC_MODULE_EXPORT *)
+module system_external_reset_fake_0 (dout)
+(* integer foreign = "SystemC";
+*);
+ output wire [15 : 0 ] dout;  
+endmodule
+`endif
+
+`ifdef RIVIERA
+(* SC_MODULE_EXPORT *)
+module system_external_reset_fake_0 (dout)
+  output wire [15 : 0 ] dout;
+endmodule
+`endif
+

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Jul  6 10:46:59 2022" VIVADOVERSION="2020.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Jul  6 12:41:41 2022" VIVADOVERSION="2020.2">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z010" NAME="system" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -897,7 +897,6 @@
             <CONNECTION INSTANCE="Memory_IO_axis_ram_writer_0" PORT="aclk"/>
             <CONNECTION INSTANCE="Memory_IO_axi_sts_register_0" PORT="aclk"/>
             <CONNECTION INSTANCE="Memory_IO_axi_cfg_register_0" PORT="aclk"/>
-            <CONNECTION INSTANCE="Reg_Brakeout_dna_reader_0" PORT="aclk"/>
             <CONNECTION INSTANCE="Reg_Brakeout_axis_variable_0" PORT="aclk"/>
             <CONNECTION INSTANCE="Reg_Brakeout_axis_constant_0" PORT="aclk"/>
             <CONNECTION INSTANCE="Data_Conversion_axis_combiner_0" PORT="aclk"/>
@@ -907,6 +906,8 @@
             <CONNECTION INSTANCE="Data_Conversion_ch1_output_dac_mem_split" PORT="aclk"/>
             <CONNECTION INSTANCE="Data_Conversion_CIC_config_replicator" PORT="aclk"/>
             <CONNECTION INSTANCE="Data_Conversion_memory_binary_conver_0" PORT="aclk"/>
+            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_1" PORT="aclk"/>
+            <CONNECTION INSTANCE="Data_Conversion_axis_constant_0" PORT="aclk"/>
             <CONNECTION INSTANCE="axis_red_pitaya_adc_0" PORT="aclk"/>
             <CONNECTION INSTANCE="axis_red_pitaya_dac_0" PORT="aclk"/>
             <CONNECTION INSTANCE="feedback_combined_0" PORT="aclk"/>
@@ -3424,13 +3425,13 @@
             <CONNECTION INSTANCE="ch1_mem_fb_split" PORT="aresetn"/>
             <CONNECTION INSTANCE="Memory_IO_axi_sts_register_0" PORT="aresetn"/>
             <CONNECTION INSTANCE="Memory_IO_axi_cfg_register_0" PORT="aresetn"/>
-            <CONNECTION INSTANCE="Reg_Brakeout_dna_reader_0" PORT="aresetn"/>
             <CONNECTION INSTANCE="Reg_Brakeout_axis_variable_0" PORT="aresetn"/>
             <CONNECTION INSTANCE="Data_Conversion_ch1_output_dac_mem_split" PORT="aresetn"/>
             <CONNECTION INSTANCE="Data_Conversion_CIC_config_replicator" PORT="aresetn"/>
             <CONNECTION INSTANCE="Data_Conversion_cic_1" PORT="aresetn"/>
             <CONNECTION INSTANCE="Data_Conversion_axis_combiner_0" PORT="aresetn"/>
             <CONNECTION INSTANCE="Data_Conversion_cic_0" PORT="aresetn"/>
+            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_1" PORT="aresetn"/>
             <CONNECTION INSTANCE="xadc_read_0" PORT="aresetn"/>
             <CONNECTION INSTANCE="Core_ps_0_axi_periph" PORT="S00_ARESETN"/>
             <CONNECTION INSTANCE="Core_ps_0_axi_periph" PORT="M00_ARESETN"/>
@@ -3674,24 +3675,12 @@
             <CONNECTION INSTANCE="Data_Conversion_cic_1" PORT="m_axis_data_tdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="m_axis_tvalid" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_0_m_axis_tvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Data_Conversion_conv_0" PORT="s_axis_tvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="m_axis_tready" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_0_m_axis_tready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Data_Conversion_conv_0" PORT="s_axis_tready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="31" NAME="m_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_0_m_axis_tdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Data_Conversion_conv_0" PORT="s_axis_tdata"/>
-          </CONNECTIONS>
-        </PORT>
+        <PORT DIR="O" NAME="m_axis_tvalid" SIGIS="undef"/>
+        <PORT DIR="I" NAME="m_axis_tready" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="31" NAME="m_axis_tdata" RIGHT="0" SIGIS="undef"/>
       </PORTS>
       <BUSINTERFACES>
-        <BUSINTERFACE BUSNAME="Data_Conversion_axis_combiner_0_M_AXIS" NAME="M_AXIS" TYPE="MASTER" VLNV="xilinx.com:interface:axis:1.0">
+        <BUSINTERFACE BUSNAME="__NOC__" NAME="M_AXIS" TYPE="MASTER" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="4"/>
           <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
@@ -3749,6 +3738,191 @@
             <PORTMAP LOGICAL="TVALID" PHYSICAL="s_axis_tvalid"/>
             <PORTMAP LOGICAL="TREADY" PHYSICAL="s_axis_tready"/>
             <PORTMAP LOGICAL="TDATA" PHYSICAL="s_axis_tdata"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="20" FULLNAME="/Data_Conversion/axis_combiner_1" HWVERSION="1.1" INSTANCE="Data_Conversion_axis_combiner_1" IPTYPE="BUS" IS_ENABLE="1" MODCLASS="BUS" MODTYPE="axis_combiner" VLNV="xilinx.com:ip:axis_combiner:1.1">
+      <DOCUMENTS>
+        <DOCUMENT SOURCE="https://www.xilinx.com/cgi-bin/docs/ipdoc?c=axis_combiner;v=v1_1;d=pg085-axi4stream-infrastructure.pdf"/>
+      </DOCUMENTS>
+      <PARAMETERS>
+        <PARAMETER NAME="C_FAMILY" VALUE="zynq"/>
+        <PARAMETER NAME="C_AXIS_TDATA_WIDTH" VALUE="16"/>
+        <PARAMETER NAME="C_AXIS_TID_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_TDEST_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_TUSER_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="C_AXIS_SIGNAL_SET" VALUE="0b00000000000000000000000000000011"/>
+        <PARAMETER NAME="C_MASTER_PORT_NUM" VALUE="0"/>
+        <PARAMETER NAME="C_NUM_SI_SLOTS" VALUE="2"/>
+        <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="2"/>
+        <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+        <PARAMETER NAME="NUM_SI" VALUE="2"/>
+        <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+        <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+        <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+        <PARAMETER NAME="MASTER_PORT_NUM" VALUE="0"/>
+        <PARAMETER NAME="HAS_CMD_ERR" VALUE="0"/>
+        <PARAMETER NAME="HAS_ACLKEN" VALUE="0"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_axis_combiner_0_1"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="125000000" DIR="I" NAME="aclk" SIGIS="clk" SIGNAME="Core_pll_0_clk_out1">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Core_pll_0" PORT="clk_out1"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="aresetn" POLARITY="ACTIVE_LOW" SIGIS="rst" SIGNAME="Core_rst_0_peripheral_aresetn">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Core_rst_0" PORT="peripheral_aresetn"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="s_axis_tvalid" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_1_s_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Data_Conversion_ch1_output_dac_mem_split" PORT="m_axis_tvalid"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Data_Conversion_axis_constant_0" PORT="m_axis_tvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="1" NAME="s_axis_tready" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="I" LEFT="31" NAME="s_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_1_s_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Data_Conversion_ch1_output_dac_mem_split" PORT="m_axis_tdata"/>
+          </CONNECTIONS>
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Data_Conversion_axis_constant_0" PORT="m_axis_tdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axis_tvalid" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_1_m_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axis_red_pitaya_dac_0" PORT="s_axis_tvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="m_axis_tready" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_1_m_axis_tready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axis_red_pitaya_dac_0" PORT="s_axis_tready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="m_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_1_m_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axis_red_pitaya_dac_0" PORT="s_axis_tdata"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="Data_Conversion_axis_combiner_1_M_AXIS" NAME="M_AXIS" TYPE="MASTER" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="4"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="PHASE" VALUE="0.0"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="system_pll_0_0_clk_out1"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="m_axis_tvalid"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="m_axis_tready"/>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="m_axis_tdata"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+        <BUSINTERFACE BUSNAME="Data_Conversion_ch1_output_dac_mem_split_M01_AXIS" NAME="S00_AXIS" TYPE="SLAVE" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="2"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="PHASE" VALUE="0.0"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="system_pll_0_0_clk_out1"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="s_axis_tvalid"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="s_axis_tready"/>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="s_axis_tdata"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+        <BUSINTERFACE BUSNAME="Data_Conversion_axis_constant_0_M_AXIS" NAME="S01_AXIS" TYPE="SLAVE" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="2"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="1"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="PHASE" VALUE="0.0"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="system_pll_0_0_clk_out1"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="s_axis_tvalid"/>
+            <PORTMAP LOGICAL="TREADY" PHYSICAL="s_axis_tready"/>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="s_axis_tdata"/>
+          </PORTMAPS>
+        </BUSINTERFACE>
+      </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="1" FULLNAME="/Data_Conversion/axis_constant_0" HWVERSION="1.0" INSTANCE="Data_Conversion_axis_constant_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="axis_constant" VLNV="xilinx.com:user:axis_constant:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="AXIS_TDATA_WIDTH" VALUE="16"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_axis_constant_0_1"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="125000000" DIR="I" NAME="aclk" SIGIS="clk" SIGNAME="Core_pll_0_clk_out1">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Core_pll_0" PORT="clk_out1"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="15" NAME="cfg_data" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_xlconstant_0_dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Data_Conversion_xlconstant_0" PORT="dout"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="15" NAME="m_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_1_s_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_1" PORT="s_axis_tdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="m_axis_tvalid" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_1_s_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_1" PORT="s_axis_tvalid"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES>
+        <BUSINTERFACE BUSNAME="Data_Conversion_axis_constant_0_M_AXIS" NAME="M_AXIS" TYPE="MASTER" VLNV="xilinx.com:interface:axis:1.0">
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="2"/>
+          <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
+          <PARAMETER NAME="HAS_TREADY" VALUE="0"/>
+          <PARAMETER NAME="HAS_TSTRB" VALUE="0"/>
+          <PARAMETER NAME="HAS_TKEEP" VALUE="0"/>
+          <PARAMETER NAME="HAS_TLAST" VALUE="0"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
+          <PARAMETER NAME="PHASE" VALUE="0.0"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="system_pll_0_0_clk_out1"/>
+          <PARAMETER NAME="LAYERED_METADATA" VALUE="undef"/>
+          <PARAMETER NAME="INSERT_VIP" VALUE="0"/>
+          <PORTMAPS>
+            <PORTMAP LOGICAL="TDATA" PHYSICAL="m_axis_tdata"/>
+            <PORTMAP LOGICAL="TVALID" PHYSICAL="m_axis_tvalid"/>
           </PORTMAPS>
         </BUSINTERFACE>
       </BUSINTERFACES>
@@ -3840,18 +4014,18 @@
         </PORT>
         <PORT DIR="O" LEFT="1" NAME="m_axis_tvalid" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_ch1_output_dac_mem_split_m_axis_tvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Data_Conversion_memory_binary_conver_0" PORT="S_AXIS_tvalid"/>
+            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_1" PORT="s_axis_tvalid"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axis_red_pitaya_dac_0" PORT="s_axis_tvalid"/>
+            <CONNECTION INSTANCE="Data_Conversion_memory_binary_conver_0" PORT="S_AXIS_tvalid"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="31" NAME="m_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_ch1_output_dac_mem_split_m_axis_tdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Data_Conversion_memory_binary_conver_0" PORT="S_AXIS_tdata"/>
+            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_1" PORT="s_axis_tdata"/>
           </CONNECTIONS>
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axis_red_pitaya_dac_0" PORT="s_axis_tdata"/>
+            <CONNECTION INSTANCE="Data_Conversion_memory_binary_conver_0" PORT="S_AXIS_tdata"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -4317,19 +4491,15 @@
             <CONNECTION INSTANCE="Reg_Brakeout_pre_memory_reset" PORT="Dout"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s_axis_tvalid" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_0_m_axis_tvalid">
+        <PORT DIR="I" NAME="s_axis_tvalid" SIGIS="undef" SIGNAME="Data_Conversion_conv_0_s_axis_tvalid">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_0" PORT="m_axis_tvalid"/>
+            <CONNECTION INSTANCE="xadc_read_0" PORT="m_axis_tvalid"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s_axis_tready" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_0_m_axis_tready">
+        <PORT DIR="O" NAME="s_axis_tready" SIGIS="undef"/>
+        <PORT DIR="I" LEFT="31" NAME="s_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_conv_0_s_axis_tdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_0" PORT="m_axis_tready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="31" NAME="s_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_0_m_axis_tdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_0" PORT="m_axis_tdata"/>
+            <CONNECTION INSTANCE="xadc_read_0" PORT="m_axis_tdata"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="m_axis_tvalid" SIGIS="undef" SIGNAME="Data_Conversion_conv_0_m_axis_tvalid">
@@ -4349,7 +4519,7 @@
         </PORT>
       </PORTS>
       <BUSINTERFACES>
-        <BUSINTERFACE BUSNAME="Data_Conversion_axis_combiner_0_M_AXIS" NAME="S_AXIS" TYPE="SLAVE" VLNV="xilinx.com:interface:axis:1.0">
+        <BUSINTERFACE BUSNAME="xadc_read_0_m_axis" NAME="S_AXIS" TYPE="SLAVE" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="4"/>
           <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
@@ -4466,6 +4636,23 @@
           </PORTMAPS>
         </BUSINTERFACE>
       </BUSINTERFACES>
+    </MODULE>
+    <MODULE COREREVISION="7" FULLNAME="/Data_Conversion/xlconstant_0" HWVERSION="1.1" INSTANCE="Data_Conversion_xlconstant_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:1.1">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="CONST_WIDTH" VALUE="16"/>
+        <PARAMETER NAME="CONST_VAL" VALUE="0x01F4"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_xlconstant_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="O" LEFT="15" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_xlconstant_0_dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Data_Conversion_axis_constant_0" PORT="cfg_data"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
     </MODULE>
     <MODULE COREREVISION="1" FULLNAME="/Memory_IO/axi_cfg_register_0" HWVERSION="1.0" INSTANCE="Memory_IO_axi_cfg_register_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="axi_cfg_register" VLNV="xilinx.com:user:axi_cfg_register:1.0">
       <DOCUMENTS/>
@@ -4650,7 +4837,7 @@
         <ADDRESSBLOCK ACCESS="" INTERFACE="s_axi" NAME="reg0" RANGE="4294967296" USAGE="register"/>
       </ADDRESSBLOCKS>
       <PARAMETERS>
-        <PARAMETER NAME="STS_DATA_WIDTH" VALUE="128"/>
+        <PARAMETER NAME="STS_DATA_WIDTH" VALUE="32"/>
         <PARAMETER NAME="AXI_DATA_WIDTH" VALUE="32"/>
         <PARAMETER NAME="AXI_ADDR_WIDTH" VALUE="32"/>
         <PARAMETER NAME="Component_Name" VALUE="system_axi_sts_register_0_0"/>
@@ -4669,7 +4856,7 @@
             <CONNECTION INSTANCE="Core_rst_0" PORT="peripheral_aresetn"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="127" NAME="sts_data" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_status_concat_1_dout">
+        <PORT DIR="I" LEFT="31" NAME="sts_data" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_status_concat_1_dout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="Reg_Brakeout_status_concat_1" PORT="dout"/>
           </CONNECTIONS>
@@ -4838,7 +5025,7 @@
         </PORT>
         <PORT DIR="O" LEFT="15" NAME="sts_data" RIGHT="0" SIGIS="undef" SIGNAME="Memory_IO_axis_ram_writer_0_sts_data">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Reg_Brakeout_status_concat_1" PORT="In2"/>
+            <CONNECTION INSTANCE="Reg_Brakeout_status_concat_1" PORT="In0"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="2" NAME="m_axi_awid" RIGHT="0" SIGIS="undef" SIGNAME="Core_ps_0_S_AXI_ACP_AWID">
@@ -5202,31 +5389,6 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
-    <MODULE COREREVISION="1" FULLNAME="/Reg_Brakeout/dna_reader_0" HWVERSION="1.0" INSTANCE="Reg_Brakeout_dna_reader_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="dna_reader" VLNV="xilinx.com:user:dna_reader:1.0">
-      <DOCUMENTS/>
-      <PARAMETERS>
-        <PARAMETER NAME="Component_Name" VALUE="system_dna_reader_0_0"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT CLKFREQUENCY="125000000" DIR="I" NAME="aclk" SIGIS="clk" SIGNAME="Core_pll_0_clk_out1">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Core_pll_0" PORT="clk_out1"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="aresetn" POLARITY="ACTIVE_LOW" SIGIS="rst" SIGNAME="Core_rst_0_peripheral_aresetn">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Core_rst_0" PORT="peripheral_aresetn"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="56" NAME="dna_data" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_dna_reader_0_dna_data">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Reg_Brakeout_status_concat_1" PORT="In1"/>
-          </CONNECTIONS>
-        </PORT>
-      </PORTS>
-      <BUSINTERFACES/>
-    </MODULE>
     <MODULE COREREVISION="7" FULLNAME="/Reg_Brakeout/external_reset_fake" HWVERSION="1.1" INSTANCE="Reg_Brakeout_external_reset_fake" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:1.1">
       <DOCUMENTS/>
       <PARAMETERS>
@@ -5239,7 +5401,6 @@
         <PORT DIR="O" LEFT="0" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_external_reset_fake_dout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="Core_rst_0" PORT="ext_reset_in"/>
-            <CONNECTION INSTANCE="Reg_Brakeout_status_concat_1" PORT="In0"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -5344,8 +5505,8 @@
     <MODULE COREREVISION="4" FULLNAME="/Reg_Brakeout/status_concat_1" HWVERSION="2.1" INSTANCE="Reg_Brakeout_status_concat_1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconcat" VLNV="xilinx.com:ip:xlconcat:2.1">
       <DOCUMENTS/>
       <PARAMETERS>
-        <PARAMETER NAME="IN0_WIDTH" VALUE="32"/>
-        <PARAMETER NAME="IN1_WIDTH" VALUE="64"/>
+        <PARAMETER NAME="IN0_WIDTH" VALUE="16"/>
+        <PARAMETER NAME="IN1_WIDTH" VALUE="16"/>
         <PARAMETER NAME="IN2_WIDTH" VALUE="32"/>
         <PARAMETER NAME="IN3_WIDTH" VALUE="1"/>
         <PARAMETER NAME="IN4_WIDTH" VALUE="1"/>
@@ -5472,30 +5633,42 @@
         <PARAMETER NAME="IN125_WIDTH" VALUE="1"/>
         <PARAMETER NAME="IN126_WIDTH" VALUE="1"/>
         <PARAMETER NAME="IN127_WIDTH" VALUE="1"/>
-        <PARAMETER NAME="dout_width" VALUE="128"/>
-        <PARAMETER NAME="NUM_PORTS" VALUE="3"/>
+        <PARAMETER NAME="dout_width" VALUE="32"/>
+        <PARAMETER NAME="NUM_PORTS" VALUE="2"/>
         <PARAMETER NAME="Component_Name" VALUE="system_concat_1_0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT DIR="I" LEFT="31" NAME="In0" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_external_reset_fake_dout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Reg_Brakeout_external_reset_fake" PORT="dout"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="63" NAME="In1" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_dna_reader_0_dna_data">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Reg_Brakeout_dna_reader_0" PORT="dna_data"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="31" NAME="In2" RIGHT="0" SIGIS="undef" SIGNAME="Memory_IO_axis_ram_writer_0_sts_data">
+        <PORT DIR="I" LEFT="15" NAME="In0" RIGHT="0" SIGIS="undef" SIGNAME="Memory_IO_axis_ram_writer_0_sts_data">
           <CONNECTIONS>
             <CONNECTION INSTANCE="Memory_IO_axis_ram_writer_0" PORT="sts_data"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="127" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_status_concat_1_dout">
+        <PORT DIR="I" LEFT="15" NAME="In1" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_zero_add_to_address_dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Reg_Brakeout_zero_add_to_address" PORT="dout"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_status_concat_1_dout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="Memory_IO_axi_sts_register_0" PORT="sts_data"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="7" FULLNAME="/Reg_Brakeout/zero_add_to_address" HWVERSION="1.1" INSTANCE="Reg_Brakeout_zero_add_to_address" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlconstant" VLNV="xilinx.com:ip:xlconstant:1.1">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="CONST_WIDTH" VALUE="16"/>
+        <PARAMETER NAME="CONST_VAL" VALUE="0x0000"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_external_reset_fake_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="O" LEFT="15" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_zero_add_to_address_dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Reg_Brakeout_status_concat_1" PORT="In1"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -5616,20 +5789,24 @@
             <CONNECTION INSTANCE="External_Ports" PORT="dac_dat_o"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="s_axis_tready" SIGIS="undef"/>
-        <PORT DIR="I" LEFT="31" NAME="s_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_ch1_output_dac_mem_split_m_axis_tdata">
+        <PORT DIR="O" NAME="s_axis_tready" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_1_m_axis_tready">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Data_Conversion_ch1_output_dac_mem_split" PORT="m_axis_tdata"/>
+            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_1" PORT="m_axis_tready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s_axis_tvalid" SIGIS="undef" SIGNAME="Data_Conversion_ch1_output_dac_mem_split_m_axis_tvalid">
+        <PORT DIR="I" LEFT="31" NAME="s_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_1_m_axis_tdata">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="Data_Conversion_ch1_output_dac_mem_split" PORT="m_axis_tvalid"/>
+            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_1" PORT="m_axis_tdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="s_axis_tvalid" SIGIS="undef" SIGNAME="Data_Conversion_axis_combiner_1_m_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Data_Conversion_axis_combiner_1" PORT="m_axis_tvalid"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
       <BUSINTERFACES>
-        <BUSINTERFACE BUSNAME="Data_Conversion_ch1_output_dac_mem_split_M01_AXIS" NAME="S_AXIS" TYPE="SLAVE" VLNV="xilinx.com:interface:axis:1.0">
+        <BUSINTERFACE BUSNAME="Data_Conversion_axis_combiner_1_M_AXIS" NAME="S_AXIS" TYPE="SLAVE" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="4"/>
           <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
@@ -5853,7 +6030,7 @@
         <PARAMETER NAME="PARAM_G_OFFSET" VALUE="192"/>
         <PARAMETER NAME="PARAM_H_OFFSET" VALUE="224"/>
         <PARAMETER NAME="DAC_DATA_WIDTH" VALUE="14"/>
-        <PARAMETER NAME="CFG_WIDTH" VALUE="288"/>
+        <PARAMETER NAME="CFG_WIDTH" VALUE="256"/>
         <PARAMETER NAME="AXIS_TDATA_WIDTH" VALUE="16"/>
         <PARAMETER NAME="SELECT_WIDTH" VALUE="2"/>
         <PARAMETER NAME="CONTINUOUS_OUTPUT" VALUE="1"/>
@@ -5876,7 +6053,7 @@
             <CONNECTION INSTANCE="Reg_Brakeout_Feedback_State" PORT="Dout"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="287" NAME="S_AXIS_CFG_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_axis_constant_0_m_axis_tdata">
+        <PORT DIR="I" LEFT="255" NAME="S_AXIS_CFG_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Reg_Brakeout_axis_constant_0_m_axis_tdata">
           <CONNECTIONS>
             <CONNECTION INSTANCE="Reg_Brakeout_axis_constant_0" PORT="m_axis_tdata"/>
           </CONNECTIONS>
@@ -5983,7 +6160,7 @@
         </BUSINTERFACE>
         <BUSINTERFACE BUSNAME="Reg_Brakeout_axis_constant_0_M_AXIS" NAME="S_AXIS_CFG" TYPE="TARGET" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="FREQ_HZ" VALUE="125000000"/>
-          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="36"/>
+          <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="32"/>
           <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TID_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TUSER_WIDTH" VALUE="0"/>
@@ -6059,11 +6236,19 @@
             <CONNECTION INSTANCE="xadc_wiz_0" PORT="do_out"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" NAME="m_axis_tvalid" SIGIS="undef"/>
-        <PORT DIR="O" LEFT="31" NAME="m_axis_tdata" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" NAME="m_axis_tvalid" SIGIS="undef" SIGNAME="Data_Conversion_conv_0_s_axis_tvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Data_Conversion_conv_0" PORT="s_axis_tvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="m_axis_tdata" RIGHT="0" SIGIS="undef" SIGNAME="Data_Conversion_conv_0_s_axis_tdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Data_Conversion_conv_0" PORT="s_axis_tdata"/>
+          </CONNECTIONS>
+        </PORT>
       </PORTS>
       <BUSINTERFACES>
-        <BUSINTERFACE BUSNAME="__NOC__" NAME="m_axis" TYPE="INITIATOR" VLNV="xilinx.com:interface:axis:1.0">
+        <BUSINTERFACE BUSNAME="xadc_read_0_m_axis" NAME="m_axis" TYPE="MASTER" VLNV="xilinx.com:interface:axis:1.0">
           <PARAMETER NAME="TDATA_NUM_BYTES" VALUE="4"/>
           <PARAMETER NAME="TDEST_WIDTH" VALUE="0"/>
           <PARAMETER NAME="TID_WIDTH" VALUE="0"/>

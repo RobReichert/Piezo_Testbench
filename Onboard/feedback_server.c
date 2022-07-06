@@ -266,7 +266,7 @@ int main () {
 	system_pointers_t system_regs ={.ram = 0,
 									.rx_rst = (uint8_t *)(cfg + 0),
 									.rx_addr = (uint32_t *)(cfg + 4),
-									.rx_cntr = (uint32_t *)(sts + 12)};
+									.rx_cntr = (uint32_t *)(sts + 0)};
 	
 	//Customisable parameter space
 	params_t params = {.rx_rate = (uint16_t *)(cfg + 2),

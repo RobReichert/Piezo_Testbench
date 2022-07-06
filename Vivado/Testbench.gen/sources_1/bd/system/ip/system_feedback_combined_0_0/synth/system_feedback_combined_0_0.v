@@ -52,7 +52,7 @@
 
 (* X_CORE_INFO = "feedback_combined,Vivado 2020.2" *)
 (* CHECK_LICENSE_TYPE = "system_feedback_combined_0_0,feedback_combined,{}" *)
-(* CORE_GENERATION_INFO = "system_feedback_combined_0_0,feedback_combined,{x_ipProduct=Vivado 2020.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=feedback_combined,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,ADC_DATA_WIDTH=16,DDS_OUT_WIDTH=16,PARAM_WIDTH=32,PARAM_A_OFFSET=0,PARAM_B_OFFSET=32,PARAM_C_OFFSET=64,PARAM_D_OFFSET=96,PARAM_E_OFFSET=128,PARAM_F_OFFSET=160,PARAM_G_OFFSET=192,PARAM_H_OFFSET=224,DAC_DATA_WIDTH=14,CFG_WIDTH=288,AXIS_TDATA_WIDTH=16,SELECT_WIDTH=2,CONTINUOUS_O\
+(* CORE_GENERATION_INFO = "system_feedback_combined_0_0,feedback_combined,{x_ipProduct=Vivado 2020.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=feedback_combined,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,ADC_DATA_WIDTH=16,DDS_OUT_WIDTH=16,PARAM_WIDTH=32,PARAM_A_OFFSET=0,PARAM_B_OFFSET=32,PARAM_C_OFFSET=64,PARAM_D_OFFSET=96,PARAM_E_OFFSET=128,PARAM_F_OFFSET=160,PARAM_G_OFFSET=192,PARAM_H_OFFSET=224,DAC_DATA_WIDTH=14,CFG_WIDTH=256,AXIS_TDATA_WIDTH=16,SELECT_WIDTH=2,CONTINUOUS_O\
 UTPUT=1}" *)
 (* IP_DEFINITION_SOURCE = "module_ref" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
@@ -77,8 +77,8 @@ input wire aclk;
 input wire trig_in;
 input wire [1 : 0] sel;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS_CFG TDATA" *)
-input wire [287 : 0] S_AXIS_CFG_tdata;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S_AXIS_CFG, FREQ_HZ 125000000, TDATA_NUM_BYTES 36, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0" *)
+input wire [255 : 0] S_AXIS_CFG_tdata;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S_AXIS_CFG, FREQ_HZ 125000000, TDATA_NUM_BYTES 32, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS_CFG TVALID" *)
 input wire S_AXIS_CFG_tvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS_ADC1 TDATA" *)
@@ -111,7 +111,7 @@ output wire trig_out;
     .PARAM_G_OFFSET(192),
     .PARAM_H_OFFSET(224),
     .DAC_DATA_WIDTH(14),
-    .CFG_WIDTH(288),
+    .CFG_WIDTH(256),
     .AXIS_TDATA_WIDTH(16),
     .SELECT_WIDTH(2),
     .CONTINUOUS_OUTPUT(1)
