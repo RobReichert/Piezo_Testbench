@@ -1,0 +1,53 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.485714",
+   "Default View_TopLeft":"-727,0",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS
+#  -string -flagsOSRD
+preplace port M_AXIS -pg 1 -lvl 3 -x 540 -y 200 -defaultsOSRD
+preplace port M_AXIS1 -pg 1 -lvl 3 -x 540 -y 70 -defaultsOSRD
+preplace port aclk -pg 1 -lvl 0 -x 0 -y 280 -defaultsOSRD
+preplace port aresetn -pg 1 -lvl 0 -x 0 -y 360 -defaultsOSRD
+preplace portBus din -pg 1 -lvl 0 -x 0 -y 560 -defaultsOSRD
+preplace portBus dout -pg 1 -lvl 3 -x 540 -y 660 -defaultsOSRD
+preplace portBus dout1 -pg 1 -lvl 3 -x 540 -y 760 -defaultsOSRD
+preplace portBus dout2 -pg 1 -lvl 3 -x 540 -y 600 -defaultsOSRD
+preplace portBus In2 -pg 1 -lvl 0 -x 0 -y 540 -defaultsOSRD
+preplace portBus dout3 -pg 1 -lvl 3 -x 540 -y 520 -defaultsOSRD
+preplace portBus dout4 -pg 1 -lvl 3 -x 540 -y 860 -defaultsOSRD
+preplace portBus dout5 -pg 1 -lvl 3 -x 540 -y 1060 -defaultsOSRD
+preplace portBus dout6 -pg 1 -lvl 3 -x 540 -y 960 -defaultsOSRD
+preplace inst status_concat_1 -pg 1 -lvl 2 -x 400 -y 520 -defaultsOSRD
+preplace inst external_reset_fake -pg 1 -lvl 1 -x 150 -y 480 -defaultsOSRD
+preplace inst Feedback_config_bus -pg 1 -lvl 1 -x 150 -y 80 -defaultsOSRD
+preplace inst sample_rate_divider -pg 1 -lvl 1 -x 150 -y 220 -defaultsOSRD
+preplace inst Feedback_State -pg 1 -lvl 2 -x 400 -y 660 -defaultsOSRD
+preplace inst RAM_addres -pg 1 -lvl 2 -x 400 -y 760 -defaultsOSRD
+preplace inst feedback_trigger -pg 1 -lvl 2 -x 400 -y 860 -defaultsOSRD
+preplace inst pre_memory_reset -pg 1 -lvl 2 -x 400 -y 960 -defaultsOSRD
+preplace inst ram_writer_reset -pg 1 -lvl 2 -x 400 -y 1060 -defaultsOSRD
+preplace inst dna_reader_0 -pg 1 -lvl 1 -x 150 -y 350 -defaultsOSRD
+preplace inst axis_variable_0 -pg 1 -lvl 2 -x 400 -y 200 -defaultsOSRD
+preplace inst axis_constant_0 -pg 1 -lvl 2 -x 400 -y 70 -defaultsOSRD
+preplace netloc pll_0_clk_out1 1 0 2 40 280 260
+preplace netloc rst_0_peripheral_aresetn 1 0 2 20 420 270J
+preplace netloc cfg_0_cfg_data 1 0 2 30 560 260
+preplace netloc const_0_dout 1 1 2 270 600 NJ
+preplace netloc writer_0_sts_data 1 0 2 NJ 540 NJ
+preplace netloc concat_1_dout 1 2 1 NJ 520
+preplace netloc sample_rate_divider_Dout 1 1 1 NJ 220
+preplace netloc Feedback_State_Dout 1 2 1 NJ 660
+preplace netloc RAM_addres_Dout 1 2 1 NJ 760
+preplace netloc feedback_trigger_Dout 1 2 1 NJ 860
+preplace netloc pre_memory_reset_Dout 1 2 1 NJ 960
+preplace netloc ram_writer_reset_Dout 1 2 1 NJ 1060
+preplace netloc dna_reader_0_dna_data 1 1 1 280 350n
+preplace netloc Feedback_config_bus_Dout 1 1 1 NJ 80
+preplace netloc axis_variable_0_M_AXIS 1 2 1 NJ 200
+preplace netloc axis_constant_0_M_AXIS 1 2 1 NJ 70
+levelinfo -pg 1 0 150 400 540
+pagesize -pg 1 -db -bbox -sgen -120 0 670 1120
+"
+}
+

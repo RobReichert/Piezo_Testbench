@@ -1,0 +1,10 @@
+*.cache
+*.runs
+*.tmp
+*.ip_user_files
+*.log
+*.jou
+*.str
+*.log
+Data
+__pycache__
