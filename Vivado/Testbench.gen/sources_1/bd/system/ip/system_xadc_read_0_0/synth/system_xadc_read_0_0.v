@@ -58,49 +58,42 @@
 module system_xadc_read_0_0 (
   aclk,
   aresetn,
-  channel,
-  eoc,
-  m_drp_den,
-  m_drp_dwe,
-  m_drp_daddr,
-  m_drp_di,
-  m_drp_drdy,
-  m_drp_do,
+  s_axis_tready,
+  s_axis_tdata,
+  s_axis_tid,
+  s_axis_tvalid,
   m_axis_tvalid,
   m_axis_tdata
 );
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME aclk, ASSOCIATED_BUSIF m_axis, ASSOCIATED_RESET aresetn, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME aclk, ASSOCIATED_BUSIF m_axis:s_axis, ASSOCIATED_RESET aresetn, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 aclk CLK" *)
 input wire aclk;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME aresetn, POLARITY ACTIVE_LOW, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 aresetn RST" *)
 input wire aresetn;
-input wire [4 : 0] channel;
-input wire eoc;
-output wire m_drp_den;
-output wire m_drp_dwe;
-output wire [6 : 0] m_drp_daddr;
-output wire [15 : 0] m_drp_di;
-input wire m_drp_drdy;
-input wire [15 : 0] m_drp_do;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis TREADY" *)
+output wire s_axis_tready;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis TDATA" *)
+input wire [15 : 0] s_axis_tdata;
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis TID" *)
+input wire [4 : 0] s_axis_tid;
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME s_axis, TDATA_NUM_BYTES 2, TDEST_WIDTH 0, TID_WIDTH 5, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 s_axis TVALID" *)
+input wire s_axis_tvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis TVALID" *)
 output wire m_axis_tvalid;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_axis, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME m_axis, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 m_axis TDATA" *)
-output wire [31 : 0] m_axis_tdata;
+output wire [63 : 0] m_axis_tdata;
 
   xadc_read inst (
     .aclk(aclk),
     .aresetn(aresetn),
-    .channel(channel),
-    .eoc(eoc),
-    .m_drp_den(m_drp_den),
-    .m_drp_dwe(m_drp_dwe),
-    .m_drp_daddr(m_drp_daddr),
-    .m_drp_di(m_drp_di),
-    .m_drp_drdy(m_drp_drdy),
-    .m_drp_do(m_drp_do),
+    .s_axis_tready(s_axis_tready),
+    .s_axis_tdata(s_axis_tdata),
+    .s_axis_tid(s_axis_tid),
+    .s_axis_tvalid(s_axis_tvalid),
     .m_axis_tvalid(m_axis_tvalid),
     .m_axis_tdata(m_axis_tdata)
   );

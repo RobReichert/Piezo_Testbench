@@ -133,16 +133,6 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/system_wrapper.v">
-        <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
-          <Attr Name="ImportPath" Val="$PPRDIR/../../../Users/Robert Reichert/Downloads/RedPitaya_Vivado/feedback.gen/sources_1/bd/system/hdl/system_wrapper.v"/>
-          <Attr Name="ImportTime" Val="1655989495"/>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
       <File Path="$PSRCDIR/sources_1/ip/c_counter_binary_0/c_counter_binary_0.xci">
         <FileInfo>
           <Attr Name="AutoDisabled" Val="1"/>
