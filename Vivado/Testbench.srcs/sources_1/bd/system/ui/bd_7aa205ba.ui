@@ -1,0 +1,58 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"0.709859",
+   "Default View_TopLeft":"-256,0",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS
+#  -string -flagsOSRD
+preplace port S_AXIS_CFG -pg 1 -lvl 0 -x 0 -y 490 -defaultsOSRD
+preplace port S_AXIS -pg 1 -lvl 0 -x 0 -y 200 -defaultsOSRD
+preplace port M00_AXIS -pg 1 -lvl 5 -x 1190 -y 200 -defaultsOSRD
+preplace port M00_AXIS1 -pg 1 -lvl 5 -x 1190 -y 360 -defaultsOSRD
+preplace port aclk -pg 1 -lvl 0 -x 0 -y 20 -defaultsOSRD
+preplace port wrt_clk -pg 1 -lvl 0 -x 0 -y 610 -defaultsOSRD
+preplace port locked -pg 1 -lvl 0 -x 0 -y 630 -defaultsOSRD
+preplace port dac_clk_o -pg 1 -lvl 5 -x 1190 -y 550 -defaultsOSRD
+preplace port dac_rst_o -pg 1 -lvl 5 -x 1190 -y 570 -defaultsOSRD
+preplace port dac_sel_o -pg 1 -lvl 5 -x 1190 -y 590 -defaultsOSRD
+preplace port dac_wrt_o -pg 1 -lvl 5 -x 1190 -y 610 -defaultsOSRD
+preplace port trig_in -pg 1 -lvl 0 -x 0 -y 530 -defaultsOSRD
+preplace port exp_p_tri_io -pg 1 -lvl 5 -x 1190 -y 690 -defaultsOSRD
+preplace port aresetn -pg 1 -lvl 0 -x 0 -y 240 -defaultsOSRD
+preplace portBus dac_dat_o -pg 1 -lvl 5 -x 1190 -y 630 -defaultsOSRD
+preplace portBus sel -pg 1 -lvl 0 -x 0 -y 550 -defaultsOSRD
+preplace inst axis_red_pitaya_dac_0 -pg 1 -lvl 4 -x 1020 -y 590 -defaultsOSRD
+preplace inst feedback_combined_0 -pg 1 -lvl 3 -x 690 -y 500 -defaultsOSRD
+preplace inst xlconstant_0 -pg 1 -lvl 1 -x 100 -y 80 -defaultsOSRD
+preplace inst axis_constant_0 -pg 1 -lvl 2 -x 330 -y 70 -defaultsOSRD
+preplace inst ch1_mem_fb_split -pg 1 -lvl 2 -x 330 -y 220 -defaultsOSRD
+preplace inst ch1_output_dac_mem_split -pg 1 -lvl 4 -x 1020 -y 370 -defaultsOSRD
+preplace inst axis_combiner_1 -pg 1 -lvl 3 -x 690 -y 290 -defaultsOSRD
+preplace netloc xlconstant_0_dout 1 1 1 NJ 80
+preplace netloc pll_0_clk_out1 1 0 4 NJ 20 180 140 500 380 870
+preplace netloc pll_0_clk_out2 1 0 4 NJ 610 NJ 610 NJ 610 870
+preplace netloc pll_0_locked 1 0 4 NJ 630 NJ 630 NJ 630 NJ
+preplace netloc axis_red_pitaya_dac_0_dac_clk 1 4 1 NJ 550
+preplace netloc axis_red_pitaya_dac_0_dac_rst 1 4 1 NJ 570
+preplace netloc axis_red_pitaya_dac_0_dac_sel 1 4 1 NJ 590
+preplace netloc axis_red_pitaya_dac_0_dac_wrt 1 4 1 NJ 610
+preplace netloc axis_red_pitaya_dac_0_dac_dat 1 4 1 NJ 630
+preplace netloc slice_9_dout 1 0 3 NJ 530 NJ 530 NJ
+preplace netloc slice_7_dout 1 0 3 NJ 550 NJ 550 NJ
+preplace netloc feedback_combined_0_trig_out 1 3 2 850J 690 NJ
+preplace netloc rst_0_peripheral_aresetn 1 0 4 NJ 240 180 300 490 390 NJ
+preplace netloc Data_Conversion_M01_AXIS 1 3 1 860 290n
+preplace netloc feedback_combined_0_M_AXIS 1 3 1 850 350n
+preplace netloc ch1_mem_fb_split_M01_AXIS 1 2 1 510 220n
+preplace netloc ch1_mem_fb_split_M02_AXIS 1 2 1 480 240n
+preplace netloc axis_constant_0_M_AXIS 1 2 1 520 70n
+preplace netloc ch1_output_dac_mem_split_M01_AXIS 1 2 3 530 190 NJ 190 1170
+preplace netloc fb_cfg_M_AXIS 1 0 3 NJ 490 NJ 490 NJ
+preplace netloc axis_red_pitaya_adc_0_M_AXIS 1 0 2 NJ 200 NJ
+preplace netloc ch1_mem_fb_split_M00_AXIS 1 2 3 NJ 200 NJ 200 NJ
+preplace netloc ch1_output_dac_mem_split_M00_AXIS 1 4 1 NJ 360
+levelinfo -pg 1 0 100 330 690 1020 1190
+pagesize -pg 1 -db -bbox -sgen -140 0 1350 710
+"
+}
+
