@@ -93,8 +93,7 @@ class dataThread:
             self.trigger, self.config, self.config_change, [self.record_request, self.bytes_to_receive] = self.GUI_to_data_Queue.get(block=False)
             logging.debug("message received")
             return True
-        except Exception as e:
-            #logging.debug(str(e))
+        except:
             return False
 
     def inform_GUI(self, event):
@@ -177,7 +176,8 @@ class dataThread:
             nbytes = self.s.recv_into(view, self.bytes_to_receive)
             view = view[nbytes:]
             self.bytes_to_receive -= nbytes
-            logging.debug(self.bytes_to_receive)
+            logging.debug("{} Bytes received {} left".format(nbytes, self.bytes_to_receive))
+            #logging.debug(self.bytes_to_receive)
 
         self.purge_socket()
         self.close_socket()
@@ -213,7 +213,7 @@ class dataThread:
                                                   2)
             try:
                 purged = self.s.recv(16384)
-                print("{} bytes received in purge, header = {} {} {} {}".format(len(purged), purged[0], purged[1], purged[3], purged[4]))
+                logging.debug("{} bytes received in purge, header = {} {} {} {}".format(len(purged), purged[0], purged[1], purged[3], purged[4]))
             except Exception as e:
                 logging.debug("Purge recv error: {}".format(e))
                 break
@@ -314,3 +314,6 @@ class dataThread:
         if self.s != None:
             self.s.close()
             logging.debug("socket closed")
+            
+        # close logging
+        logging.shutdown() 

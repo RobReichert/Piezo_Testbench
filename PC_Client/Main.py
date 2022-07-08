@@ -118,11 +118,15 @@ class Window(QtWidgets.QMainWindow):
         self.ui.buttonMeasurement.setText("Start Measurement") # change button text
         # Stop data recording monitoring
         self.timer.stop()        
+        
         #create array with view of shared mem
         logging.debug("data_ready recognised")
-        temp = np.ndarray((self.num_samples), dtype=np.dtype([('in', np.int16), ('out', np.int16)]), buffer=self.shared_mem.buf)
+        #temp = np.ndarray((self.num_samples), dtype=np.dtype([('in', np.int16), ('out', np.int16)]), buffer=self.shared_mem.buf)
+        temp = np.ndarray((self.num_samples), dtype=np.dtype([('in1', np.int16), ('out', np.int16), ('in', np.int16), ('out2', np.int16), ('in3', np.int16), ('in4', np.int16), ('in5', np.int16), ('in6', np.int16)]), buffer=self.shared_mem.buf)
         #copy into permanent array
         recording = np.copy(temp)
+        print(temp)
+        
         logging.debug("recording copied")
         # Delete view of shared memory (important, otherwise memory still exists)
         del temp
@@ -218,7 +222,7 @@ class Window(QtWidgets.QMainWindow):
             self.ButtonPressSend()
             
             self.num_samples = int(self.ui.inputData9.text())
-            self.num_bytes = self.num_samples * 4
+            self.num_bytes = self.num_samples * 16
             # Send record request to server
             packet = [0, self.FPGA_config, False, [True, self.num_bytes]]
             logging.debug("{} samples requested".format(self.num_samples))
