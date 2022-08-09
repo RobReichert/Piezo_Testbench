@@ -1,10 +1,9 @@
-
 `timescale 1 ns / 1 ps
 
 module axis_ram_writer #
 (
-  parameter integer ADDR_WIDTH = 20,
-  parameter integer AXI_ID_WIDTH = 6,
+  parameter integer ADDR_WIDTH = 16,
+  parameter integer AXI_ID_WIDTH = 3,
   parameter integer AXI_ADDR_WIDTH = 32,
   parameter integer AXI_DATA_WIDTH = 64,
   parameter integer AXIS_TDATA_WIDTH = 64
@@ -52,34 +51,75 @@ module axis_ram_writer #
   reg [ADDR_WIDTH-1:0] int_addr_reg, int_addr_next;
   reg [AXI_ID_WIDTH-1:0] int_wid_reg, int_wid_next;
   reg [3:0] int_res_reg, int_res_next;
+  
 
   wire int_fifo_rst_wire;
-  wire int_full_wire, int_empty_wire, int_rden_wire;
+  wire int_full_wire_0, int_empty_wire_0, int_rden_wire_0, int_full_wire_1, int_empty_wire_1 , int_rden_wire_1;
   wire int_wlast_wire, int_tready_wire;
-  wire [71:0] int_wdata_wire;
+  wire [71:0] int_wdata_wire_0, int_wdata_wire_1;
 
-  assign int_tready_wire = ~int_full_wire;
+  assign int_tready_wire = ~int_full_wire_0;
   assign int_wlast_wire = &int_addr_reg[3:0];
-  assign int_rden_wire = m_axi_wready & int_wvalid_reg;
+  assign int_rden_wire_0 = m_axi_wready & int_wvalid_reg;
   assign int_fifo_rst_wire = int_res_reg >= 4'b1110;
 
-  FIFO36E1 #(
-    .FIRST_WORD_FALL_THROUGH("TRUE"),
-    .ALMOST_EMPTY_OFFSET(13'hf),
-    .DATA_WIDTH(72),
-    .FIFO_MODE("FIFO36_72")
-  ) fifo_0 (
-    .FULL(int_full_wire),
-    .ALMOSTEMPTY(int_empty_wire),
-    .RST(int_fifo_rst_wire),
-    .WRCLK(aclk),
-    .WREN(int_tready_wire & s_axis_tvalid),
-    .DI({{(72-AXIS_TDATA_WIDTH){1'b0}}, s_axis_tdata}),
-    .RDCLK(aclk),
-    .RDEN(int_rden_wire),
-    .DO(int_wdata_wire)
-  );
-
+  generate
+  if (AXIS_TDATA_WIDTH > 64)
+  begin
+      FIFO36E1 #(
+        .FIRST_WORD_FALL_THROUGH("TRUE"),
+        .ALMOST_EMPTY_OFFSET(13'hf),
+        .DATA_WIDTH(72),
+        .FIFO_MODE("FIFO36_72")
+      ) fifo_0 (
+        .FULL(int_full_wire_0),
+        .ALMOSTEMPTY(int_empty_wire_0),
+        .RST(int_fifo_rst_wire),
+        .WRCLK(aclk),
+        .WREN(int_tready_wire & s_axis_tvalid),
+        .DI({8'b0, s_axis_tdata[63:0]}),
+        .RDCLK(aclk),
+        .RDEN(int_rden_wire_0),
+        .DO(int_wdata_wire_0)
+      );
+      FIFO36E1 #(
+        .FIRST_WORD_FALL_THROUGH("TRUE"),
+        .ALMOST_EMPTY_OFFSET(13'hf),
+        .DATA_WIDTH(72),
+        .FIFO_MODE("FIFO36_72")
+      ) fifo_1 (
+        .FULL(int_full_wire_1),
+        .ALMOSTEMPTY(int_empty_wire_1),
+        .RST(int_fifo_rst_wire),
+        .WRCLK(aclk),
+        .WREN(int_tready_wire & s_axis_tvalid),
+        .DI({{(136-AXIS_TDATA_WIDTH){1'b0}}, s_axis_tdata[AXIS_TDATA_WIDTH-1:64]}),
+        .RDCLK(aclk),
+        .RDEN(int_rden_wire_0),
+        .DO(int_wdata_wire_1)
+      );
+  end
+  else
+  begin
+      FIFO36E1 #(
+        .FIRST_WORD_FALL_THROUGH("TRUE"),
+        .ALMOST_EMPTY_OFFSET(13'hf),
+        .DATA_WIDTH(72),
+        .FIFO_MODE("FIFO36_72")
+      ) fifo_0 (
+        .FULL(int_full_wire_0),
+        .ALMOSTEMPTY(int_empty_wire_0),
+        .RST(int_fifo_rst_wire),
+        .WRCLK(aclk),
+        .WREN(int_tready_wire & s_axis_tvalid),
+        .DI({{(72-AXIS_TDATA_WIDTH){1'b0}}, s_axis_tdata}),
+        .RDCLK(aclk),
+        .RDEN(int_rden_wire_0),
+        .DO(int_wdata_wire_0)
+      );
+  end
+  endgenerate
+  
   always @(posedge aclk)
   begin
     if(~aresetn)
@@ -113,7 +153,7 @@ module axis_ram_writer #
 		int_res_next = int_res_reg + 1'b1;
 	end
 	
-    if(~int_empty_wire & ~int_awvalid_reg & ~int_wvalid_reg)
+    if(~int_empty_wire_0 & ~int_awvalid_reg & ~int_wvalid_reg)
     begin
       int_awvalid_next = 1'b1;
       int_wvalid_next = 1'b1;
@@ -124,7 +164,7 @@ module axis_ram_writer #
       int_awvalid_next = 1'b0;
     end
 
-    if(int_rden_wire)
+    if(int_rden_wire_0)
     begin
       int_addr_next = int_addr_reg + 1'b1;
     end
@@ -132,7 +172,7 @@ module axis_ram_writer #
     if(m_axi_wready & int_wlast_wire)
     begin
       int_wid_next = int_wid_reg + 1'b1;
-      if(int_empty_wire)
+      if(int_empty_wire_0)
       begin
         int_wvalid_next = 1'b0;
       end
@@ -153,7 +193,7 @@ module axis_ram_writer #
   assign m_axi_awcache = 4'b1111;
   assign m_axi_awvalid = int_awvalid_reg;
   assign m_axi_wid = int_wid_reg;
-  assign m_axi_wdata = int_wdata_wire[AXI_DATA_WIDTH-1:0];
+  assign m_axi_wdata = int_addr_reg[0:0] ? int_wdata_wire_1[AXI_DATA_WIDTH-1:0] : int_wdata_wire_0[AXI_DATA_WIDTH-1:0];//int_wdata_wire_0[AXI_DATA_WIDTH-1:0];
   assign m_axi_wstrb = {(AXI_DATA_WIDTH/8){1'b1}};
   assign m_axi_wlast = int_wlast_wire;
   assign m_axi_wvalid = int_wvalid_reg;

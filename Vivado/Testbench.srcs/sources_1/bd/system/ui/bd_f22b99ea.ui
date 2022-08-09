@@ -1,0 +1,37 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"1.0",
+   "Default View_TopLeft":"-510,-91",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS
+#  -string -flagsOSRD
+preplace port S_AXI -pg 1 -lvl 0 -x 0 -y 210 -defaultsOSRD
+preplace port S_AXI1 -pg 1 -lvl 0 -x 0 -y 50 -defaultsOSRD
+preplace port S_AXIS -pg 1 -lvl 0 -x 0 -y 350 -defaultsOSRD
+preplace port M_AXI -pg 1 -lvl 2 -x 330 -y 370 -defaultsOSRD
+preplace port aclk -pg 1 -lvl 0 -x 0 -y 230 -defaultsOSRD
+preplace port aresetn -pg 1 -lvl 0 -x 0 -y 90 -defaultsOSRD
+preplace port aresetn1 -pg 1 -lvl 0 -x 0 -y 390 -defaultsOSRD
+preplace portBus sts_data -pg 1 -lvl 0 -x 0 -y 110 -defaultsOSRD
+preplace portBus cfg_data1 -pg 1 -lvl 0 -x 0 -y 410 -defaultsOSRD
+preplace portBus sts_data1 -pg 1 -lvl 2 -x 330 -y 390 -defaultsOSRD
+preplace portBus cfg_data -pg 1 -lvl 2 -x 330 -y 230 -defaultsOSRD
+preplace inst axi_sts_register_0 -pg 1 -lvl 1 -x 170 -y 80 -defaultsOSRD
+preplace inst axi_cfg_register_0 -pg 1 -lvl 1 -x 170 -y 230 -defaultsOSRD
+preplace inst axis_ram_writer_0 -pg 1 -lvl 1 -x 170 -y 380 -defaultsOSRD
+preplace netloc pll_0_clk_out1 1 0 1 30 70n
+preplace netloc rst_0_peripheral_aresetn 1 0 1 20 90n
+preplace netloc sts_data_1 1 0 1 NJ 110
+preplace netloc axi_cfg_register_0_cfg_data 1 1 1 NJ 230
+preplace netloc axis_ram_writer_0_sts_data 1 1 1 N 390
+preplace netloc aresetn1_1 1 0 1 N 390
+preplace netloc cfg_data1_1 1 0 1 N 410
+preplace netloc S_AXI_1 1 0 1 NJ 210
+preplace netloc S_AXI1_1 1 0 1 NJ 50
+preplace netloc axis_ram_writer_0_m_axi 1 1 1 N 370
+preplace netloc S_AXIS_1 1 0 1 N 350
+levelinfo -pg 1 0 170 330
+pagesize -pg 1 -db -bbox -sgen -150 -10 480 470
+"
+}
+
