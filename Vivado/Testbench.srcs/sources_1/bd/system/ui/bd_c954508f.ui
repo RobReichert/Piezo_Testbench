@@ -12,7 +12,7 @@
    "Display-PortTypeData":"true",
    "Display-PortTypeOthers":"true",
    "Display-PortTypeReset":"true",
-   "ExpandedHierarchyInLayout":"/Prozessing_System|/Prozessing_System/Memory_IO",
+   "ExpandedHierarchyInLayout":"",
    "Grouping and No Loops_ScaleFactor":"0.140863",
    "Grouping and No Loops_TopLeft":"-2641,-696",
    "Interfaces View_Layers":"/dac_0_dac_rst:false|/mult_0_P:false|/dac_0_dac_clk:false|/pll_0_clk_out1:false|/pll_0_clk_out2:false|/rst_0_peripheral_aresetn:false|/pll_0_clk_out3:false|",
