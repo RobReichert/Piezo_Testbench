@@ -7,7 +7,7 @@
    "Color Coded_TopLeft":"-2643,-706",
    "Default View_Layers":"/dac_0_dac_rst:true|/mult_0_P:true|/dac_0_dac_clk:true|/pll_0_clk_out1:true|/pll_0_clk_out2:true|/rst_0_peripheral_aresetn:true|/pll_0_clk_out3:true|",
    "Default View_ScaleFactor":"0.60648",
-   "Default View_TopLeft":"-267,-206",
+   "Default View_TopLeft":"-333,-171",
    "Display-PortTypeClock":"true",
    "Display-PortTypeData":"true",
    "Display-PortTypeOthers":"true",
@@ -28,8 +28,8 @@
    "commentid":"",
    "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS
 #  -string -flagsOSRD
-preplace port DDR -pg 1 -lvl 6 -x 3170 -y 90 -defaultsOSRD
-preplace port FIXED_IO -pg 1 -lvl 6 -x 3170 -y 110 -defaultsOSRD
+preplace port DDR -pg 1 -lvl 6 -x 4500 -y 90 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -lvl 6 -x 4500 -y 110 -defaultsOSRD
 preplace port Vp_Vn -pg 1 -lvl 0 -x -260 -y 830 -defaultsOSRD
 preplace port Vaux0 -pg 1 -lvl 0 -x -260 -y 850 -defaultsOSRD
 preplace port Vaux1 -pg 1 -lvl 0 -x -260 -y 870 -defaultsOSRD
@@ -37,110 +37,110 @@ preplace port Vaux8 -pg 1 -lvl 0 -x -260 -y 890 -defaultsOSRD
 preplace port Vaux9 -pg 1 -lvl 0 -x -260 -y 910 -defaultsOSRD
 preplace port adc_clk_p_i -pg 1 -lvl 0 -x -260 -y 190 -defaultsOSRD
 preplace port adc_clk_n_i -pg 1 -lvl 0 -x -260 -y 210 -defaultsOSRD
-preplace port adc_enc_p_o -pg 1 -lvl 6 -x 3170 -y -280 -defaultsOSRD
-preplace port adc_enc_n_o -pg 1 -lvl 6 -x 3170 -y -300 -defaultsOSRD
-preplace port adc_csn_o -pg 1 -lvl 6 -x 3170 -y 130 -defaultsOSRD
-preplace port dac_clk_o -pg 1 -lvl 6 -x 3170 -y 630 -defaultsOSRD
-preplace port dac_rst_o -pg 1 -lvl 6 -x 3170 -y 650 -defaultsOSRD
-preplace port dac_sel_o -pg 1 -lvl 6 -x 3170 -y 670 -defaultsOSRD
-preplace port dac_wrt_o -pg 1 -lvl 6 -x 3170 -y 690 -defaultsOSRD
+preplace port adc_enc_p_o -pg 1 -lvl 6 -x 4500 -y -280 -defaultsOSRD
+preplace port adc_enc_n_o -pg 1 -lvl 6 -x 4500 -y -300 -defaultsOSRD
+preplace port adc_csn_o -pg 1 -lvl 6 -x 4500 -y 130 -defaultsOSRD
+preplace port dac_clk_o -pg 1 -lvl 6 -x 4500 -y 630 -defaultsOSRD
+preplace port dac_rst_o -pg 1 -lvl 6 -x 4500 -y 650 -defaultsOSRD
+preplace port dac_sel_o -pg 1 -lvl 6 -x 4500 -y 670 -defaultsOSRD
+preplace port dac_wrt_o -pg 1 -lvl 6 -x 4500 -y 690 -defaultsOSRD
 preplace portBus adc_dat_a_i -pg 1 -lvl 0 -x -260 -y 600 -defaultsOSRD
 preplace portBus adc_dat_b_i -pg 1 -lvl 0 -x -260 -y 620 -defaultsOSRD
-preplace portBus dac_dat_o -pg 1 -lvl 6 -x 3170 -y 710 -defaultsOSRD
-preplace portBus dac_pwm_o -pg 1 -lvl 6 -x 3170 -y -260 -defaultsOSRD
-preplace portBus exp_p_tri_io -pg 1 -lvl 6 -x 3170 -y 550 -defaultsOSRD
-preplace portBus exp_n_tri_io -pg 1 -lvl 6 -x 3170 -y -240 -defaultsOSRD
-preplace portBus led_o -pg 1 -lvl 6 -x 3170 -y 530 -defaultsOSRD
-preplace inst axis_red_pitaya_adc_0 -pg 1 -lvl 1 -x 150 -y 1124 -defaultsOSRD
-preplace inst xadc_wiz_0 -pg 1 -lvl 1 -x 150 -y 1424 -defaultsOSRD
-preplace inst Prozessing_System -pg 1 -lvl 1 -x 150 -y 192 -defaultsOSRD
-preplace inst data_aquisition -pg 1 -lvl 4 -x 2682 -y 670 -defaultsOSRD
-preplace inst Calculation -pg 1 -lvl 3 -x 2250 -y 670 -defaultsOSRD
-preplace inst axis_red_pitaya_dac_0 -pg 1 -lvl 5 -x 3030 -y 670 -defaultsOSRD
-preplace inst xadc_read_0 -pg 1 -lvl 2 -x 1840 -y 900 -defaultsOSRD
-preplace inst Prozessing_System|Core -pg 1 -lvl 2 -x 930 -y 512 -defaultsOSRD
-preplace inst Prozessing_System|Memory_IO -pg 1 -lvl 1 -x 280 -y 194 -defaultsOSRD
-preplace inst Prozessing_System|Reg_Brakeout -pg 1 -lvl 3 -x 1280 -y 282 -defaultsOSRD
-preplace inst Prozessing_System|Memory_IO|axi_sts_register_0 -pg 1 -lvl 1 -x 400 -y 344 -defaultsOSRD
-preplace inst Prozessing_System|Memory_IO|axi_cfg_register_0 -pg 1 -lvl 1 -x 400 -y 494 -defaultsOSRD
-preplace inst Prozessing_System|Memory_IO|axis_ram_writer_0 -pg 1 -lvl 1 -x 400 -y 184 -defaultsOSRD
+preplace portBus dac_dat_o -pg 1 -lvl 6 -x 4500 -y 710 -defaultsOSRD
+preplace portBus dac_pwm_o -pg 1 -lvl 6 -x 4500 -y -260 -defaultsOSRD
+preplace portBus exp_p_tri_io -pg 1 -lvl 6 -x 4500 -y 550 -defaultsOSRD
+preplace portBus exp_n_tri_io -pg 1 -lvl 6 -x 4500 -y -240 -defaultsOSRD
+preplace portBus led_o -pg 1 -lvl 6 -x 4500 -y 530 -defaultsOSRD
+preplace inst axis_red_pitaya_adc_0 -pg 1 -lvl 1 -x 150 -y 1648 -defaultsOSRD
+preplace inst xadc_wiz_0 -pg 1 -lvl 1 -x 150 -y 1948 -defaultsOSRD
+preplace inst Prozessing_System -pg 1 -lvl 1 -x 150 -y 194 -defaultsOSRD
+preplace inst data_aquisition -pg 1 -lvl 4 -x 4008 -y 670 -defaultsOSRD
+preplace inst Calculation -pg 1 -lvl 3 -x 3576 -y 670 -defaultsOSRD
+preplace inst axis_red_pitaya_dac_0 -pg 1 -lvl 5 -x 4356 -y 670 -defaultsOSRD
+preplace inst xadc_read_0 -pg 1 -lvl 2 -x 3166 -y 900 -defaultsOSRD
+preplace inst Prozessing_System|Core -pg 1 -lvl 2 -x 950 -y 514 -defaultsOSRD
+preplace inst Prozessing_System|Memory_IO -pg 1 -lvl 1 -x 280 -y 196 -defaultsOSRD
+preplace inst Prozessing_System|Reg_Brakeout -pg 1 -lvl 3 -x 1300 -y 284 -defaultsOSRD
+preplace inst Prozessing_System|Memory_IO|axi_sts_register_0 -pg 1 -lvl 1 -x 410 -y 346 -defaultsOSRD
+preplace inst Prozessing_System|Memory_IO|axi_cfg_register_0 -pg 1 -lvl 1 -x 410 -y 496 -defaultsOSRD
+preplace inst Prozessing_System|Memory_IO|axis_ram_writer_0 -pg 1 -lvl 1 -x 410 -y 186 -defaultsOSRD
 preplace netloc adc_clk_p_i_1 1 0 1 -160J 190n
 preplace netloc adc_clk_n_i_1 1 0 1 -170J 210n
-preplace netloc rst_0_peripheral_aresetn 1 0 4 -150 920 1610 720 1970 790 2440
-preplace netloc pll_0_clk_out1 1 0 5 -160 900 1590 660 1980 780 2430 780 2840
-preplace netloc slice_7_dout 1 1 2 N 602 1970
-preplace netloc slice_9_dout 1 1 2 N 622 1960
-preplace netloc feedback_combined_0_trig_out 1 3 3 2400 550 N 550 3150
+preplace netloc rst_0_peripheral_aresetn 1 0 4 -150 920 1630 720 3300 790 3770
+preplace netloc pll_0_clk_out1 1 0 5 -160 900 1610 660 3310 780 3760 780 4160
+preplace netloc slice_7_dout 1 1 2 N 604 3300
+preplace netloc slice_9_dout 1 1 2 N 624 3290
+preplace netloc feedback_combined_0_trig_out 1 3 3 3730 550 N 550 4480
 preplace netloc adc_dat_a_i_1 1 0 1 -180J 600n
 preplace netloc adc_dat_b_i_1 1 0 1 -190J 620n
-preplace netloc axis_red_pitaya_adc_0_adc_csn 1 1 5 1620 130 N 130 N 130 N 130 N
-preplace netloc slice_0_dout 1 1 3 1630 560 N 560 2410
+preplace netloc axis_red_pitaya_adc_0_adc_csn 1 1 5 1640 130 N 130 N 130 N 130 N
+preplace netloc slice_0_dout 1 1 3 1650 560 N 560 3740
 preplace netloc axis_red_pitaya_dac_0_dac_clk 1 5 1 N 630
 preplace netloc axis_red_pitaya_dac_0_dac_rst 1 5 1 N 650
 preplace netloc axis_red_pitaya_dac_0_dac_dat 1 5 1 N 710
 preplace netloc axis_red_pitaya_dac_0_dac_sel 1 5 1 N 670
 preplace netloc axis_red_pitaya_dac_0_dac_wrt 1 5 1 N 690
-preplace netloc Prozessing_System_locked 1 1 4 NJ 542 NJ 542 2390 540 2830
-preplace netloc Prozessing_System_clk_out2 1 1 4 1600J 530 NJ 530 N 530 2850
-preplace netloc fb_cfg_M_AXIS 1 1 2 N 502 1980
-preplace netloc rate_0_M_AXIS 1 1 3 N 482 N 482 2440
-preplace netloc ps_0_FIXED_IO 1 1 5 1600 110 N 110 N 110 N 110 N
-preplace netloc axis_red_pitaya_adc_0_M_AXIS 1 1 2 1640 640 N
+preplace netloc Prozessing_System_locked 1 1 4 NJ 544 NJ 544 3720 540 4150
+preplace netloc Prozessing_System_clk_out2 1 1 4 1620J 530 NJ 530 N 530 4170
 preplace netloc Vp_Vn_1 1 0 1 -200J 830n
-preplace netloc Vaux9_1 1 0 1 -240J 910n
-preplace netloc conv_0_M_AXIS 1 0 5 -150 770 N 770 N 770 N 770 2820
 preplace netloc Vaux0_1 1 0 1 -210J 850n
-preplace netloc ch1_output_dac_mem_split_M00_AXIS 1 3 1 2430 640n
-preplace netloc Calculation_M_AXIS 1 3 2 2420 560 2840
-preplace netloc xadc_wiz_0_M_AXIS 1 1 1 1650 880n
-preplace netloc ch1_mem_fb_split_M00_AXIS 1 3 1 2390 620n
+preplace netloc ch1_output_dac_mem_split_M00_AXIS 1 3 1 3760 640n
+preplace netloc axis_red_pitaya_adc_0_M_AXIS 1 1 2 1660 640 N
+preplace netloc ps_0_DDR 1 1 5 1610 90 N 90 N 90 N 90 N
+preplace netloc Vaux9_1 1 0 1 -240J 910n
+preplace netloc conv_0_M_AXIS 1 0 5 -150 770 N 770 N 770 N 770 4140
+preplace netloc rate_0_M_AXIS 1 1 3 N 484 N 484 3770
+preplace netloc Calculation_M_AXIS 1 3 2 3750 560 4160
+preplace netloc ps_0_FIXED_IO 1 1 5 1620 110 N 110 N 110 N 110 N
+preplace netloc xadc_wiz_0_M_AXIS 1 1 1 1670 880n
+preplace netloc ch1_mem_fb_split_M00_AXIS 1 3 1 3720 620n
 preplace netloc Vaux8_1 1 0 1 -230J 890n
-preplace netloc ps_0_DDR 1 1 5 1590 90 N 90 N 90 N 90 N
+preplace netloc fb_cfg_M_AXIS 1 1 2 N 504 3310
 preplace netloc Vaux1_1 1 0 1 -220J 870n
-preplace netloc Prozessing_System|const_0_dout 1 1 3 710 142 NJ 142 1390
-preplace netloc Prozessing_System|concat_1_dout 1 0 4 40 662 NJ 662 NJ 662 1400
-preplace netloc Prozessing_System|slice_1_dout 1 0 4 20 682 NJ 682 NJ 682 1390
-preplace netloc Prozessing_System|slice_3_dout 1 0 4 30 692 NJ 692 NJ 692 1410
-preplace netloc Prozessing_System|writer_0_sts_data 1 1 2 NJ 194 1080
-preplace netloc Prozessing_System|Memory_IO_cfg_data 1 1 2 690J 312 N
-preplace netloc Prozessing_System|pll_0_clk_out1 1 0 4 -10 672 NJ 672 1100 522 NJ
-preplace netloc Prozessing_System|pll_0_locked 1 2 2 N 542 NJ
-preplace netloc Prozessing_System|rst_0_peripheral_aresetn 1 0 4 50 622 700J 652 1110 562 NJ
-preplace netloc Prozessing_System|adc_clk_p_i_1 1 0 2 -20J 594 690
-preplace netloc Prozessing_System|adc_clk_n_i_1 1 0 2 NJ 612 700
-preplace netloc Prozessing_System|pll_0_clk_out2 1 2 2 N 582 NJ
-preplace netloc Prozessing_System|slice_7_dout 1 3 1 1440 242n
-preplace netloc Prozessing_System|slice_9_dout 1 3 1 1430 322n
-preplace netloc Prozessing_System|slice_0_dout 1 3 1 1420 362n
-preplace netloc Prozessing_System|ps_0_axi_periph_M01_AXI 1 0 3 0 632 NJ 632 1080
-preplace netloc Prozessing_System|ps_0_axi_periph_M00_AXI 1 0 3 10 642 NJ 642 1090
-preplace netloc Prozessing_System|ps_0_FIXED_IO 1 2 2 N 462 NJ
-preplace netloc Prozessing_System|fb_cfg_M_AXIS 1 3 1 1450 222n
-preplace netloc Prozessing_System|conv_0_M_AXIS 1 0 1 N 334
-preplace netloc Prozessing_System|rate_0_M_AXIS 1 3 1 1460 202n
-preplace netloc Prozessing_System|writer_0_M_AXI 1 1 1 700 174n
-preplace netloc Prozessing_System|ps_0_DDR 1 2 2 N 442 NJ
-preplace netloc Prozessing_System|Memory_IO|pll_0_clk_out1 1 0 1 230 174n
-preplace netloc Prozessing_System|Memory_IO|rst_0_peripheral_aresetn 1 0 1 250 354n
-preplace netloc Prozessing_System|Memory_IO|sts_data_1 1 0 1 260 374n
-preplace netloc Prozessing_System|Memory_IO|axi_cfg_register_0_cfg_data 1 1 1 N 494
-preplace netloc Prozessing_System|Memory_IO|axis_ram_writer_0_sts_data 1 1 1 N 194
-preplace netloc Prozessing_System|Memory_IO|aresetn1_1 1 0 1 210 194n
-preplace netloc Prozessing_System|Memory_IO|cfg_data1_1 1 0 1 240 214n
-preplace netloc Prozessing_System|Memory_IO|S_AXI_1 1 0 1 220 294n
-preplace netloc Prozessing_System|Memory_IO|S_AXI1_1 1 0 1 N 314
-preplace netloc Prozessing_System|Memory_IO|axis_ram_writer_0_m_axi 1 1 1 N 174
-preplace netloc Prozessing_System|Memory_IO|S_AXIS_1 1 0 1 200 154n
-levelinfo -pg 1 -260 150 1840 2250 2682 3030 3170
-levelinfo -hier Prozessing_System * 280 930 1280 *
-levelinfo -hier Prozessing_System|Memory_IO * 400 *
-pagesize -pg 1 -db -bbox -sgen -430 -320 3330 2270
-pagesize -hier Prozessing_System -db -bbox -sgen -50 62 1490 702
-pagesize -hier Prozessing_System|Memory_IO -db -bbox -sgen 170 94 570 574
+preplace netloc Prozessing_System|const_0_dout 1 1 3 710 144 NJ 144 1410
+preplace netloc Prozessing_System|concat_1_dout 1 0 4 50 664 NJ 664 NJ 664 1420
+preplace netloc Prozessing_System|slice_1_dout 1 0 4 30 684 NJ 684 NJ 684 1410
+preplace netloc Prozessing_System|slice_3_dout 1 0 4 40 694 NJ 694 NJ 694 1430
+preplace netloc Prozessing_System|writer_0_sts_data 1 1 2 NJ 196 1100
+preplace netloc Prozessing_System|Memory_IO_cfg_data 1 1 2 690J 314 N
+preplace netloc Prozessing_System|pll_0_clk_out1 1 0 4 0 674 NJ 674 1120 524 NJ
+preplace netloc Prozessing_System|pll_0_locked 1 2 2 N 544 NJ
+preplace netloc Prozessing_System|rst_0_peripheral_aresetn 1 0 4 60 624 700J 654 1130 564 NJ
+preplace netloc Prozessing_System|adc_clk_p_i_1 1 0 2 -10J 596 690
+preplace netloc Prozessing_System|adc_clk_n_i_1 1 0 2 NJ 614 700
+preplace netloc Prozessing_System|pll_0_clk_out2 1 2 2 N 584 NJ
+preplace netloc Prozessing_System|slice_7_dout 1 3 1 1460 244n
+preplace netloc Prozessing_System|slice_9_dout 1 3 1 1450 324n
+preplace netloc Prozessing_System|slice_0_dout 1 3 1 1440 364n
+preplace netloc Prozessing_System|fb_cfg_M_AXIS 1 3 1 1470 224n
+preplace netloc Prozessing_System|conv_0_M_AXIS 1 0 1 N 336
+preplace netloc Prozessing_System|rate_0_M_AXIS 1 3 1 1480 204n
+preplace netloc Prozessing_System|ps_0_FIXED_IO 1 2 2 N 464 NJ
+preplace netloc Prozessing_System|ps_0_axi_periph_M01_AXI 1 0 3 10 634 NJ 634 1100
+preplace netloc Prozessing_System|writer_0_M_AXI 1 1 1 700 176n
+preplace netloc Prozessing_System|ps_0_DDR 1 2 2 N 444 NJ
+preplace netloc Prozessing_System|ps_0_axi_periph_M00_AXI 1 0 3 20 644 NJ 644 1110
+preplace netloc Prozessing_System|Memory_IO|pll_0_clk_out1 1 0 1 240 176n
+preplace netloc Prozessing_System|Memory_IO|rst_0_peripheral_aresetn 1 0 1 260 356n
+preplace netloc Prozessing_System|Memory_IO|sts_data_1 1 0 1 270 376n
+preplace netloc Prozessing_System|Memory_IO|axi_cfg_register_0_cfg_data 1 1 1 N 496
+preplace netloc Prozessing_System|Memory_IO|axis_ram_writer_0_sts_data 1 1 1 N 196
+preplace netloc Prozessing_System|Memory_IO|aresetn1_1 1 0 1 220 196n
+preplace netloc Prozessing_System|Memory_IO|cfg_data1_1 1 0 1 250 216n
+preplace netloc Prozessing_System|Memory_IO|S_AXI1_1 1 0 1 N 316
+preplace netloc Prozessing_System|Memory_IO|S_AXI_1 1 0 1 230 296n
+preplace netloc Prozessing_System|Memory_IO|axis_ram_writer_0_M_AXI 1 1 1 N 176
+preplace netloc Prozessing_System|Memory_IO|S_AXIS_1 1 0 1 210 156n
+levelinfo -pg 1 -260 150 3166 3576 4008 4356 4500
+levelinfo -hier Prozessing_System * 280 950 1300 *
+levelinfo -hier Prozessing_System|Memory_IO * 410 *
+pagesize -pg 1 -db -bbox -sgen -430 -320 4660 2270
+pagesize -hier Prozessing_System -db -bbox -sgen -40 64 1510 704
+pagesize -hier Prozessing_System|Memory_IO -db -bbox -sgen 180 96 570 576
 "
 }
 {
-   """""""""""""""""""""""""""""""""""""""""""""""""""""""""""da_clkrst_cnt""""""""""""""""""""""""""""""""""""""""""""""""""""""""""":"13",
-   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""da_clkrst_cnt"""""""""""""""""""""""""""""""""""""""""""""""""""""""""":"10",
-   """da_clkrst_cnt""":"3"
+   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""da_clkrst_cnt"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""":"13",
+   """""""""""""""""""""""""""""""""""""""""""""""""""""""""""da_clkrst_cnt""""""""""""""""""""""""""""""""""""""""""""""""""""""""""":"10",
+   """"da_clkrst_cnt"""":"3"
 }

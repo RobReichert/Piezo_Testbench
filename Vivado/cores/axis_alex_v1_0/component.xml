@@ -280,15 +280,15 @@
       <xilinx:displayName>AXI4-Stream Alex Interface</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:26:13Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:19:42Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@15edc0fb_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@49b17e34_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6253912f_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5c1457ac_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5454cad5_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6c9d8598_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6459c5ca_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@68625eb4_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4333b776_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4788f2c9_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d5fedf6_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ebea020_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@373fd6ce_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@52e1ba6f_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_alex_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

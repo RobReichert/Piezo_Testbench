@@ -415,16 +415,16 @@
       <xilinx:displayName>AXI4-Stream Accumulator</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:26:04Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:19:33Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@35f66ccc_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4c3b9e89_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@45be5452_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2cfaa807_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@53a21a33_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@731ae90d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@130180a7_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@280c519d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@179b79a0_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3caef3d8_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@42e97ae7_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3d2f4dc5_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37df115f_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@490d206d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@68b4e447_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@14dcad90_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_accumulator_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

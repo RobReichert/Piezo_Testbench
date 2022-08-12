@@ -224,15 +224,15 @@
       <xilinx:displayName>Pulse Generator</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:29:50Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:23:26Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d0b7e5_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@76d6d17d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1892e71d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@22752573_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@270a1c8b_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1052add4_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a67fca9_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@74b71046_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3352afcc_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5b5fb624_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3335881b_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@43a0cc6c_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@13125b1_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4cbdd87e_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/pulse_generator_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

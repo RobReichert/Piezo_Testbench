@@ -643,15 +643,15 @@
       <xilinx:displayName>AXI Status Register</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:29:27Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:23:01Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3548084e_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@62d4db7d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2842bd7f_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@439b90b6_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@26cbd3ea_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@49cbe4a1_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2cbae685_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1a2a02dd_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f7daead_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@616ea2b2_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ca331a0_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@353543b8_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@62732597_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b35d20f_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axi_sts_register_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

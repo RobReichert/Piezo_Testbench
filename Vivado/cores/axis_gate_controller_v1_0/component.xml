@@ -310,15 +310,15 @@
       <xilinx:displayName>AXI4-Stream Gate Controller</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:26:52Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:20:21Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@49680e67_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c8110dd_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@9ef1afb_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d87a450_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@35bba98c_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a5f5fa_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@784f1b06_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@264aecaa_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5eb6e2ee_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@48c56662_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@563aad4c_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@74cf075e_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@75621319_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4db9d2f1_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gate_controller_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

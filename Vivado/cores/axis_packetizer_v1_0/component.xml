@@ -425,16 +425,16 @@
       <xilinx:displayName>AXI4-Stream Packetizer</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:27:39Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:21:08Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6581249d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@7bc67d78_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@99c8011_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@18c68456_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@cd74269_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e9d97fc_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a724c22_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@65353de_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4db48bdc_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6b0c4b59_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f8867e5_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ee3f90e_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@448e4564_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@10d07dc3_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@67d52cff_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7219d4d6_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_packetizer_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

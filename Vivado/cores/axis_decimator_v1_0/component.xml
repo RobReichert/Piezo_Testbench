@@ -382,15 +382,15 @@
       <xilinx:displayName>AXI4-Stream Decimator</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:26:42Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:20:11Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2bf68ea5_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5b7372af_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@325d25de_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@12ec3c40_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5600b3cc_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@940fd47_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@31e041b6_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@57954c65_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3bb6c8a2_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@70cd60b1_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@13dadbc1_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@649e520_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ebf5a1_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@310234a7_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_decimator_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

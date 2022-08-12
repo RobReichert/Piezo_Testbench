@@ -321,15 +321,15 @@
       <xilinx:displayName>AXI4-Stream Validator</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:28:48Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:22:20Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6c0b91ce_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@62cb142b_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6bacfd82_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6ca2b4ef_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@33b057a1_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@47f41ea5_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@64e41a52_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@45a0d864_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5970af27_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1d06aa9d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3faf30bd_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ea1dcae_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1fc3fb87_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4dde6955_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_validator_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

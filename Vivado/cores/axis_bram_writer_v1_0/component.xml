@@ -478,16 +478,16 @@
       <xilinx:displayName>AXI4-Stream Block RAM Writer</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:26:30Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:19:59Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6b48dbdc_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@79a6ea3e_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@26ce865c_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@f4f6150_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5e63c615_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3012cbf3_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@165c835f_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6071ddae_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@35b372fd_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@27f456e3_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@253b0806_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1e875353_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@668fbf94_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1ca68a07_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@c129379_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f4a3a2e_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_bram_writer_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

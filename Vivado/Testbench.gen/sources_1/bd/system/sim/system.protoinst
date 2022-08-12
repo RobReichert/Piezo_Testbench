@@ -891,7 +891,7 @@
 						"WVALID": { "actual": "s_axi_wvalid"}
 					}
 				},
-				"/Prozessing_System/Memory_IO/axis_ram_writer_0/m_axi": {
+				"/Prozessing_System/Memory_IO/axis_ram_writer_0/M_AXI": {
 					"interface": "xilinx.com:interface:aximm:1.0",
 					"ports": {
 						"ACLK": { "actual": "aclk"},
@@ -914,7 +914,7 @@
 						"WVALID": { "actual": "m_axi_wvalid"}
 					}
 				},
-				"/Prozessing_System/Memory_IO/axis_ram_writer_0/s_axis": {
+				"/Prozessing_System/Memory_IO/axis_ram_writer_0/S_AXIS": {
 					"interface": "xilinx.com:interface:axis:1.0",
 					"ports": {
 						"ACLK": { "actual": "aclk"},

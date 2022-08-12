@@ -223,15 +223,15 @@
       <xilinx:displayName>AXI4-Stream GPIO Reader</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:26:55Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:20:24Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@338527f6_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5610e05e_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3ce67619_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6ff5e783_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4848dd9c_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@34c7ef8_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@60e8f4de_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3470968d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2a98765c_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5a681d3d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2a245f38_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2b4d489e_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@79e63111_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1837033f_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

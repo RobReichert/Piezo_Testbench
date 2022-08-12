@@ -279,15 +279,15 @@
         <xilinx:xpmLibrary>XPM_CDC</xilinx:xpmLibrary>
       </xilinx:xpmLibraries>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:27:51Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:21:20Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a78a943_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6e145fc7_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5bb45845_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3fc64916_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@40779518_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@46f8947_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@56ac7803_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@69ba1423_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@720d3900_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@daeae16_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@435557d2_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@16a76018_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5eb55bb9_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b961179_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_pps_counter_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

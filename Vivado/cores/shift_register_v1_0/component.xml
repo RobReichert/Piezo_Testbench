@@ -180,15 +180,15 @@
       <xilinx:displayName>Shift Register</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:29:53Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:23:30Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a13ed52_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@29adb3eb_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@62fd8fd4_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1ce72eda_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@328df959_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ef7ab81_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1e600041_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@30fc17c2_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37180f5e_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@14936ea1_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@44d3bff_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1625ac73_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@27f4df09_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ab568b3_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/shift_register_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

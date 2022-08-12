@@ -6,5 +6,6 @@
 *.jou
 *.str
 *.log
+*.sim
 Data
 __pycache__
