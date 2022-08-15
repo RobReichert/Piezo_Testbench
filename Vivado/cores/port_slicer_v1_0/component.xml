@@ -171,15 +171,15 @@
       <xilinx:displayName>Port Slicer</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:29:46Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:23:22Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1b42f02e_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1518defa_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5855930f_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1e6353da_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1c0e190f_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@78eb80ca_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@8762aeb_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2d0a1a0c_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61f1b344_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@79195cdc_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@525f9831_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4f9ebc9b_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@281752fc_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3a9c8155_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_slicer_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

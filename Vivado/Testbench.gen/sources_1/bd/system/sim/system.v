@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-//Date        : Fri Jul  8 09:47:01 2022
+//Date        : Fri Aug 12 13:18:12 2022
 //Host        : DESKTOP-PEVG67J running 64-bit major release  (build 9200)
 //Command     : generate_target system.bd
 //Design      : system
@@ -9,11 +9,157 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
+module Analog_Input_imp_1FFEQO1
+   (M00_AXIS_tdata,
+    M00_AXIS_tvalid,
+    M01_AXIS_tdata,
+    M01_AXIS_tvalid,
+    M02_AXIS_tdata,
+    M02_AXIS_tvalid,
+    M_AXIS_tdata,
+    M_AXIS_tvalid,
+    Vaux0_v_n,
+    Vaux0_v_p,
+    Vaux1_v_n,
+    Vaux1_v_p,
+    Vaux8_v_n,
+    Vaux8_v_p,
+    Vaux9_v_n,
+    Vaux9_v_p,
+    Vp_Vn_v_n,
+    Vp_Vn_v_p,
+    aclk,
+    adc_csn_o,
+    adc_dat_a_i,
+    adc_dat_b_i,
+    aresetn);
+  output [15:0]M00_AXIS_tdata;
+  output [0:0]M00_AXIS_tvalid;
+  output [15:0]M01_AXIS_tdata;
+  output [0:0]M01_AXIS_tvalid;
+  output [15:0]M02_AXIS_tdata;
+  output [0:0]M02_AXIS_tvalid;
+  output [31:0]M_AXIS_tdata;
+  output M_AXIS_tvalid;
+  input Vaux0_v_n;
+  input Vaux0_v_p;
+  input Vaux1_v_n;
+  input Vaux1_v_p;
+  input Vaux8_v_n;
+  input Vaux8_v_p;
+  input Vaux9_v_n;
+  input Vaux9_v_p;
+  input Vp_Vn_v_n;
+  input Vp_Vn_v_p;
+  input aclk;
+  output adc_csn_o;
+  input [15:0]adc_dat_a_i;
+  input [15:0]adc_dat_b_i;
+  input aresetn;
+
+  wire Vaux0_1_V_N;
+  wire Vaux0_1_V_P;
+  wire Vaux1_1_V_N;
+  wire Vaux1_1_V_P;
+  wire Vaux8_1_V_N;
+  wire Vaux8_1_V_P;
+  wire Vaux9_1_V_N;
+  wire Vaux9_1_V_P;
+  wire Vp_Vn_1_V_N;
+  wire Vp_Vn_1_V_P;
+  wire [15:0]adc_dat_a_i_1;
+  wire [15:0]adc_dat_b_i_1;
+  wire [31:0]axis_red_pitaya_adc_0_M_AXIS_TDATA;
+  wire axis_red_pitaya_adc_0_M_AXIS_TVALID;
+  wire axis_red_pitaya_adc_0_adc_csn;
+  wire [15:0]ch1_mem_fb_split_M00_AXIS_TDATA;
+  wire [0:0]ch1_mem_fb_split_M00_AXIS_TVALID;
+  wire [31:16]ch1_mem_fb_split_M01_AXIS_TDATA;
+  wire [1:1]ch1_mem_fb_split_M01_AXIS_TVALID;
+  wire [47:32]ch1_mem_fb_split_M02_AXIS_TDATA;
+  wire [2:2]ch1_mem_fb_split_M02_AXIS_TVALID;
+  wire pll_0_clk_out1;
+  wire rst_0_peripheral_aresetn;
+  wire [63:0]xadc_read_0_m_axis_TDATA;
+  wire xadc_read_0_m_axis_TVALID;
+  wire [15:0]xadc_wiz_0_M_AXIS_TDATA;
+  wire [4:0]xadc_wiz_0_M_AXIS_TID;
+  wire xadc_wiz_0_M_AXIS_TREADY;
+  wire xadc_wiz_0_M_AXIS_TVALID;
+
+  assign M00_AXIS_tdata[15:0] = ch1_mem_fb_split_M00_AXIS_TDATA;
+  assign M00_AXIS_tvalid[0] = ch1_mem_fb_split_M00_AXIS_TVALID;
+  assign M01_AXIS_tdata[15:0] = ch1_mem_fb_split_M01_AXIS_TDATA;
+  assign M01_AXIS_tvalid[0] = ch1_mem_fb_split_M01_AXIS_TVALID;
+  assign M02_AXIS_tdata[15:0] = ch1_mem_fb_split_M02_AXIS_TDATA;
+  assign M02_AXIS_tvalid[0] = ch1_mem_fb_split_M02_AXIS_TVALID;
+  assign M_AXIS_tdata[31:0] = axis_red_pitaya_adc_0_M_AXIS_TDATA;
+  assign M_AXIS_tvalid = axis_red_pitaya_adc_0_M_AXIS_TVALID;
+  assign Vaux0_1_V_N = Vaux0_v_n;
+  assign Vaux0_1_V_P = Vaux0_v_p;
+  assign Vaux1_1_V_N = Vaux1_v_n;
+  assign Vaux1_1_V_P = Vaux1_v_p;
+  assign Vaux8_1_V_N = Vaux8_v_n;
+  assign Vaux8_1_V_P = Vaux8_v_p;
+  assign Vaux9_1_V_N = Vaux9_v_n;
+  assign Vaux9_1_V_P = Vaux9_v_p;
+  assign Vp_Vn_1_V_N = Vp_Vn_v_n;
+  assign Vp_Vn_1_V_P = Vp_Vn_v_p;
+  assign adc_csn_o = axis_red_pitaya_adc_0_adc_csn;
+  assign adc_dat_a_i_1 = adc_dat_a_i[15:0];
+  assign adc_dat_b_i_1 = adc_dat_b_i[15:0];
+  assign pll_0_clk_out1 = aclk;
+  assign rst_0_peripheral_aresetn = aresetn;
+  system_axis_red_pitaya_adc_0_0 axis_red_pitaya_adc_0
+       (.aclk(pll_0_clk_out1),
+        .adc_csn(axis_red_pitaya_adc_0_adc_csn),
+        .adc_dat_a(adc_dat_a_i_1),
+        .adc_dat_b(adc_dat_b_i_1),
+        .m_axis_tdata(axis_red_pitaya_adc_0_M_AXIS_TDATA),
+        .m_axis_tvalid(axis_red_pitaya_adc_0_M_AXIS_TVALID));
+  system_ch1_mem_fb_split_1 ch1_mem_fb_split
+       (.aclk(pll_0_clk_out1),
+        .aresetn(rst_0_peripheral_aresetn),
+        .m_axis_tdata({ch1_mem_fb_split_M02_AXIS_TDATA,ch1_mem_fb_split_M01_AXIS_TDATA,ch1_mem_fb_split_M00_AXIS_TDATA}),
+        .m_axis_tvalid({ch1_mem_fb_split_M02_AXIS_TVALID,ch1_mem_fb_split_M01_AXIS_TVALID,ch1_mem_fb_split_M00_AXIS_TVALID}),
+        .s_axis_tdata(xadc_read_0_m_axis_TDATA),
+        .s_axis_tvalid(xadc_read_0_m_axis_TVALID));
+  system_xadc_read_0_0 xadc_read_0
+       (.aclk(pll_0_clk_out1),
+        .aresetn(rst_0_peripheral_aresetn),
+        .m_axis_tdata(xadc_read_0_m_axis_TDATA),
+        .m_axis_tvalid(xadc_read_0_m_axis_TVALID),
+        .s_axis_tdata(xadc_wiz_0_M_AXIS_TDATA),
+        .s_axis_tid(xadc_wiz_0_M_AXIS_TID),
+        .s_axis_tready(xadc_wiz_0_M_AXIS_TREADY),
+        .s_axis_tvalid(xadc_wiz_0_M_AXIS_TVALID));
+  system_xadc_wiz_0_0 xadc_wiz_0
+       (.m_axis_aclk(pll_0_clk_out1),
+        .m_axis_resetn(rst_0_peripheral_aresetn),
+        .m_axis_tdata(xadc_wiz_0_M_AXIS_TDATA),
+        .m_axis_tid(xadc_wiz_0_M_AXIS_TID),
+        .m_axis_tready(xadc_wiz_0_M_AXIS_TREADY),
+        .m_axis_tvalid(xadc_wiz_0_M_AXIS_TVALID),
+        .s_axis_aclk(pll_0_clk_out1),
+        .vauxn0(Vaux0_1_V_N),
+        .vauxn1(Vaux1_1_V_N),
+        .vauxn8(Vaux8_1_V_N),
+        .vauxn9(Vaux9_1_V_N),
+        .vauxp0(Vaux0_1_V_P),
+        .vauxp1(Vaux1_1_V_P),
+        .vauxp8(Vaux8_1_V_P),
+        .vauxp9(Vaux9_1_V_P),
+        .vn_in(Vp_Vn_1_V_N),
+        .vp_in(Vp_Vn_1_V_P));
+endmodule
+
 module Calculation_imp_801JAY
    (M00_AXIS1_tdata,
     M00_AXIS1_tvalid,
     M00_AXIS_tdata,
     M00_AXIS_tvalid,
+    M03_AXIS_tdata,
+    M03_AXIS_tvalid,
     M_AXIS_tdata,
     M_AXIS_tready,
     M_AXIS_tvalid,
@@ -30,6 +176,8 @@ module Calculation_imp_801JAY
   output [0:0]M00_AXIS1_tvalid;
   output [15:0]M00_AXIS_tdata;
   output [0:0]M00_AXIS_tvalid;
+  output [15:0]M03_AXIS_tdata;
+  output [0:0]M03_AXIS_tvalid;
   output [31:0]M_AXIS_tdata;
   input M_AXIS_tready;
   output M_AXIS_tvalid;
@@ -56,6 +204,8 @@ module Calculation_imp_801JAY
   wire [1:1]ch1_mem_fb_split_M01_AXIS_TVALID;
   wire [47:32]ch1_mem_fb_split_M02_AXIS_TDATA;
   wire [2:2]ch1_mem_fb_split_M02_AXIS_TVALID;
+  wire [63:48]ch1_mem_fb_split_M03_AXIS_TDATA;
+  wire [3:3]ch1_mem_fb_split_M03_AXIS_TVALID;
   wire [15:0]ch1_output_dac_mem_split_M00_AXIS_TDATA;
   wire [0:0]ch1_output_dac_mem_split_M00_AXIS_TVALID;
   wire [31:16]ch1_output_dac_mem_split_M01_AXIS_TDATA;
@@ -76,6 +226,8 @@ module Calculation_imp_801JAY
   assign M00_AXIS1_tvalid[0] = ch1_output_dac_mem_split_M00_AXIS_TVALID;
   assign M00_AXIS_tdata[15:0] = ch1_mem_fb_split_M00_AXIS_TDATA;
   assign M00_AXIS_tvalid[0] = ch1_mem_fb_split_M00_AXIS_TVALID;
+  assign M03_AXIS_tdata[15:0] = ch1_mem_fb_split_M03_AXIS_TDATA;
+  assign M03_AXIS_tvalid[0] = ch1_mem_fb_split_M03_AXIS_TVALID;
   assign M_AXIS_tdata[31:0] = Conn1_TDATA;
   assign M_AXIS_tvalid = Conn1_TVALID;
   assign axis_red_pitaya_adc_0_M_AXIS_TDATA = S_AXIS_tdata[31:0];
@@ -103,8 +255,8 @@ module Calculation_imp_801JAY
   system_axis_broadcaster_0_2 ch1_mem_fb_split
        (.aclk(pll_0_clk_out1),
         .aresetn(rst_0_peripheral_aresetn),
-        .m_axis_tdata({ch1_mem_fb_split_M02_AXIS_TDATA,ch1_mem_fb_split_M01_AXIS_TDATA,ch1_mem_fb_split_M00_AXIS_TDATA}),
-        .m_axis_tvalid({ch1_mem_fb_split_M02_AXIS_TVALID,ch1_mem_fb_split_M01_AXIS_TVALID,ch1_mem_fb_split_M00_AXIS_TVALID}),
+        .m_axis_tdata({ch1_mem_fb_split_M03_AXIS_TDATA,ch1_mem_fb_split_M02_AXIS_TDATA,ch1_mem_fb_split_M01_AXIS_TDATA,ch1_mem_fb_split_M00_AXIS_TDATA}),
+        .m_axis_tvalid({ch1_mem_fb_split_M03_AXIS_TVALID,ch1_mem_fb_split_M02_AXIS_TVALID,ch1_mem_fb_split_M01_AXIS_TVALID,ch1_mem_fb_split_M00_AXIS_TVALID}),
         .s_axis_tdata(axis_red_pitaya_adc_0_M_AXIS_TDATA),
         .s_axis_tvalid(axis_red_pitaya_adc_0_M_AXIS_TVALID));
   system_ch1_mem_fb_split_0 ch1_output_dac_mem_split
@@ -746,7 +898,7 @@ module Memory_IO_imp_1UEKTOT
   input [31:0]S_AXI1_wdata;
   output S_AXI1_wready;
   input S_AXI1_wvalid;
-  input [63:0]S_AXIS_tdata;
+  input [127:0]S_AXIS_tdata;
   output S_AXIS_tready;
   input S_AXIS_tvalid;
   input [31:0]S_AXI_araddr;
@@ -790,7 +942,7 @@ module Memory_IO_imp_1UEKTOT
   wire [31:0]S_AXI1_1_WDATA;
   wire S_AXI1_1_WREADY;
   wire S_AXI1_1_WVALID;
-  wire [63:0]S_AXIS_1_TDATA;
+  wire [127:0]S_AXIS_1_TDATA;
   wire S_AXIS_1_TREADY;
   wire S_AXIS_1_TVALID;
   wire [31:0]S_AXI_1_ARADDR;
@@ -863,7 +1015,7 @@ module Memory_IO_imp_1UEKTOT
   assign S_AXI1_rresp[1:0] = S_AXI1_1_RRESP;
   assign S_AXI1_rvalid = S_AXI1_1_RVALID;
   assign S_AXI1_wready = S_AXI1_1_WREADY;
-  assign S_AXIS_1_TDATA = S_AXIS_tdata[63:0];
+  assign S_AXIS_1_TDATA = S_AXIS_tdata[127:0];
   assign S_AXIS_1_TVALID = S_AXIS_tvalid;
   assign S_AXIS_tready = S_AXIS_1_TREADY;
   assign S_AXI_1_ARADDR = S_AXI_araddr[31:0];
@@ -934,7 +1086,7 @@ module Memory_IO_imp_1UEKTOT
         .s_axi_wready(S_AXI1_1_WREADY),
         .s_axi_wvalid(S_AXI1_1_WVALID),
         .sts_data(sts_data_1));
-  system_axis_ram_writer_0_0 axis_ram_writer_0
+  system_axis_ram_writer_0_2 axis_ram_writer_0
        (.aclk(pll_0_clk_out1),
         .aresetn(aresetn1_1),
         .cfg_data(cfg_data1_1),
@@ -985,7 +1137,6 @@ module Prozessing_System_imp_VE239K
     M_AXIS1_tdata,
     M_AXIS1_tvalid,
     M_AXIS_tdata,
-    M_AXIS_tready,
     M_AXIS_tvalid,
     S_AXIS_tdata,
     S_AXIS_tready,
@@ -997,7 +1148,6 @@ module Prozessing_System_imp_VE239K
     clk_out2,
     dout,
     dout4,
-    dout6,
     locked);
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
@@ -1023,9 +1173,8 @@ module Prozessing_System_imp_VE239K
   output [255:0]M_AXIS1_tdata;
   output M_AXIS1_tvalid;
   output [15:0]M_AXIS_tdata;
-  input M_AXIS_tready;
   output M_AXIS_tvalid;
-  input [63:0]S_AXIS_tdata;
+  input [127:0]S_AXIS_tdata;
   output S_AXIS_tready;
   input S_AXIS_tvalid;
   output aclk;
@@ -1035,7 +1184,6 @@ module Prozessing_System_imp_VE239K
   output clk_out2;
   output [1:0]dout;
   output [0:0]dout4;
-  output [0:0]dout6;
   output locked;
 
   wire [319:0]Memory_IO_cfg_data;
@@ -1043,7 +1191,7 @@ module Prozessing_System_imp_VE239K
   wire adc_clk_p_i_1;
   wire [31:0]concat_1_dout;
   wire [0:0]const_0_dout;
-  wire [63:0]conv_0_M_AXIS_TDATA;
+  wire [127:0]conv_0_M_AXIS_TDATA;
   wire conv_0_M_AXIS_TREADY;
   wire conv_0_M_AXIS_TVALID;
   wire [255:0]fb_cfg_M_AXIS_TDATA;
@@ -1106,10 +1254,8 @@ module Prozessing_System_imp_VE239K
   wire [3:0]ps_0_axi_periph_M01_AXI_WSTRB;
   wire ps_0_axi_periph_M01_AXI_WVALID;
   wire [15:0]rate_0_M_AXIS_TDATA;
-  wire rate_0_M_AXIS_TREADY;
   wire rate_0_M_AXIS_TVALID;
   wire [0:0]rst_0_peripheral_aresetn;
-  wire [0:0]slice_0_dout;
   wire [0:0]slice_1_dout;
   wire [31:0]slice_3_dout;
   wire [1:0]slice_7_dout;
@@ -1142,13 +1288,11 @@ module Prozessing_System_imp_VE239K
   assign adc_clk_p_i_1 = adc_clk_p_i;
   assign aresetn[0] = rst_0_peripheral_aresetn;
   assign clk_out2 = pll_0_clk_out2;
-  assign conv_0_M_AXIS_TDATA = S_AXIS_tdata[63:0];
+  assign conv_0_M_AXIS_TDATA = S_AXIS_tdata[127:0];
   assign conv_0_M_AXIS_TVALID = S_AXIS_tvalid;
   assign dout[1:0] = slice_7_dout;
   assign dout4[0] = slice_9_dout;
-  assign dout6[0] = slice_0_dout;
   assign locked = pll_0_locked;
-  assign rate_0_M_AXIS_TREADY = M_AXIS_tready;
   Core_imp_12NMCLA Core
        (.DDR_addr(DDR_addr[14:0]),
         .DDR_ba(DDR_ba[2:0]),
@@ -1293,7 +1437,6 @@ module Prozessing_System_imp_VE239K
         .M_AXIS1_tdata(fb_cfg_M_AXIS_TDATA),
         .M_AXIS1_tvalid(fb_cfg_M_AXIS_TVALID),
         .M_AXIS_tdata(rate_0_M_AXIS_TDATA),
-        .M_AXIS_tready(rate_0_M_AXIS_TREADY),
         .M_AXIS_tvalid(rate_0_M_AXIS_TVALID),
         .aclk(pll_0_clk_out1),
         .aresetn(rst_0_peripheral_aresetn),
@@ -1302,8 +1445,7 @@ module Prozessing_System_imp_VE239K
         .dout2(const_0_dout),
         .dout3(concat_1_dout),
         .dout4(slice_9_dout),
-        .dout5(slice_1_dout),
-        .dout6(slice_0_dout));
+        .dout5(slice_1_dout));
 endmodule
 
 module Reg_Brakeout_imp_1144GQA
@@ -1312,7 +1454,6 @@ module Reg_Brakeout_imp_1144GQA
     M_AXIS1_tdata,
     M_AXIS1_tvalid,
     M_AXIS_tdata,
-    M_AXIS_tready,
     M_AXIS_tvalid,
     aclk,
     aresetn,
@@ -1328,7 +1469,6 @@ module Reg_Brakeout_imp_1144GQA
   output [255:0]M_AXIS1_tdata;
   output M_AXIS1_tvalid;
   output [15:0]M_AXIS_tdata;
-  input M_AXIS_tready;
   output M_AXIS_tvalid;
   input aclk;
   input aresetn;
@@ -1348,7 +1488,6 @@ module Reg_Brakeout_imp_1144GQA
   wire [255:0]axis_constant_0_M_AXIS_TDATA;
   wire axis_constant_0_M_AXIS_TVALID;
   wire [15:0]axis_variable_0_M_AXIS_TDATA;
-  wire axis_variable_0_M_AXIS_TREADY;
   wire axis_variable_0_M_AXIS_TVALID;
   wire [31:0]concat_1_dout;
   wire [15:0]external_reset_fake_1_dout;
@@ -1366,7 +1505,6 @@ module Reg_Brakeout_imp_1144GQA
   assign M_AXIS1_tvalid = axis_constant_0_M_AXIS_TVALID;
   assign M_AXIS_tdata[15:0] = axis_variable_0_M_AXIS_TDATA;
   assign M_AXIS_tvalid = axis_variable_0_M_AXIS_TVALID;
-  assign axis_variable_0_M_AXIS_TREADY = M_AXIS_tready;
   assign dout[1:0] = Feedback_State_Dout;
   assign dout1[31:0] = RAM_addres_Dout;
   assign dout2[0] = external_reset_fake_dout;
@@ -1395,7 +1533,7 @@ module Reg_Brakeout_imp_1144GQA
         .aresetn(rst_0_peripheral_aresetn),
         .cfg_data(sample_rate_divider_Dout),
         .m_axis_tdata(axis_variable_0_M_AXIS_TDATA),
-        .m_axis_tready(axis_variable_0_M_AXIS_TREADY),
+        .m_axis_tready(1'b1),
         .m_axis_tvalid(axis_variable_0_M_AXIS_TVALID));
   system_const_0_0 external_reset_fake
        (.dout(external_reset_fake_dout));
@@ -1423,98 +1561,148 @@ module data_aquisition_imp_1HJBSSC
    (M_AXIS_tdata,
     M_AXIS_tready,
     M_AXIS_tvalid,
+    S_AXIS_CANNEL_3_tdata,
+    S_AXIS_CANNEL_3_tvalid,
+    S_AXIS_CANNEL_4_tdata,
+    S_AXIS_CANNEL_4_tvalid,
+    S_AXIS_CANNEL_5_tdata,
+    S_AXIS_CANNEL_5_tvalid,
+    S_AXIS_CANNEL_6_tdata,
+    S_AXIS_CANNEL_6_tvalid,
     S_AXIS_DATA1_tdata,
     S_AXIS_DATA1_tvalid,
     S_AXIS_DATA_tdata,
     S_AXIS_DATA_tvalid,
     S_AXIS_tdata,
-    S_AXIS_tready,
     S_AXIS_tvalid,
     aclk,
-    aresetn,
     aresetn1);
-  output [63:0]M_AXIS_tdata;
+  output [127:0]M_AXIS_tdata;
   input M_AXIS_tready;
   output M_AXIS_tvalid;
+  input [15:0]S_AXIS_CANNEL_3_tdata;
+  input [0:0]S_AXIS_CANNEL_3_tvalid;
+  input [15:0]S_AXIS_CANNEL_4_tdata;
+  input [0:0]S_AXIS_CANNEL_4_tvalid;
+  input [15:0]S_AXIS_CANNEL_5_tdata;
+  input [0:0]S_AXIS_CANNEL_5_tvalid;
+  input [15:0]S_AXIS_CANNEL_6_tdata;
+  input [0:0]S_AXIS_CANNEL_6_tvalid;
   input [15:0]S_AXIS_DATA1_tdata;
   input [0:0]S_AXIS_DATA1_tvalid;
   input [15:0]S_AXIS_DATA_tdata;
   input [0:0]S_AXIS_DATA_tvalid;
   input [15:0]S_AXIS_tdata;
-  output S_AXIS_tready;
   input S_AXIS_tvalid;
   input aclk;
-  input aresetn;
   input aresetn1;
 
-  wire [47:32]CIC_config_replicator_M02_AXIS_TDATA;
-  wire CIC_config_replicator_M02_AXIS_TREADY;
-  wire [2:2]CIC_config_replicator_M02_AXIS_TVALID;
-  wire [63:48]CIC_config_replicator_M03_AXIS_TDATA;
-  wire CIC_config_replicator_M03_AXIS_TREADY;
-  wire [3:3]CIC_config_replicator_M03_AXIS_TVALID;
-  wire [63:0]axis_combiner_0_M_AXIS_TDATA;
+  wire [15:0]S_AXIS_1_TDATA;
+  wire S_AXIS_1_TVALID;
+  wire [15:0]S_AXIS_CANNEL_3_1_TDATA;
+  wire [0:0]S_AXIS_CANNEL_3_1_TVALID;
+  wire [15:0]S_AXIS_CANNEL_4_1_TDATA;
+  wire [0:0]S_AXIS_CANNEL_4_1_TVALID;
+  wire [15:0]S_AXIS_CANNEL_5_1_TDATA;
+  wire [0:0]S_AXIS_CANNEL_5_1_TVALID;
+  wire [15:0]S_AXIS_CANNEL_6_1_TDATA;
+  wire [0:0]S_AXIS_CANNEL_6_1_TVALID;
+  wire [15:0]S_AXIS_DATA1_1_TDATA;
+  wire [0:0]S_AXIS_DATA1_1_TVALID;
+  wire [15:0]S_AXIS_DATA_1_TDATA;
+  wire [0:0]S_AXIS_DATA_1_TVALID;
+  wire [15:0]Sample_Hold_0_M_AXIS_CANNEL_1_TDATA;
+  wire Sample_Hold_0_M_AXIS_CANNEL_1_TVALID;
+  wire [15:0]Sample_Hold_0_M_AXIS_CANNEL_2_TDATA;
+  wire Sample_Hold_0_M_AXIS_CANNEL_2_TVALID;
+  wire [15:0]Sample_Hold_0_M_AXIS_CANNEL_3_TDATA;
+  wire Sample_Hold_0_M_AXIS_CANNEL_3_TVALID;
+  wire [15:0]Sample_Hold_0_M_AXIS_CANNEL_4_TDATA;
+  wire Sample_Hold_0_M_AXIS_CANNEL_4_TVALID;
+  wire [15:0]Sample_Hold_0_M_AXIS_CANNEL_5_TDATA;
+  wire Sample_Hold_0_M_AXIS_CANNEL_5_TVALID;
+  wire [15:0]Sample_Hold_0_M_AXIS_CANNEL_6_TDATA;
+  wire Sample_Hold_0_M_AXIS_CANNEL_6_TVALID;
+  wire [15:0]Sample_Hold_0_M_AXIS_CANNEL_7_TDATA;
+  wire Sample_Hold_0_M_AXIS_CANNEL_7_TVALID;
+  wire [15:0]Sample_Hold_0_M_AXIS_CANNEL_8_TDATA;
+  wire Sample_Hold_0_M_AXIS_CANNEL_8_TVALID;
+  wire [127:0]axis_combiner_0_M_AXIS_TDATA;
   wire axis_combiner_0_M_AXIS_TREADY;
   wire axis_combiner_0_M_AXIS_TVALID;
   wire [15:0]axis_constant_0_M_AXIS_TDATA;
   wire axis_constant_0_M_AXIS_TVALID;
   wire [15:0]axis_constant_1_M_AXIS_TDATA;
   wire axis_constant_1_M_AXIS_TVALID;
-  wire [15:0]ch1_mem_fb_split_M00_AXIS_TDATA;
-  wire [0:0]ch1_mem_fb_split_M00_AXIS_TVALID;
-  wire [15:0]ch1_output_dac_mem_split1_M00_AXIS_TDATA;
-  wire ch1_output_dac_mem_split1_M00_AXIS_TREADY;
-  wire [0:0]ch1_output_dac_mem_split1_M00_AXIS_TVALID;
-  wire [31:16]ch1_output_dac_mem_split1_M01_AXIS_TDATA;
-  wire ch1_output_dac_mem_split1_M01_AXIS_TREADY;
-  wire [1:1]ch1_output_dac_mem_split1_M01_AXIS_TVALID;
-  wire [15:0]cic_0_M_AXIS_DATA_TDATA;
-  wire cic_0_M_AXIS_DATA_TVALID;
-  wire [15:0]cic_1_M_AXIS_DATA_TDATA;
-  wire cic_1_M_AXIS_DATA_TVALID;
-  wire [15:0]cic_2_M_AXIS_DATA_TDATA;
-  wire cic_2_M_AXIS_DATA_TVALID;
-  wire [15:0]cic_3_M_AXIS_DATA_TDATA;
-  wire cic_3_M_AXIS_DATA_TVALID;
-  wire [15:0]output_binary_conver_0_M_AXIS_TDATA;
-  wire [0:0]output_binary_conver_0_M_AXIS_TVALID;
   wire pll_0_clk_out1;
-  wire [15:0]rate_0_M_AXIS_TDATA;
-  wire rate_0_M_AXIS_TREADY;
-  wire rate_0_M_AXIS_TVALID;
   wire rst_0_peripheral_aresetn;
   wire [15:0]xlconstant_0_dout;
   wire [15:0]xlconstant_1_dout;
 
-  assign M_AXIS_tdata[63:0] = axis_combiner_0_M_AXIS_TDATA;
+  assign M_AXIS_tdata[127:0] = axis_combiner_0_M_AXIS_TDATA;
   assign M_AXIS_tvalid = axis_combiner_0_M_AXIS_TVALID;
-  assign S_AXIS_tready = rate_0_M_AXIS_TREADY;
+  assign S_AXIS_1_TDATA = S_AXIS_tdata[15:0];
+  assign S_AXIS_1_TVALID = S_AXIS_tvalid;
+  assign S_AXIS_CANNEL_3_1_TDATA = S_AXIS_CANNEL_3_tdata[15:0];
+  assign S_AXIS_CANNEL_3_1_TVALID = S_AXIS_CANNEL_3_tvalid[0];
+  assign S_AXIS_CANNEL_4_1_TDATA = S_AXIS_CANNEL_4_tdata[15:0];
+  assign S_AXIS_CANNEL_4_1_TVALID = S_AXIS_CANNEL_4_tvalid[0];
+  assign S_AXIS_CANNEL_5_1_TDATA = S_AXIS_CANNEL_5_tdata[15:0];
+  assign S_AXIS_CANNEL_5_1_TVALID = S_AXIS_CANNEL_5_tvalid[0];
+  assign S_AXIS_CANNEL_6_1_TDATA = S_AXIS_CANNEL_6_tdata[15:0];
+  assign S_AXIS_CANNEL_6_1_TVALID = S_AXIS_CANNEL_6_tvalid[0];
+  assign S_AXIS_DATA1_1_TDATA = S_AXIS_DATA1_tdata[15:0];
+  assign S_AXIS_DATA1_1_TVALID = S_AXIS_DATA1_tvalid[0];
+  assign S_AXIS_DATA_1_TDATA = S_AXIS_DATA_tdata[15:0];
+  assign S_AXIS_DATA_1_TVALID = S_AXIS_DATA_tvalid[0];
   assign axis_combiner_0_M_AXIS_TREADY = M_AXIS_tready;
-  assign ch1_mem_fb_split_M00_AXIS_TDATA = S_AXIS_DATA_tdata[15:0];
-  assign ch1_mem_fb_split_M00_AXIS_TVALID = S_AXIS_DATA_tvalid[0];
-  assign output_binary_conver_0_M_AXIS_TDATA = S_AXIS_DATA1_tdata[15:0];
-  assign output_binary_conver_0_M_AXIS_TVALID = S_AXIS_DATA1_tvalid[0];
   assign pll_0_clk_out1 = aclk;
-  assign rate_0_M_AXIS_TDATA = S_AXIS_tdata[15:0];
-  assign rate_0_M_AXIS_TVALID = S_AXIS_tvalid;
   assign rst_0_peripheral_aresetn = aresetn1;
-  system_ch1_output_dac_mem_split_0 CIC_config_replicator
-       (.aclk(pll_0_clk_out1),
-        .aresetn(rst_0_peripheral_aresetn),
-        .m_axis_tdata({CIC_config_replicator_M03_AXIS_TDATA,CIC_config_replicator_M02_AXIS_TDATA,ch1_output_dac_mem_split1_M01_AXIS_TDATA,ch1_output_dac_mem_split1_M00_AXIS_TDATA}),
-        .m_axis_tready({CIC_config_replicator_M03_AXIS_TREADY,CIC_config_replicator_M02_AXIS_TREADY,ch1_output_dac_mem_split1_M01_AXIS_TREADY,ch1_output_dac_mem_split1_M00_AXIS_TREADY}),
-        .m_axis_tvalid({CIC_config_replicator_M03_AXIS_TVALID,CIC_config_replicator_M02_AXIS_TVALID,ch1_output_dac_mem_split1_M01_AXIS_TVALID,ch1_output_dac_mem_split1_M00_AXIS_TVALID}),
-        .s_axis_tdata(rate_0_M_AXIS_TDATA),
-        .s_axis_tready(rate_0_M_AXIS_TREADY),
-        .s_axis_tvalid(rate_0_M_AXIS_TVALID));
+  system_Sample_Hold_0_0 Sample_Hold_0
+       (.M_AXIS_CANNEL_1_tdata(Sample_Hold_0_M_AXIS_CANNEL_1_TDATA),
+        .M_AXIS_CANNEL_1_tvalid(Sample_Hold_0_M_AXIS_CANNEL_1_TVALID),
+        .M_AXIS_CANNEL_2_tdata(Sample_Hold_0_M_AXIS_CANNEL_2_TDATA),
+        .M_AXIS_CANNEL_2_tvalid(Sample_Hold_0_M_AXIS_CANNEL_2_TVALID),
+        .M_AXIS_CANNEL_3_tdata(Sample_Hold_0_M_AXIS_CANNEL_3_TDATA),
+        .M_AXIS_CANNEL_3_tvalid(Sample_Hold_0_M_AXIS_CANNEL_3_TVALID),
+        .M_AXIS_CANNEL_4_tdata(Sample_Hold_0_M_AXIS_CANNEL_4_TDATA),
+        .M_AXIS_CANNEL_4_tvalid(Sample_Hold_0_M_AXIS_CANNEL_4_TVALID),
+        .M_AXIS_CANNEL_5_tdata(Sample_Hold_0_M_AXIS_CANNEL_5_TDATA),
+        .M_AXIS_CANNEL_5_tvalid(Sample_Hold_0_M_AXIS_CANNEL_5_TVALID),
+        .M_AXIS_CANNEL_6_tdata(Sample_Hold_0_M_AXIS_CANNEL_6_TDATA),
+        .M_AXIS_CANNEL_6_tvalid(Sample_Hold_0_M_AXIS_CANNEL_6_TVALID),
+        .M_AXIS_CANNEL_7_tdata(Sample_Hold_0_M_AXIS_CANNEL_7_TDATA),
+        .M_AXIS_CANNEL_7_tvalid(Sample_Hold_0_M_AXIS_CANNEL_7_TVALID),
+        .M_AXIS_CANNEL_8_tdata(Sample_Hold_0_M_AXIS_CANNEL_8_TDATA),
+        .M_AXIS_CANNEL_8_tvalid(Sample_Hold_0_M_AXIS_CANNEL_8_TVALID),
+        .S_AXIS_CANNEL_1_tdata(S_AXIS_DATA_1_TDATA),
+        .S_AXIS_CANNEL_1_tvalid(S_AXIS_DATA_1_TVALID),
+        .S_AXIS_CANNEL_2_tdata(S_AXIS_DATA1_1_TDATA),
+        .S_AXIS_CANNEL_2_tvalid(S_AXIS_DATA1_1_TVALID),
+        .S_AXIS_CANNEL_3_tdata(S_AXIS_CANNEL_3_1_TDATA),
+        .S_AXIS_CANNEL_3_tvalid(S_AXIS_CANNEL_3_1_TVALID),
+        .S_AXIS_CANNEL_4_tdata(S_AXIS_CANNEL_4_1_TDATA),
+        .S_AXIS_CANNEL_4_tvalid(S_AXIS_CANNEL_4_1_TVALID),
+        .S_AXIS_CANNEL_5_tdata(S_AXIS_CANNEL_5_1_TDATA),
+        .S_AXIS_CANNEL_5_tvalid(S_AXIS_CANNEL_5_1_TVALID),
+        .S_AXIS_CANNEL_6_tdata(S_AXIS_CANNEL_6_1_TDATA),
+        .S_AXIS_CANNEL_6_tvalid(S_AXIS_CANNEL_6_1_TVALID),
+        .S_AXIS_CANNEL_7_tdata(axis_constant_1_M_AXIS_TDATA),
+        .S_AXIS_CANNEL_7_tvalid(axis_constant_1_M_AXIS_TVALID),
+        .S_AXIS_CANNEL_8_tdata(axis_constant_0_M_AXIS_TDATA),
+        .S_AXIS_CANNEL_8_tvalid(axis_constant_0_M_AXIS_TVALID),
+        .S_AXIS_CONFIG_tdata(S_AXIS_1_TDATA),
+        .S_AXIS_CONFIG_tvalid(S_AXIS_1_TVALID),
+        .aclk(pll_0_clk_out1),
+        .aresetn(rst_0_peripheral_aresetn));
   system_axis_combiner_0_0 axis_combiner_0
        (.aclk(pll_0_clk_out1),
         .aresetn(rst_0_peripheral_aresetn),
         .m_axis_tdata(axis_combiner_0_M_AXIS_TDATA),
         .m_axis_tready(axis_combiner_0_M_AXIS_TREADY),
         .m_axis_tvalid(axis_combiner_0_M_AXIS_TVALID),
-        .s_axis_tdata({cic_2_M_AXIS_DATA_TDATA,cic_3_M_AXIS_DATA_TDATA,cic_1_M_AXIS_DATA_TDATA,cic_0_M_AXIS_DATA_TDATA}),
-        .s_axis_tvalid({cic_2_M_AXIS_DATA_TVALID,cic_3_M_AXIS_DATA_TVALID,cic_1_M_AXIS_DATA_TVALID,cic_0_M_AXIS_DATA_TVALID}));
+        .s_axis_tdata({Sample_Hold_0_M_AXIS_CANNEL_8_TDATA,Sample_Hold_0_M_AXIS_CANNEL_7_TDATA,Sample_Hold_0_M_AXIS_CANNEL_6_TDATA,Sample_Hold_0_M_AXIS_CANNEL_5_TDATA,Sample_Hold_0_M_AXIS_CANNEL_4_TDATA,Sample_Hold_0_M_AXIS_CANNEL_3_TDATA,Sample_Hold_0_M_AXIS_CANNEL_2_TDATA,Sample_Hold_0_M_AXIS_CANNEL_1_TDATA}),
+        .s_axis_tvalid({Sample_Hold_0_M_AXIS_CANNEL_8_TVALID,Sample_Hold_0_M_AXIS_CANNEL_7_TVALID,Sample_Hold_0_M_AXIS_CANNEL_6_TVALID,Sample_Hold_0_M_AXIS_CANNEL_5_TVALID,Sample_Hold_0_M_AXIS_CANNEL_4_TVALID,Sample_Hold_0_M_AXIS_CANNEL_3_TVALID,Sample_Hold_0_M_AXIS_CANNEL_2_TVALID,Sample_Hold_0_M_AXIS_CANNEL_1_TVALID}));
   system_axis_constant_0_2 axis_constant_0
        (.aclk(pll_0_clk_out1),
         .cfg_data(xlconstant_0_dout),
@@ -1525,46 +1713,6 @@ module data_aquisition_imp_1HJBSSC
         .cfg_data(xlconstant_1_dout),
         .m_axis_tdata(axis_constant_1_M_AXIS_TDATA),
         .m_axis_tvalid(axis_constant_1_M_AXIS_TVALID));
-  system_cic_0_0 cic_0
-       (.aclk(pll_0_clk_out1),
-        .aresetn(rst_0_peripheral_aresetn),
-        .m_axis_data_tdata(cic_0_M_AXIS_DATA_TDATA),
-        .m_axis_data_tvalid(cic_0_M_AXIS_DATA_TVALID),
-        .s_axis_config_tdata(ch1_output_dac_mem_split1_M00_AXIS_TDATA),
-        .s_axis_config_tready(ch1_output_dac_mem_split1_M00_AXIS_TREADY),
-        .s_axis_config_tvalid(ch1_output_dac_mem_split1_M00_AXIS_TVALID),
-        .s_axis_data_tdata(ch1_mem_fb_split_M00_AXIS_TDATA),
-        .s_axis_data_tvalid(ch1_mem_fb_split_M00_AXIS_TVALID));
-  system_cic_0_1 cic_1
-       (.aclk(pll_0_clk_out1),
-        .aresetn(rst_0_peripheral_aresetn),
-        .m_axis_data_tdata(cic_1_M_AXIS_DATA_TDATA),
-        .m_axis_data_tvalid(cic_1_M_AXIS_DATA_TVALID),
-        .s_axis_config_tdata(ch1_output_dac_mem_split1_M01_AXIS_TDATA),
-        .s_axis_config_tready(ch1_output_dac_mem_split1_M01_AXIS_TREADY),
-        .s_axis_config_tvalid(ch1_output_dac_mem_split1_M01_AXIS_TVALID),
-        .s_axis_data_tdata(output_binary_conver_0_M_AXIS_TDATA),
-        .s_axis_data_tvalid(output_binary_conver_0_M_AXIS_TVALID));
-  system_cic_1_0 cic_2
-       (.aclk(pll_0_clk_out1),
-        .aresetn(rst_0_peripheral_aresetn),
-        .m_axis_data_tdata(cic_2_M_AXIS_DATA_TDATA),
-        .m_axis_data_tvalid(cic_2_M_AXIS_DATA_TVALID),
-        .s_axis_config_tdata(CIC_config_replicator_M03_AXIS_TDATA),
-        .s_axis_config_tready(CIC_config_replicator_M03_AXIS_TREADY),
-        .s_axis_config_tvalid(CIC_config_replicator_M03_AXIS_TVALID),
-        .s_axis_data_tdata(axis_constant_0_M_AXIS_TDATA),
-        .s_axis_data_tvalid(axis_constant_0_M_AXIS_TVALID));
-  system_cic_1_1 cic_3
-       (.aclk(pll_0_clk_out1),
-        .aresetn(rst_0_peripheral_aresetn),
-        .m_axis_data_tdata(cic_3_M_AXIS_DATA_TDATA),
-        .m_axis_data_tvalid(cic_3_M_AXIS_DATA_TVALID),
-        .s_axis_config_tdata(CIC_config_replicator_M02_AXIS_TDATA),
-        .s_axis_config_tready(CIC_config_replicator_M02_AXIS_TREADY),
-        .s_axis_config_tvalid(CIC_config_replicator_M02_AXIS_TVALID),
-        .s_axis_data_tdata(axis_constant_1_M_AXIS_TDATA),
-        .s_axis_data_tvalid(axis_constant_1_M_AXIS_TVALID));
   system_xlconstant_0_1 xlconstant_0
        (.dout(xlconstant_0_dout));
   system_xlconstant_0_2 xlconstant_1
@@ -2133,7 +2281,7 @@ module s00_couplers_imp_17W2P32
         .s_axi_wvalid(s00_couplers_to_auto_pc_WVALID));
 endmodule
 
-(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=50,numReposBlks=40,numNonXlnxBlks=0,numHierBlks=10,maxHierDepth=2,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=2,numPkgbdBlks=0,bdsource=USER,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=13,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=10,\"da_clkrst_cnt\"=3,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
+(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=48,numReposBlks=37,numNonXlnxBlks=0,numHierBlks=11,maxHierDepth=2,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=3,numPkgbdBlks=0,bdsource=USER,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=13,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=10,\"\"\"\"da_clkrst_cnt\"\"\"\"=3,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
 module system
    (DDR_addr,
     DDR_ba,
@@ -2230,6 +2378,14 @@ module system
   inout [7:0]exp_p_tri_io;
   output [7:0]led_o;
 
+  wire [15:0]Analog_Input_M00_AXIS_TDATA;
+  wire [0:0]Analog_Input_M00_AXIS_TVALID;
+  wire [15:0]Analog_Input_M01_AXIS_TDATA;
+  wire [0:0]Analog_Input_M01_AXIS_TVALID;
+  wire [15:0]Analog_Input_M02_AXIS_TDATA;
+  wire [0:0]Analog_Input_M02_AXIS_TVALID;
+  wire [15:0]Calculation_M03_AXIS_TDATA;
+  wire [0:0]Calculation_M03_AXIS_TVALID;
   wire [31:0]Calculation_M_AXIS_TDATA;
   wire Calculation_M_AXIS_TREADY;
   wire Calculation_M_AXIS_TVALID;
@@ -2261,7 +2417,7 @@ module system
   wire [0:0]ch1_mem_fb_split_M00_AXIS_TVALID;
   wire [15:0]ch1_output_dac_mem_split_M00_AXIS_TDATA;
   wire [0:0]ch1_output_dac_mem_split_M00_AXIS_TVALID;
-  wire [63:0]conv_0_M_AXIS_TDATA;
+  wire [127:0]conv_0_M_AXIS_TDATA;
   wire conv_0_M_AXIS_TREADY;
   wire conv_0_M_AXIS_TVALID;
   wire [255:0]fb_cfg_M_AXIS_TDATA;
@@ -2290,16 +2446,10 @@ module system
   wire ps_0_FIXED_IO_PS_PORB;
   wire ps_0_FIXED_IO_PS_SRSTB;
   wire [15:0]rate_0_M_AXIS_TDATA;
-  wire rate_0_M_AXIS_TREADY;
   wire rate_0_M_AXIS_TVALID;
   wire [0:0]rst_0_peripheral_aresetn;
-  wire [0:0]slice_0_dout;
   wire [1:0]slice_7_dout;
   wire [0:0]slice_9_dout;
-  wire [15:0]xadc_wiz_0_M_AXIS_TDATA;
-  wire [4:0]xadc_wiz_0_M_AXIS_TID;
-  wire xadc_wiz_0_M_AXIS_TREADY;
-  wire xadc_wiz_0_M_AXIS_TVALID;
 
   assign Vaux0_1_V_N = Vaux0_v_n;
   assign Vaux0_1_V_P = Vaux0_v_p;
@@ -2322,11 +2472,37 @@ module system
   assign dac_sel_o = axis_red_pitaya_dac_0_dac_sel;
   assign dac_wrt_o = axis_red_pitaya_dac_0_dac_wrt;
   assign led_o[0] = exp_p_tri_io[0];
+  Analog_Input_imp_1FFEQO1 Analog_Input
+       (.M00_AXIS_tdata(Analog_Input_M00_AXIS_TDATA),
+        .M00_AXIS_tvalid(Analog_Input_M00_AXIS_TVALID),
+        .M01_AXIS_tdata(Analog_Input_M01_AXIS_TDATA),
+        .M01_AXIS_tvalid(Analog_Input_M01_AXIS_TVALID),
+        .M02_AXIS_tdata(Analog_Input_M02_AXIS_TDATA),
+        .M02_AXIS_tvalid(Analog_Input_M02_AXIS_TVALID),
+        .M_AXIS_tdata(axis_red_pitaya_adc_0_M_AXIS_TDATA),
+        .M_AXIS_tvalid(axis_red_pitaya_adc_0_M_AXIS_TVALID),
+        .Vaux0_v_n(Vaux0_1_V_N),
+        .Vaux0_v_p(Vaux0_1_V_P),
+        .Vaux1_v_n(Vaux1_1_V_N),
+        .Vaux1_v_p(Vaux1_1_V_P),
+        .Vaux8_v_n(Vaux8_1_V_N),
+        .Vaux8_v_p(Vaux8_1_V_P),
+        .Vaux9_v_n(Vaux9_1_V_N),
+        .Vaux9_v_p(Vaux9_1_V_P),
+        .Vp_Vn_v_n(Vp_Vn_1_V_N),
+        .Vp_Vn_v_p(Vp_Vn_1_V_P),
+        .aclk(pll_0_clk_out1),
+        .adc_csn_o(axis_red_pitaya_adc_0_adc_csn),
+        .adc_dat_a_i(adc_dat_a_i_1),
+        .adc_dat_b_i(adc_dat_b_i_1),
+        .aresetn(rst_0_peripheral_aresetn));
   Calculation_imp_801JAY Calculation
        (.M00_AXIS1_tdata(ch1_output_dac_mem_split_M00_AXIS_TDATA),
         .M00_AXIS1_tvalid(ch1_output_dac_mem_split_M00_AXIS_TVALID),
         .M00_AXIS_tdata(ch1_mem_fb_split_M00_AXIS_TDATA),
         .M00_AXIS_tvalid(ch1_mem_fb_split_M00_AXIS_TVALID),
+        .M03_AXIS_tdata(Calculation_M03_AXIS_TDATA),
+        .M03_AXIS_tvalid(Calculation_M03_AXIS_TVALID),
         .M_AXIS_tdata(Calculation_M_AXIS_TDATA),
         .M_AXIS_tready(Calculation_M_AXIS_TREADY),
         .M_AXIS_tvalid(Calculation_M_AXIS_TVALID),
@@ -2364,7 +2540,6 @@ module system
         .M_AXIS1_tdata(fb_cfg_M_AXIS_TDATA),
         .M_AXIS1_tvalid(fb_cfg_M_AXIS_TVALID),
         .M_AXIS_tdata(rate_0_M_AXIS_TDATA),
-        .M_AXIS_tready(rate_0_M_AXIS_TREADY),
         .M_AXIS_tvalid(rate_0_M_AXIS_TVALID),
         .S_AXIS_tdata(conv_0_M_AXIS_TDATA),
         .S_AXIS_tready(conv_0_M_AXIS_TREADY),
@@ -2376,15 +2551,7 @@ module system
         .clk_out2(Prozessing_System_clk_out2),
         .dout(slice_7_dout),
         .dout4(slice_9_dout),
-        .dout6(slice_0_dout),
         .locked(Prozessing_System_locked));
-  system_axis_red_pitaya_adc_0_0 axis_red_pitaya_adc_0
-       (.aclk(pll_0_clk_out1),
-        .adc_csn(axis_red_pitaya_adc_0_adc_csn),
-        .adc_dat_a(adc_dat_a_i_1),
-        .adc_dat_b(adc_dat_b_i_1),
-        .m_axis_tdata(axis_red_pitaya_adc_0_M_AXIS_TDATA),
-        .m_axis_tvalid(axis_red_pitaya_adc_0_M_AXIS_TVALID));
   system_axis_red_pitaya_dac_0_0 axis_red_pitaya_dac_0
        (.aclk(pll_0_clk_out1),
         .dac_clk(axis_red_pitaya_dac_0_dac_clk),
@@ -2402,41 +2569,22 @@ module system
        (.M_AXIS_tdata(conv_0_M_AXIS_TDATA),
         .M_AXIS_tready(conv_0_M_AXIS_TREADY),
         .M_AXIS_tvalid(conv_0_M_AXIS_TVALID),
+        .S_AXIS_CANNEL_3_tdata(Calculation_M03_AXIS_TDATA),
+        .S_AXIS_CANNEL_3_tvalid(Calculation_M03_AXIS_TVALID),
+        .S_AXIS_CANNEL_4_tdata(Analog_Input_M00_AXIS_TDATA),
+        .S_AXIS_CANNEL_4_tvalid(Analog_Input_M00_AXIS_TVALID),
+        .S_AXIS_CANNEL_5_tdata(Analog_Input_M01_AXIS_TDATA),
+        .S_AXIS_CANNEL_5_tvalid(Analog_Input_M01_AXIS_TVALID),
+        .S_AXIS_CANNEL_6_tdata(Analog_Input_M02_AXIS_TDATA),
+        .S_AXIS_CANNEL_6_tvalid(Analog_Input_M02_AXIS_TVALID),
         .S_AXIS_DATA1_tdata(ch1_output_dac_mem_split_M00_AXIS_TDATA),
         .S_AXIS_DATA1_tvalid(ch1_output_dac_mem_split_M00_AXIS_TVALID),
         .S_AXIS_DATA_tdata(ch1_mem_fb_split_M00_AXIS_TDATA),
         .S_AXIS_DATA_tvalid(ch1_mem_fb_split_M00_AXIS_TVALID),
         .S_AXIS_tdata(rate_0_M_AXIS_TDATA),
-        .S_AXIS_tready(rate_0_M_AXIS_TREADY),
         .S_AXIS_tvalid(rate_0_M_AXIS_TVALID),
         .aclk(pll_0_clk_out1),
-        .aresetn(slice_0_dout),
         .aresetn1(rst_0_peripheral_aresetn));
-  system_xadc_read_0_0 xadc_read_0
-       (.aclk(pll_0_clk_out1),
-        .aresetn(rst_0_peripheral_aresetn),
-        .s_axis_tdata(xadc_wiz_0_M_AXIS_TDATA),
-        .s_axis_tid(xadc_wiz_0_M_AXIS_TID),
-        .s_axis_tready(xadc_wiz_0_M_AXIS_TREADY),
-        .s_axis_tvalid(xadc_wiz_0_M_AXIS_TVALID));
-  system_xadc_wiz_0_0 xadc_wiz_0
-       (.m_axis_aclk(pll_0_clk_out1),
-        .m_axis_resetn(rst_0_peripheral_aresetn),
-        .m_axis_tdata(xadc_wiz_0_M_AXIS_TDATA),
-        .m_axis_tid(xadc_wiz_0_M_AXIS_TID),
-        .m_axis_tready(xadc_wiz_0_M_AXIS_TREADY),
-        .m_axis_tvalid(xadc_wiz_0_M_AXIS_TVALID),
-        .s_axis_aclk(pll_0_clk_out1),
-        .vauxn0(Vaux0_1_V_N),
-        .vauxn1(Vaux1_1_V_N),
-        .vauxn8(Vaux8_1_V_N),
-        .vauxn9(Vaux9_1_V_N),
-        .vauxp0(Vaux0_1_V_P),
-        .vauxp1(Vaux1_1_V_P),
-        .vauxp8(Vaux8_1_V_P),
-        .vauxp9(Vaux9_1_V_P),
-        .vn_in(Vp_Vn_1_V_N),
-        .vp_in(Vp_Vn_1_V_P));
 endmodule
 
 module system_ps_0_axi_periph_0

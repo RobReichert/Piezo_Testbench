@@ -6,7 +6,7 @@
 <Project Version="7" Minor="54" Path="C:/GitHub/RedPitaya/tmp/cores/axi_sts_register.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="2fd905a4f1734c798f997c2d2d3abafb"/>
+    <Option Name="Id" Val="3419c7ee8f764092b2172f71d185b7cf"/>
     <Option Name="Part" Val="xc7z010clg400-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>

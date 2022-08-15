@@ -6,7 +6,7 @@
 <Project Version="7" Minor="54" Path="C:/GitHub/RedPitaya/tmp/cores/dna_reader.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="ffe1035c08fa4f01a14035229498ad4d"/>
+    <Option Name="Id" Val="c340362c21944c94ae5e154c355cd261"/>
     <Option Name="Part" Val="xc7z010clg400-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>

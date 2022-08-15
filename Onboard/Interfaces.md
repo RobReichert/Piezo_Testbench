@@ -17,11 +17,11 @@ Located in mem file with memory offset of 0x40001000 and range of 4k
 
 Bit      | Byte Offset | Signal                          | Substructure
 -------- | ----------- | ------------------------------- | ------
-[7:0]    | 0           | "reset"                         | [0:0]=cma_memory_reset
+[7:0]    | 0           | "reset"                         | [0:0]=unused reset
 &nbsp;   |             |                                 | [1:1]=ram_writer_reset
 &nbsp;   |             |                                 | [2:2]=Feedback_trigger
 &nbsp;   |             |                                 | [7:6]=Feedback_mode   
-[31:16]  | 2           | sample rate (CIC Filter Config --> f=125MHz/value) |
+[31:16]  | 2           | sample rate (Sample/Hold Config --> f=125MHz/value) |
 [63:32]  | 4           | RAM_adress --> set address of writer |
 [159:64] | 8           | Feedback_config_bus             | [95:64] (Offset 8)=param_a/ fixed_phase/ start_freqency
 &nbsp;   |             |                                 | [127:96] (Offset 12)=param_b/ amplitude/ stop_freqency
@@ -35,4 +35,8 @@ Bit      | Byte Offset | Signal                          | Substructure
 ## ram
 Located in cma file with memory offset of 0x00000000 and range of 512M
 
+8 channel with 16bit each arranched in 128bit blocks
 
+e.g. [0:15]ch1,[16:31]ch2,[32:47]ch3,[48:63]ch4,[64:79]ch5,[80:95]ch6,[96:111]ch7,[112:127]ch8,[128:143]ch1,...
+
+Data of each channel have to be defined in data_aquisiton section of vivado blockdesign

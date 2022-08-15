@@ -6,7 +6,7 @@
 <Project Version="7" Minor="54" Path="C:/GitHub/RedPitaya/tmp/cores/port_slicer.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="b3c36de71c95453f98216718037eba7e"/>
+    <Option Name="Id" Val="3de030c6dc544325872558147beb3f3d"/>
     <Option Name="Part" Val="xc7z010clg400-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>

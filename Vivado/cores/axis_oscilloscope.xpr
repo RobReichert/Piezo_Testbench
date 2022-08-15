@@ -6,7 +6,7 @@
 <Project Version="7" Minor="54" Path="C:/GitHub/RedPitaya/tmp/cores/axis_oscilloscope.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="025e46a9a2a547599b40e1a7fe347d1a"/>
+    <Option Name="Id" Val="9573e7b8326a40028eb808d2b9b0afb0"/>
     <Option Name="Part" Val="xc7z010clg400-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>

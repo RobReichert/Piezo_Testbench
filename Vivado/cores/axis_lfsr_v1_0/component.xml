@@ -287,15 +287,15 @@
       <xilinx:displayName>AXI4-Stream Linear Feedback Shift-Register</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:27:22Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:20:50Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1b4d68dd_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@58649d82_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@70d63250_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@341a829a_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@54545a6b_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@219e2113_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@652dca5c_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@51c17b87_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1429233b_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2485081d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1fb06e76_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@8e80d6_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@77402ff3_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4d0973b3_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_lfsr_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

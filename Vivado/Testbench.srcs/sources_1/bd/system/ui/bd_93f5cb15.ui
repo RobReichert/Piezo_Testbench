@@ -1,52 +1,50 @@
 {
    "ActiveEmotionalView":"Default View",
-   "Default View_ScaleFactor":"0.82623",
-   "Default View_TopLeft":"403,437",
+   "Default View_ScaleFactor":"0.830508",
+   "Default View_TopLeft":"-175,-10",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS
 #  -string -flagsOSRD
-preplace port DDR -pg 1 -lvl 4 -x 1090 -y 390 -defaultsOSRD
-preplace port FIXED_IO -pg 1 -lvl 4 -x 1090 -y 410 -defaultsOSRD
+preplace port DDR -pg 1 -lvl 4 -x 1100 -y 390 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -lvl 4 -x 1100 -y 410 -defaultsOSRD
 preplace port S_AXIS -pg 1 -lvl 0 -x 0 -y 110 -defaultsOSRD
-preplace port M_AXIS -pg 1 -lvl 4 -x 1090 -y 50 -defaultsOSRD
-preplace port M_AXIS1 -pg 1 -lvl 4 -x 1090 -y 70 -defaultsOSRD
-preplace port aclk -pg 1 -lvl 4 -x 1090 -y 430 -defaultsOSRD
-preplace port locked -pg 1 -lvl 4 -x 1090 -y 490 -defaultsOSRD
+preplace port M_AXIS -pg 1 -lvl 4 -x 1100 -y 50 -defaultsOSRD
+preplace port M_AXIS1 -pg 1 -lvl 4 -x 1100 -y 70 -defaultsOSRD
+preplace port aclk -pg 1 -lvl 4 -x 1100 -y 430 -defaultsOSRD
+preplace port locked -pg 1 -lvl 4 -x 1100 -y 490 -defaultsOSRD
 preplace port adc_clk_p_i -pg 1 -lvl 0 -x 0 -y 480 -defaultsOSRD
 preplace port adc_clk_n_i -pg 1 -lvl 0 -x 0 -y 500 -defaultsOSRD
-preplace port clk_out2 -pg 1 -lvl 4 -x 1090 -y 530 -defaultsOSRD
-preplace portBus aresetn -pg 1 -lvl 4 -x 1090 -y 510 -defaultsOSRD
-preplace portBus dout -pg 1 -lvl 4 -x 1090 -y 90 -defaultsOSRD
-preplace portBus dout4 -pg 1 -lvl 4 -x 1090 -y 170 -defaultsOSRD
-preplace portBus dout6 -pg 1 -lvl 4 -x 1090 -y 210 -defaultsOSRD
+preplace port clk_out2 -pg 1 -lvl 4 -x 1100 -y 530 -defaultsOSRD
+preplace portBus aresetn -pg 1 -lvl 4 -x 1100 -y 510 -defaultsOSRD
+preplace portBus dout -pg 1 -lvl 4 -x 1100 -y 90 -defaultsOSRD
+preplace portBus dout4 -pg 1 -lvl 4 -x 1100 -y 170 -defaultsOSRD
 preplace inst Core -pg 1 -lvl 2 -x 600 -y 460 -defaultsOSRD
 preplace inst Memory_IO -pg 1 -lvl 1 -x 220 -y 140 -defaultsOSRD
 preplace inst Reg_Brakeout -pg 1 -lvl 3 -x 922 -y 130 -defaultsOSRD
-preplace netloc const_0_dout 1 1 3 360 250 770J 270 1060
-preplace netloc concat_1_dout 1 0 4 80 260 NJ 260 NJ 260 1040
-preplace netloc slice_1_dout 1 0 4 60 290 NJ 290 NJ 290 1050
-preplace netloc slice_3_dout 1 0 4 70 300 NJ 300 NJ 300 1070
+preplace netloc const_0_dout 1 1 3 370 270 NJ 270 1060
+preplace netloc concat_1_dout 1 0 4 60 260 NJ 260 NJ 260 1040
+preplace netloc slice_1_dout 1 0 4 40 290 NJ 290 NJ 290 1050
+preplace netloc slice_3_dout 1 0 4 50 300 NJ 300 NJ 300 1070
 preplace netloc writer_0_sts_data 1 1 2 NJ 140 N
 preplace netloc Memory_IO_cfg_data 1 1 2 NJ 160 N
-preplace netloc pll_0_clk_out1 1 0 4 30 0 NJ 0 790 430 NJ
+preplace netloc pll_0_clk_out1 1 0 4 20 270 350J 250 770 430 NJ
 preplace netloc pll_0_locked 1 2 2 NJ 490 NJ
-preplace netloc rst_0_peripheral_aresetn 1 0 4 40 10 NJ 10 780 510 NJ
-preplace netloc adc_clk_p_i_1 1 0 2 NJ 480 350J
+preplace netloc rst_0_peripheral_aresetn 1 0 4 30 280 NJ 280 780 510 NJ
+preplace netloc adc_clk_p_i_1 1 0 2 40J 470 NJ
 preplace netloc adc_clk_n_i_1 1 0 2 NJ 500 360J
 preplace netloc pll_0_clk_out2 1 2 2 NJ 530 NJ
 preplace netloc slice_7_dout 1 3 1 NJ 90
 preplace netloc slice_9_dout 1 3 1 NJ 170
-preplace netloc slice_0_dout 1 3 1 NJ 210
-preplace netloc writer_0_M_AXI 1 1 1 350 120n
-preplace netloc ps_0_axi_periph_M00_AXI 1 0 3 50 270 NJ 270 760
-preplace netloc ps_0_axi_periph_M01_AXI 1 0 3 20 280 NJ 280 750
-preplace netloc ps_0_DDR 1 2 2 NJ 390 NJ
-preplace netloc ps_0_FIXED_IO 1 2 2 NJ 410 NJ
-preplace netloc conv_0_M_AXIS 1 0 1 NJ 110
 preplace netloc rate_0_M_AXIS 1 3 1 NJ 50
+preplace netloc ps_0_FIXED_IO 1 2 2 NJ 410 NJ
 preplace netloc fb_cfg_M_AXIS 1 3 1 NJ 70
-levelinfo -pg 1 0 220 600 922 1090
-pagesize -pg 1 -db -bbox -sgen -130 -10 1220 1030
+preplace netloc conv_0_M_AXIS 1 0 1 NJ 110
+preplace netloc ps_0_axi_periph_M00_AXI 1 0 3 20 0 NJ 0 760
+preplace netloc ps_0_axi_periph_M01_AXI 1 0 3 60 10 NJ 10 750
+preplace netloc writer_0_M_AXI 1 1 1 360 120n
+preplace netloc ps_0_DDR 1 2 2 NJ 390 NJ
+levelinfo -pg 1 0 220 600 922 1100
+pagesize -pg 1 -db -bbox -sgen -130 -10 1230 1030
 "
 }
-
+0

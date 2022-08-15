@@ -6,7 +6,7 @@
 <Project Version="7" Minor="54" Path="C:/GitHub/RedPitaya/tmp/cores/axis_gpio_reader.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="1181e481c88243c7a1f0ba34ec1cb6a4"/>
+    <Option Name="Id" Val="7f21adb303b84b10be6c175b23026b3e"/>
     <Option Name="Part" Val="xc7z010clg400-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>

@@ -122,7 +122,7 @@ class Window(QtWidgets.QMainWindow):
         #create array with view of shared mem
         logging.debug("data_ready recognised")
         #temp = np.ndarray((self.num_samples), dtype=np.dtype([('in', np.int16), ('out', np.int16)]), buffer=self.shared_mem.buf)
-        temp = np.ndarray((self.num_samples), dtype=np.dtype([('in1', np.int16), ('out', np.int16), ('in', np.int16), ('out2', np.int16), ('in3', np.int16), ('in4', np.int16), ('in5', np.int16), ('in6', np.int16)]), buffer=self.shared_mem.buf)
+        temp = np.ndarray((self.num_samples), dtype=np.dtype([('in1', np.int16), ('out', np.int16), ('in2', np.int16), ('in', np.int16), ('in3', np.int16), ('in4', np.int16), ('in5', np.int16), ('in6', np.int16)]), buffer=self.shared_mem.buf)
         #copy into permanent array
         recording = np.copy(temp)
         print(temp)
@@ -169,7 +169,12 @@ class Window(QtWidgets.QMainWindow):
             self.FPGA_config["param_g"] = int(self.ui.inputData7.text())
             self.FPGA_config["param_h"] = int(self.ui.inputData8.text())
         
-            self.FPGA_config["CIC_divider"] = int(np.floor(125000000 / int(self.ui.inputData10.text())))
+            
+            if int(self.ui.inputData10.text()) <= 50000000 and int(self.ui.inputData10.text()) >= 10000:
+                self.FPGA_config["CIC_divider"] = int(np.floor(125000000 / int(self.ui.inputData10.text())))
+            else:
+                logging.debug("Value out of Range")
+                self.FPGA_config["CIC_divider"] = 1250
             
             # Mode dependent parameter calculation
             

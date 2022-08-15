@@ -223,15 +223,15 @@
       <xilinx:displayName>AXI4-Stream Constant</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:26:34Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:20:03Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@134be95b_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6550fb1d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f01dada_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@22b43270_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@41462212_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4089e669_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3c239f4a_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7118bb1_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1a1c8638_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1fbaf819_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@282ee6df_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4807d6e5_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2b403631_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f6a0665_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_constant_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

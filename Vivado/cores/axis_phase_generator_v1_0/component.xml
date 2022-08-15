@@ -304,15 +304,15 @@
       <xilinx:displayName>AXI4-Stream Phase Generator</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:27:47Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:21:16Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a345bbd_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@243b6d4_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4fdfa852_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4624883a_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@265f2df3_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@656138e5_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4d5b57b6_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b89f2a_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@200bf187_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@386db759_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2d41042_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2756f57_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@9bd413d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4f696d5f_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/axis_phase_generator_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

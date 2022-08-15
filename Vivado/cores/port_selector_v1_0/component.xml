@@ -162,15 +162,15 @@
       <xilinx:displayName>Port Selector</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:29:42Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:23:18Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@6270b40a_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@e9ff318_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@5658b746_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@50af84e6_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@e5ab804_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@188adac3_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@53bbe0dc_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4f95cf8c_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@63c18901_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3e8693ec_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@59d9830_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61274d0e_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7810f610_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a29da5c_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/port_selector_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

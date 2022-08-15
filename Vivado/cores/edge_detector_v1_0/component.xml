@@ -159,15 +159,15 @@
       <xilinx:displayName>Edge Detector</xilinx:displayName>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:coreRevision>1</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2022-06-10T09:29:34Z</xilinx:coreCreationDateTime>
+      <xilinx:coreCreationDateTime>2022-08-10T13:23:09Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@161585a3_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@1e65b056_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@71aee00d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@4cb6cbd6_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@3d5a833f_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@648dcd12_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
-        <xilinx:tag xilinx:name="ui.data.coregen.dd@59e04e4d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@226cf8e0_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@b0254ee_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5bdfba5d_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@e8a60f8_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2735452a_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@46c8fcee_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@52e23230_ARCHIVE_LOCATION">c:/GitHub/RedPitaya/tmp/cores/edge_detector_v1_0</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
