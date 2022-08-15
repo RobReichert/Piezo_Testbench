@@ -147,7 +147,7 @@ uint32_t get_config(int sock_client, config_t* current_config_struct, config_t* 
 		}
 
 		// CIC Devider
-		if (fetched_config_struct->CIC_divider < 6250) {
+		if (fetched_config_struct->CIC_divider <= 12500) {
 			current_config_struct->CIC_divider = fetched_config_struct->CIC_divider;
 		}
 
@@ -335,7 +335,7 @@ int main () {
 		printf("\nSaved config: \n"
 				"trigger: %d \n"
 				"mode: %d\n"
-				"CIC_divider: %f\n"
+				"CIC_divider: %d\n"
 				"param_a: %d\n"
 				"param_b: %d\n"
 				"param_c: %d\n"
@@ -346,7 +346,7 @@ int main () {
 				"param_h: %d\n\n",
 				(*(system_regs.rx_rst) & TRIG_MASK) >> 2,
 				(*(system_regs.rx_rst) & MODE_MASK) >> 6,
-				(float)125.0e6 / *(params.rx_rate),
+				*(params.rx_rate),
 				*(params.param_a),
 				*(params.param_b),
 				*(params.param_c),

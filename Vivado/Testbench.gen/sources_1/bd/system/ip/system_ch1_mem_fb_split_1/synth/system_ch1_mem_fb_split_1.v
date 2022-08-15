@@ -50,10 +50,11 @@
 // IP VLNV: xilinx.com:ip:axis_broadcaster:1.1
 // IP Revision: 21
 
-`timescale 1ns/1ps
-
+(* X_CORE_INFO = "top_system_ch1_mem_fb_split_1,Vivado 2020.2" *)
+(* CHECK_LICENSE_TYPE = "system_ch1_mem_fb_split_1,top_system_ch1_mem_fb_split_1,{}" *)
+(* CORE_GENERATION_INFO = "system_ch1_mem_fb_split_1,top_system_ch1_mem_fb_split_1,{x_ipProduct=Vivado 2020.2,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=axis_broadcaster,x_ipVersion=1.1,x_ipCoreRevision=21,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,C_FAMILY=zynq,C_NUM_MI_SLOTS=4,C_S_AXIS_TDATA_WIDTH=64,C_M_AXIS_TDATA_WIDTH=16,C_AXIS_TID_WIDTH=1,C_AXIS_TDEST_WIDTH=1,C_S_AXIS_TUSER_WIDTH=1,C_M_AXIS_TUSER_WIDTH=1,C_AXIS_SIGNAL_SET=0b00000000000000000000000000000010}" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
-module system_axis_broadcaster_0_2 (
+module system_ch1_mem_fb_split_1 (
   aclk,
   aresetn,
   s_axis_tvalid,
@@ -70,9 +71,9 @@ input wire aclk;
 input wire aresetn;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS TVALID" *)
 input wire s_axis_tvalid;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S_AXIS, TDATA_NUM_BYTES 4, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S_AXIS, TDATA_NUM_BYTES 8, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 S_AXIS TDATA" *)
-input wire [31 : 0] s_axis_tdata;
+input wire [63 : 0] s_axis_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TVALID [0:0] [0:0], xilinx.com:interface:axis:1.0 M01_AXIS TVALID [0:0] [1:1], xilinx.com:interface:axis:1.0 M02_AXIS TVALID [0:0] [2:2], xilinx.com:interface:axis:1.0 M03_AXIS TVALID [0:0] [3:3]" *)
 output wire [3 : 0] m_axis_tvalid;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M00_AXIS, TDATA_NUM_BYTES 2, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0, XIL_INTERFACENAME M01_AXIS, TDATA_NUM_BYTES 2, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 0, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 0, FREQ_HZ 125000000, PHASE 0.0, CLK_DOMAIN system_pll_0_0_clk_out1, LAYERED_METADATA undef, INSERT_VIP 0, XIL_IN\
@@ -80,10 +81,10 @@ TERFACENAME M02_AXIS, TDATA_NUM_BYTES 2, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 M00_AXIS TDATA [15:0] [15:0], xilinx.com:interface:axis:1.0 M01_AXIS TDATA [15:0] [31:16], xilinx.com:interface:axis:1.0 M02_AXIS TDATA [15:0] [47:32], xilinx.com:interface:axis:1.0 M03_AXIS TDATA [15:0] [63:48]" *)
 output wire [63 : 0] m_axis_tdata;
 
-  top_system_axis_broadcaster_0_2 #(
+  top_system_ch1_mem_fb_split_1 #(
     .C_FAMILY("zynq"),
     .C_NUM_MI_SLOTS(4),
-    .C_S_AXIS_TDATA_WIDTH(32),
+    .C_S_AXIS_TDATA_WIDTH(64),
     .C_M_AXIS_TDATA_WIDTH(16),
     .C_AXIS_TID_WIDTH(1),
     .C_AXIS_TDEST_WIDTH(1),
@@ -97,8 +98,8 @@ output wire [63 : 0] m_axis_tdata;
     .s_axis_tvalid(s_axis_tvalid),
     .s_axis_tready(),
     .s_axis_tdata(s_axis_tdata),
-    .s_axis_tstrb(4'HF),
-    .s_axis_tkeep(4'HF),
+    .s_axis_tstrb(8'HFF),
+    .s_axis_tkeep(8'HFF),
     .s_axis_tlast(1'H1),
     .s_axis_tid(1'H0),
     .s_axis_tdest(1'H0),

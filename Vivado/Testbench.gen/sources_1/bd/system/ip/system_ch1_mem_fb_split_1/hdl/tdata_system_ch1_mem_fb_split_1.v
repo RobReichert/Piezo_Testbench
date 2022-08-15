@@ -46,14 +46,14 @@
 
 `timescale 1ps/1ps
 
-module tuser_system_axis_broadcaster_0_2 #
+module tdata_system_ch1_mem_fb_split_1 #
   (
-   parameter C_S_AXIS_TUSER_WIDTH = 8,
-   parameter C_M_AXIS_TUSER_WIDTH = 8
+   parameter C_S_AXIS_TDATA_WIDTH = 8,
+   parameter C_M_AXIS_TDATA_WIDTH = 8
   )
   (
-   input  wire [C_S_AXIS_TUSER_WIDTH-1:0] tuser,
-   output wire [C_M_AXIS_TUSER_WIDTH-1:0] tuser_out
+   input  wire [C_S_AXIS_TDATA_WIDTH-1:0] tdata,
+   output wire [C_M_AXIS_TDATA_WIDTH-1:0] tdata_out
   );
-  assign tuser_out = {1'b0,1'b0,1'b0,1'b0};
+  assign tdata_out = {tdata[63:48],tdata[47:32],tdata[31:16],tdata[15:0]};
 endmodule

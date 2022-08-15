@@ -46,7 +46,7 @@
 
 `timescale 1ps/1ps
 
-module tuser_system_axis_broadcaster_0_2 #
+module tuser_system_ch1_mem_fb_split_1 #
   (
    parameter C_S_AXIS_TUSER_WIDTH = 8,
    parameter C_M_AXIS_TUSER_WIDTH = 8
