@@ -74,6 +74,13 @@
   <FileSets Version="1" Minor="31">
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
       <Filter Type="Srcs"/>
+      <File Path="$PSRCDIR/sources_1/new/Sample_Hold.v">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/sources_1/ip/dds_compiler_1/dds_compiler_1.xci">
         <FileInfo>
           <Attr Name="ImportPath" Val="$PPRDIR/../../../Users/Robert Reichert/Downloads/RedPitaya_Vivado/feedback.srcs/sources_1/ip/dds_compiler_1/dds_compiler_1.xci"/>
@@ -102,13 +109,6 @@
         </FileInfo>
       </File>
       <File Path="$PSRCDIR/sources_1/new/xadc_read.v">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
-      <File Path="$PSRCDIR/sources_1/new/Sample_Hold.v">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Aug 12 13:18:13 2022" VIVADOVERSION="2020.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Tue Oct 25 12:46:22 2022" VIVADOVERSION="2020.2">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z010" NAME="system" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -163,26 +163,6 @@
         <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="DDR_DQS"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="I" NAME="Vaux1_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn1">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn1"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="Vaux1_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxp1">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxp1"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="Vaux8_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn8">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn8"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="Vaux8_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxp8">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxp8"/>
-      </CONNECTIONS>
-    </PORT>
     <PORT DIR="I" NAME="Vaux9_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn9">
       <CONNECTIONS>
         <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn9"/>
@@ -191,6 +171,16 @@
     <PORT DIR="I" NAME="Vaux9_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxp9">
       <CONNECTIONS>
         <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxp9"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="Vaux1_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn1">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn1"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="Vaux1_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxp1">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxp1"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="IO" LEFT="53" NAME="FIXED_IO_mio" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_MIO">
@@ -221,6 +211,16 @@
     <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_PS_PORB">
       <CONNECTIONS>
         <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="PS_PORB"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="Vaux8_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn8">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn8"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="Vaux8_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxp8">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxp8"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>

@@ -7,7 +7,7 @@
    "Color Coded_TopLeft":"-2643,-706",
    "Default View_Layers":"/dac_0_dac_rst:true|/mult_0_P:true|/dac_0_dac_clk:true|/pll_0_clk_out1:true|/pll_0_clk_out2:true|/rst_0_peripheral_aresetn:true|/pll_0_clk_out3:true|",
    "Default View_ScaleFactor":"0.606481",
-   "Default View_TopLeft":"63,-20",
+   "Default View_TopLeft":"64,-20",
    "Display-PortTypeClock":"true",
    "Display-PortTypeData":"true",
    "Display-PortTypeOthers":"true",
@@ -58,45 +58,45 @@ preplace inst axis_red_pitaya_dac_0 -pg 1 -lvl 4 -x 1240 -y 550 -defaultsOSRD
 preplace inst Analog_Input -pg 1 -lvl 2 -x 380 -y 690 -defaultsOSRD
 preplace netloc adc_clk_p_i_1 1 0 1 NJ 184
 preplace netloc adc_clk_n_i_1 1 0 1 -240J 204n
-preplace netloc rst_0_peripheral_aresetn 1 1 2 80 140 560
-preplace netloc pll_0_clk_out1 1 1 3 100 120 620 68 1060
-preplace netloc slice_7_dout 1 1 1 70 254n
-preplace netloc slice_9_dout 1 1 1 50 272n
-preplace netloc feedback_combined_0_trig_out 1 2 3 540 38 1110 40 1380
-preplace netloc adc_dat_a_i_1 1 0 2 NJ 820 140
-preplace netloc adc_dat_b_i_1 1 0 2 NJ 840 150
-preplace netloc axis_red_pitaya_adc_0_adc_csn 1 2 3 590 28 1120 30 1410
+preplace netloc rst_0_peripheral_aresetn 1 1 2 130 152 550
+preplace netloc pll_0_clk_out1 1 1 3 90 372 620 372 1070
+preplace netloc slice_7_dout 1 1 1 60 254n
+preplace netloc slice_9_dout 1 1 1 40 272n
+preplace netloc feedback_combined_0_trig_out 1 2 3 540 402 N 402 1380
+preplace netloc adc_dat_a_i_1 1 0 2 NJ 820 160
+preplace netloc adc_dat_b_i_1 1 0 2 NJ 840 170
+preplace netloc axis_red_pitaya_adc_0_adc_csn 1 2 3 620 392 1060 390 N
 preplace netloc axis_red_pitaya_dac_0_dac_clk 1 4 1 1360 350n
 preplace netloc axis_red_pitaya_dac_0_dac_rst 1 4 1 1370 370n
 preplace netloc axis_red_pitaya_dac_0_dac_dat 1 4 1 N 590
 preplace netloc axis_red_pitaya_dac_0_dac_sel 1 4 1 N 550
-preplace netloc axis_red_pitaya_dac_0_dac_wrt 1 4 1 1390 570n
-preplace netloc Prozessing_System_locked 1 1 3 60J 20 580 18 1080
-preplace netloc Prozessing_System_clk_out2 1 1 3 50J 10 540 8 1100
-preplace netloc Vp_Vn_1 1 0 2 NJ 680 50
-preplace netloc Vaux0_1 1 0 2 NJ 700 90
-preplace netloc ch1_output_dac_mem_split_M00_AXIS 1 2 1 600 158n
-preplace netloc axis_red_pitaya_adc_0_M_AXIS 1 1 2 120 150 520
-preplace netloc ps_0_DDR 1 1 4 N 94 530 58 1070 60 1390
-preplace netloc Vaux1_1 1 0 2 NJ 720 110
-preplace netloc Calculation_M_AXIS 1 2 2 580 78 1050
-preplace netloc Vaux8_1 1 0 2 NJ 740 120
-preplace netloc conv_0_M_AXIS 1 0 4 -240 0 N 0 520 -2 1040
-preplace netloc Vaux9_1 1 0 2 NJ 760 130
-preplace netloc fb_cfg_M_AXIS 1 1 1 90 154n
-preplace netloc ch1_mem_fb_split_M00_AXIS 1 2 1 570 138n
-preplace netloc rate_0_M_AXIS 1 1 2 70 130 550
-preplace netloc ps_0_FIXED_IO 1 1 4 40 50 520 48 1090 50 1400
-preplace netloc Calculation_M03_AXIS 1 2 1 610 198n
-preplace netloc Analog_Input_M00_AXIS 1 2 1 630 218n
-preplace netloc Analog_Input_M01_AXIS 1 2 1 640 238n
-preplace netloc Analog_Input_M02_AXIS 1 2 1 650 258n
+preplace netloc axis_red_pitaya_dac_0_dac_wrt 1 4 1 1370 570n
+preplace netloc Prozessing_System_locked 1 1 3 60J 122 600 352 1050
+preplace netloc Prozessing_System_clk_out2 1 1 3 80J 142 530 382 1040
+preplace netloc ch1_output_dac_mem_split_M00_AXIS 1 2 1 560 158n
+preplace netloc Vp_Vn_1 1 0 2 NJ 680 100
+preplace netloc Vaux0_1 1 0 2 NJ 700 110
+preplace netloc axis_red_pitaya_adc_0_M_AXIS 1 1 2 140 382 520
+preplace netloc ps_0_DDR 1 1 4 40 68 N 68 N 68 1380
+preplace netloc ch1_mem_fb_split_M00_AXIS 1 2 1 540 138n
+preplace netloc Vaux9_1 1 0 2 NJ 760 150
+preplace netloc Vaux1_1 1 0 2 NJ 720 120
+preplace netloc fb_cfg_M_AXIS 1 1 1 120 154n
+preplace netloc rate_0_M_AXIS 1 1 2 70 132 520
+preplace netloc conv_0_M_AXIS 1 0 4 -230 362 N 362 N 362 1040
+preplace netloc ps_0_FIXED_IO 1 1 4 50 78 N 78 N 78 1360
+preplace netloc Calculation_M_AXIS 1 2 2 560 510 N
+preplace netloc Vaux8_1 1 0 2 NJ 740 140
+preplace netloc Calculation_M03_AXIS 1 2 1 570 198n
+preplace netloc Analog_Input_M02_AXIS 1 2 1 610 258n
+preplace netloc Analog_Input_M00_AXIS 1 2 1 580 218n
+preplace netloc Analog_Input_M01_AXIS 1 2 1 590 238n
 levelinfo -pg 1 -260 -80 380 892 1240 1430
 pagesize -pg 1 -db -bbox -sgen -430 -320 1590 3160
 "
 }
 {
-   """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""da_clkrst_cnt""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""":"13",
-   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""da_clkrst_cnt"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""":"10",
-   """""da_clkrst_cnt""""":"3"
+   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""da_clkrst_cnt"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""":"13",
+   """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""da_clkrst_cnt""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""":"10",
+   """"""da_clkrst_cnt"""""":"3"
 }

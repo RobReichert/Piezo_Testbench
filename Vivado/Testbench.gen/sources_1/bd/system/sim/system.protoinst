@@ -1128,8 +1128,8 @@
 					"ports": {
 						"ACLK": { "actual": "aclk"},
 						"ARESETN": { "actual": "aresetn1"},
-						"TDATA": { "actual": "S_AXIS_CANNEL_3_tdata[63:48]"},
-						"TVALID": { "actual": "S_AXIS_CANNEL_3_tvalid[3:3]"}
+						"TDATA": { "actual": "S_AXIS_CANNEL_3_tdata"},
+						"TVALID": { "actual": "S_AXIS_CANNEL_3_tvalid"}
 					}
 				},
 				"/data_aquisition/S_AXIS_CANNEL_4": {
@@ -1137,8 +1137,8 @@
 					"ports": {
 						"ACLK": { "actual": "aclk"},
 						"ARESETN": { "actual": "aresetn1"},
-						"TDATA": { "actual": "S_AXIS_CANNEL_4_tdata[15:0]"},
-						"TVALID": { "actual": "S_AXIS_CANNEL_4_tvalid[0:0]"}
+						"TDATA": { "actual": "S_AXIS_CANNEL_4_tdata"},
+						"TVALID": { "actual": "S_AXIS_CANNEL_4_tvalid"}
 					}
 				},
 				"/data_aquisition/S_AXIS_CANNEL_5": {
@@ -1146,8 +1146,8 @@
 					"ports": {
 						"ACLK": { "actual": "aclk"},
 						"ARESETN": { "actual": "aresetn1"},
-						"TDATA": { "actual": "S_AXIS_CANNEL_5_tdata[31:16]"},
-						"TVALID": { "actual": "S_AXIS_CANNEL_5_tvalid[1:1]"}
+						"TDATA": { "actual": "S_AXIS_CANNEL_5_tdata"},
+						"TVALID": { "actual": "S_AXIS_CANNEL_5_tvalid"}
 					}
 				},
 				"/data_aquisition/S_AXIS_CANNEL_6": {
@@ -1155,8 +1155,8 @@
 					"ports": {
 						"ACLK": { "actual": "aclk"},
 						"ARESETN": { "actual": "aresetn1"},
-						"TDATA": { "actual": "S_AXIS_CANNEL_6_tdata[47:32]"},
-						"TVALID": { "actual": "S_AXIS_CANNEL_6_tvalid[2:2]"}
+						"TDATA": { "actual": "S_AXIS_CANNEL_6_tdata"},
+						"TVALID": { "actual": "S_AXIS_CANNEL_6_tvalid"}
 					}
 				},
 				"/data_aquisition/S_AXIS_DATA": {
