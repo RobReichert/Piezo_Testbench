@@ -6,7 +6,7 @@ http://pavel-demin.github.io/red-pitaya-notes/led-blinker/
 
 or follow this steps
 
--	Download SD Card image from https://www.dropbox.com/sh/5fy49wae6xwxa8a/AAB1xH748EwOday_5ZN24nsva/red-pitaya-debian-9.13-armhf-20210423.zip?dl=1
+-	Download SD Card image from https://www.dropbox.com/sh/5fy49wae6xwxa8a/AAB1xH748EwOday_5ZN24nsva/red-pitaya-debian-9.13-armhf-20210423.zip?dl=1 or take from *.rar file from https://www.dropbox.com/s/57xnm1pejv230su/RedPitaya.img.rar?dl=0
 -	If SD Card have been used before, it’s may be necessary to remove all partitions and create a new one. Can be done by windows tool “disk management”
 -	Write the image to the SD Card, e.g. with Win32 Disk Imager: https://sourceforge.net/projects/win32diskimager/
 - Fix PC IP to 192.168.1.x and connect Ethernet wire
@@ -44,6 +44,7 @@ or follow this steps
 - Type ``gcc -o feedback_server -g -O3 -march=armv7-a -mtune=cortex-a9 -D_GNU_SOURCE /usr/src/feedback_server.c -lm`` to compile the *c file
 - Type ``./feedback_server`` to start the server
 - Press ``strg+c`` to kill the server
+- If i2c comunication is used coppy ``wire.cpp`` and ``wire.h`` to ``/usr/src`` and type ``gcc -o i2c -g -O3 -march=armv7-a -mtune=cortex-a9 -D_GNU_SOURCE /usr/src/i2c.cpp /usr/src/wire.cpp -lm`` for compiling
 
 ### Auto run @ reboot
 - Compile like for single run
