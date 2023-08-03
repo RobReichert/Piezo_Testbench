@@ -4,33 +4,34 @@ To get it working like this the SD card image of Parvel Demin is nessecery, it c
 http://pavel-demin.github.io/red-pitaya-notes/led-blinker/
 
 ## sts
-Located in mem file with memory offset of 0x40000000 and range of 4k
+Located in mem file with memory offset of 0x40000000 and range of 4k --> FPGA output
 
-Bit      | Offset | Signal   
--------- | ------ | -------- 
-[31:0]   | 0      | reserved for reset   
-[95:32]  | 4      | DNA --> device ID
-[127:96] | 12     | writer position
+Bit      | Offset | Signal               | Substructure
+-------- | ------ | -------------------- | ------
+[15:0]   | 0      | ram writer position counter | 
+[47:32]  | 4      | system feedback      | [32:32] = measurement is running
+
 
 ## cfg
-Located in mem file with memory offset of 0x40001000 and range of 4k
+Located in mem file with memory offset of 0x40001000 and range of 4k --> FPGA input
 
 Bit      | Byte Offset | Signal                          | Substructure
 -------- | ----------- | ------------------------------- | ------
-[7:0]    | 0           | "reset"                         | [0:0]=unused reset
-&nbsp;   |             |                                 | [1:1]=ram_writer_reset
-&nbsp;   |             |                                 | [2:2]=Feedback_trigger
-&nbsp;   |             |                                 | [7:6]=Feedback_mode   
+[7:0]    | 0           | system input commands           | [0:0]=measure
+&nbsp;   |             |                                 | 
+&nbsp;   |             |                                 | 
+&nbsp;   |             |                                 |  
+[15:8]   | 1           | Measurement modes               | [11:8]=Load mode
+&nbsp;   |             |                                 | [15:12]=Sample mode
 [31:16]  | 2           | sample rate (Sample/Hold Config --> f=125MHz/value) |
-[63:32]  | 4           | RAM_adress --> set address of writer |
-[159:64] | 8           | Feedback_config_bus             | [95:64] (Offset 8)=param_a/ fixed_phase/ start_freqency
-&nbsp;   |             |                                 | [127:96] (Offset 12)=param_b/ amplitude/ stop_freqency
-&nbsp;   |             |                                 | [159:128] (Offset 16)=param_c/ amplitude
-&nbsp;   |             |                                 | [191:160] (Offset 20)=param_d
-&nbsp;   |             |                                 | [223:192] (Offset 24)=param_e
-&nbsp;   |             |                                 | [255:224] (Offset 28)=param_f
-&nbsp;   |             |                                 | [287:256] (Offset 32)=param_g
-&nbsp;   |             |                                 | [319:288] (Offset 36)=param_h
+[63:32]  | 4           | RAM_adress --> set address of writer | 
+[95:64]  | 8           | DDS phase (phase=f/125MHz*2^30-1) |
+[127:96] | 12          | PWM DAC Value                   | [103:96] DAC 1 (Offset 12)
+&nbsp;   |             |                                 | [111:104] DAC 2 (Offset 13)
+&nbsp;   |             |                                 | [119:112] DAC 3 (Offset 14)
+&nbsp;   |             |                                 | [127:120] DAC 4 (Offset 15)
+[xx:128] | 16          |                                 |
+
 
 ## ram
 Located in cma file with memory offset of 0x00000000 and range of 512M

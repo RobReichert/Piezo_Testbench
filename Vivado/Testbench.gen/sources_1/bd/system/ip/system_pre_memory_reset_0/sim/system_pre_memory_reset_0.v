@@ -1,4 +1,4 @@
-// (c) Copyright 1995-2022 Xilinx, Inc. All rights reserved.
+// (c) Copyright 1995-2023 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -63,8 +63,8 @@ output wire [0 : 0] Dout;
 
   xlslice_v1_0_2_xlslice #(
     .DIN_WIDTH(320),
-    .DIN_FROM(1),
-    .DIN_TO(1)
+    .DIN_FROM(0),
+    .DIN_TO(0)
   ) inst (
     .Din(Din),
     .Dout(Dout)

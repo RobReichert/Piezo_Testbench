@@ -1,41 +1,41 @@
 {
    "ActiveEmotionalView":"Default View",
    "Default View_ScaleFactor":"0.752239",
-   "Default View_TopLeft":"-425,-11",
+   "Default View_TopLeft":"-425,-12",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS
 #  -string -flagsOSRD
-preplace port DDR -pg 1 -lvl 3 -x 740 -y 70 -defaultsOSRD
-preplace port FIXED_IO -pg 1 -lvl 3 -x 740 -y 90 -defaultsOSRD
-preplace port S_AXI_ACP -pg 1 -lvl 0 -x -20 -y 100 -defaultsOSRD
-preplace port M00_AXI -pg 1 -lvl 3 -x 740 -y 220 -defaultsOSRD
-preplace port M01_AXI -pg 1 -lvl 3 -x 740 -y 240 -defaultsOSRD
-preplace port clk_out1 -pg 1 -lvl 3 -x 740 -y 370 -defaultsOSRD
-preplace port ext_reset_in -pg 1 -lvl 0 -x -20 -y 530 -defaultsOSRD
-preplace port locked -pg 1 -lvl 3 -x 740 -y 410 -defaultsOSRD
-preplace port adc_clk_p_i -pg 1 -lvl 0 -x -20 -y 410 -defaultsOSRD
-preplace port adc_clk_n_i -pg 1 -lvl 0 -x -20 -y 390 -defaultsOSRD
-preplace port clk_out2 -pg 1 -lvl 3 -x 740 -y 390 -defaultsOSRD
-preplace portBus S00_ARESETN -pg 1 -lvl 3 -x 740 -y 430 -defaultsOSRD
-preplace inst rst_0 -pg 1 -lvl 1 -x 200 -y 550 -defaultsOSRD
-preplace inst pll_0 -pg 1 -lvl 1 -x 200 -y 390 -defaultsOSRD
+preplace port DDR -pg 1 -lvl 3 -x 770 -y 70 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -lvl 3 -x 770 -y 90 -defaultsOSRD
+preplace port S_AXI_ACP -pg 1 -lvl 0 -x -60 -y 100 -defaultsOSRD
+preplace port M00_AXI -pg 1 -lvl 3 -x 770 -y 220 -defaultsOSRD
+preplace port M01_AXI -pg 1 -lvl 3 -x 770 -y 240 -defaultsOSRD
+preplace port clk_out1 -pg 1 -lvl 3 -x 770 -y 370 -defaultsOSRD
+preplace port locked -pg 1 -lvl 3 -x 770 -y 410 -defaultsOSRD
+preplace port adc_clk_p_i -pg 1 -lvl 0 -x -60 -y 410 -defaultsOSRD
+preplace port adc_clk_n_i -pg 1 -lvl 0 -x -60 -y 390 -defaultsOSRD
+preplace port clk_out2 -pg 1 -lvl 3 -x 770 -y 390 -defaultsOSRD
+preplace portBus S00_ARESETN -pg 1 -lvl 3 -x 770 -y 430 -defaultsOSRD
+preplace inst rst_0 -pg 1 -lvl 1 -x 200 -y 641 -defaultsOSRD
+preplace inst pll_0 -pg 1 -lvl 1 -x 200 -y 351 -defaultsOSRD
 preplace inst ps_0 -pg 1 -lvl 1 -x 200 -y 120 -defaultsOSRD
-preplace inst ps_0_axi_periph -pg 1 -lvl 2 -x 570 -y 230 -defaultsOSRD
-preplace netloc pll_0_clk_out1 1 0 3 0 250 420 370 NJ
-preplace netloc const_0_dout 1 0 1 NJ 530
-preplace netloc pll_0_locked 1 0 3 0 650 400 410 NJ
-preplace netloc rst_0_peripheral_aresetn 1 1 2 410 430 NJ
-preplace netloc adc_clk_p_i_1 1 0 1 NJ 410
-preplace netloc adc_clk_n_i_1 1 0 1 NJ 390
-preplace netloc pll_0_clk_out2 1 1 2 NJ 390 NJ
-preplace netloc writer_0_M_AXI 1 0 1 NJ 100
+preplace inst ps_0_axi_periph -pg 1 -lvl 2 -x 590 -y 230 -defaultsOSRD
+preplace inst external_reset_fake -pg 1 -lvl 1 -x 200 -y 471 -defaultsOSRD
+preplace netloc pll_0_clk_out1 1 0 3 -20 250 410 60 740J
+preplace netloc pll_0_locked 1 0 3 -40 531 410 410 NJ
+preplace netloc rst_0_peripheral_aresetn 1 1 2 420 430 NJ
+preplace netloc adc_clk_p_i_1 1 0 1 -30J 371n
+preplace netloc adc_clk_n_i_1 1 0 1 -40J 351n
+preplace netloc pll_0_clk_out2 1 1 2 400J 50 750J
+preplace netloc xlconstant_0_dout 1 0 2 -10 541 400
 preplace netloc ps_0_axi_periph_M01_AXI 1 2 1 NJ 240
-preplace netloc ps_0_DDR 1 1 2 NJ 70 NJ
-preplace netloc ps_0_FIXED_IO 1 1 2 NJ 90 NJ
-preplace netloc ps_0_axi_periph_M00_AXI 1 2 1 NJ 220
 preplace netloc ps_0_M_AXI_GP0 1 1 1 N 150
-levelinfo -pg 1 -20 200 570 740
-pagesize -pg 1 -db -bbox -sgen -150 -10 920 660
+preplace netloc ps_0_FIXED_IO 1 1 2 NJ 90 NJ
+preplace netloc writer_0_M_AXI 1 0 1 NJ 100
+preplace netloc ps_0_DDR 1 1 2 NJ 70 NJ
+preplace netloc ps_0_axi_periph_M00_AXI 1 2 1 NJ 220
+levelinfo -pg 1 -60 200 590 770
+pagesize -pg 1 -db -bbox -sgen -190 -10 950 750
 "
 }
-
+0

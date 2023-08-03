@@ -8,9 +8,13 @@
 // Module Name: Sample_Hold
 // Project Name: 
 // Target Devices: 
-// Tool Versions: 
+// Tool Versions: 1.0
 // Description: 
-// 
+// 8 channel sampel and hold with integrated filter
+// put filtered channel data to output every aclk/S_AXIS_CONFIG_tdata cycle
+// exponential filter with tau = 1-(fil_a/2^CONFIG_WIDTH-1) / (faclk * (fil_a/2^CONFIG_WIDTH-1))
+// fil_a calculation see line 138
+//
 // Dependencies: 
 // 
 // Revision 0.01 - File Created

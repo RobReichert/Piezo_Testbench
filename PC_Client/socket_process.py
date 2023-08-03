@@ -7,7 +7,6 @@ import struct
 import logging
 import select
 import sys
-# import fabric
 
 class StreamToLogger(object):
     """
@@ -38,173 +37,84 @@ class dataThread:
         self.GUI_to_data_Queue = Queue()
         self.data_to_GUI_Queue = Queue()
 
-        #State toggles and counters
-        self.process = None
-        self.process_isRun = False
-        self.isRecord = False
-        self.bytes_to_receive = 0
-        self.trigger = False
-        self.config_change = False
-        self.record_request = False
-
         #FPGA config struct
-        self.config = { "trigger":0,
-                        "mode":0,
-                        "CIC_divider":1250,
-                        "param_a":5,
-                        "param_b":0,
-                        "param_c":0,
-                        "param_d":0,
-                        "param_e":0,
-                        "param_f":0,
-                        "param_g":0,
-                        "param_h":0}
+        self.__config = { "load_mode":0,
+                          "param_L1":0,
+                          "param_L2":0,
+                          "param_L3":0,
+                          "param_L4":0,
+                          "sample_mode":0,
+                          "param_S1":0,
+                          "param_S2":0,
+                          "param_S3":0,
+                          "param_S4":0,
+                          "temp_mode":0,
+                          "param_T1":0,
+                          "param_T2":0,
+                          "param_samp1":0,
+                          "param_samp2":0,
+                          "LI_amp_mode": 0,
+                          "DDS_phase": 42,
+                          "measure":0}
 
+        #internal variables
+        self.__process = None
+        self.__bytes_to_receive = 0
+        
         #Socket config
-        self.port = port
-        self.ip = ip
-        self.s = None
+        self.__port = port
+        self.__ip = ip
+        self.__s = None #Socket instance
+        self.__start_Process()
 
+    def __del__(self):
+        """End process and close socket when class been deleted"""
+        logging.debug("Close called")
+        try:
+            self.__process.terminate()
+        except:
+            pass
+        if self.__s != None:
+            self.__s.close()
+            logging.debug("socket closed")
 
+        #close logging
+        logging.shutdown()
+     
      # ************************ Process admin ****************************** #
 
-    def start_Process(self):
+    def __start_Process(self):
         """Begin thread, toggle run state"""
+        logging.debug('fetch_instrsssuction')
+        if self.__process == None:
+            #self.process_isRun = True
+            self.__process = Process(target=self.backgroundThread)
+            self.__process.start()
+            
+    
+            
+    # ************************ Handel Socket ****************************** #
 
-        if self.process == None:
-            self.process_isRun = True
-            self.process = Process(target=self.backgroundThread)
-            self.process.start()
-
-
-     # **************** Local Inter-process Comms with GUI****************** #
-
-    def fetch_instructions(self):
-        """ Get and save instructions from GUI thread:
-
-            config: New config struct for FPGA
-            config_change: Config struct changed, request to send (could easily optimise out)
-            record request: First request from GUI, initiates shared memory setup and handshake
-            trigger: Shared memory set up, ready to receive & send to GUI.
-
-        """
-
+    def __open_socket(self):
+        """Open generic client socket."""
+        self.__s = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
         try:
-            self.trigger, self.config, self.config_change, [self.record_request, self.bytes_to_receive] = self.GUI_to_data_Queue.get(block=False)
-            logging.debug("message received")
-            return True
-        except:
-            return False
-
-    def inform_GUI(self, event):
-        """ Send message back to GUI thread, either:
-            Allocated: Tell GUI new shared memory is allocated
-            data_ready: Shared memory filled with requested data. """
-
-        if event == "allocated":
-            self.data_to_GUI_Queue.put([0, self.shared_memory_name], block=False)
-            logging.debug(self.shared_memory_name + "sent to GUI")
-
-        elif event == "data_ready":
-            self.data_to_GUI_Queue.put([1, 0], block=False)
-
-    def initiate_record(self):
-        self.shared_mem = SharedMemory(size=self.bytes_to_receive, create=True)
-        self.shared_memory_name = self.shared_mem.name
-
-        #Tell GUI the memory is allocated
-        self.inform_GUI("allocated")
-        logging.debug("inform GUI executed")
-     # ************************ TCP Comms with RP MCU  ********************* #
-
-    def send_settings_to_FPGA(self):
-        """Package FPGA_config attribute and send to server"""
-
-        # Get config and package into c-readable struct
-        format_ = "HHHiiiiiiii"
-
-        config_send = struct.pack(format_,
-                                  self.config["trigger"],
-                                  self.config["mode"],
-                                  self.config["CIC_divider"],
-                                  self.config["param_a"],
-                                  self.config["param_b"],
-                                  self.config["param_c"],
-                                  self.config["param_d"],
-                                  self.config["param_e"],
-                                  self.config["param_f"],
-                                  self.config["param_g"],
-                                  self.config["param_h"]
-                                  )
-
-        self.open_socket()
-        if (self.initiate_transfer("config") < 1):
-            logging.debug("Socket type (config) not acknowledged by server")
-        else:
-            try:
-                self.s.sendall(config_send)
-            except Exception as e:
-                logging.debug("config send error")
-                logging.debug(e)
-
-        self.close_socket()
-        logging.debug("FPGA settings sent")
-
-
-
-    def record(self):
-        self.open_socket()
-        if (self.initiate_transfer("recording") < 1):
-            logging.debug("Socket type (record) not acknowledged by server")
-
-        #Create view of shared memory buffer
-
-        view = memoryview(self.shared_mem.buf)
-        logging.debug("memory view created")
-        logging.debug("{} to receive".format(self.bytes_to_receive))
-
-        # wait for trigger confirmation from server - process may get stuck in
-        # this loop if trigger acknowledgement is lost
-        if (self.wait_for_ack() != 1):
-            logging.debug("Record acknowledge not received")
-            return
-
-        logging.debug("start receive")
-
-        while (self.bytes_to_receive):
-            #Load info into array in nbyte chunks
-            nbytes = self.s.recv_into(view, self.bytes_to_receive)
-            view = view[nbytes:]
-            self.bytes_to_receive -= nbytes
-            logging.debug("{} Bytes received {} left".format(nbytes, self.bytes_to_receive))
-            #logging.debug(self.bytes_to_receive)
-
-        self.purge_socket()
-        self.close_socket()
-
-        del view
-        self.inform_GUI("data_ready")
-        self.shared_mem.close()
-        del self.shared_mem
-
-    def wait_for_ack(self, ack_value=1):
-        """ Wait for an acknowledge byte from MCU. If no byte or incorrect value
-        received, log error and return -1. Returns 1 on ack. """
-        ack = int.from_bytes(self.s.recv(4), "little", signed=False)
-        logging.debug("Ack value received: {}, expected {}".format(ack, ack_value))
-        
-        if ack == ack_value:
-            return 1
-        else:
-            logging.debug("Bad acknowledge")
-            return -1
-
-    def purge_socket(self):
+            self.__s.connect((self.__ip, self.__port))
+        except Exception as e:
+            logging.debug(e)
+            
+    def __close_socket(self):
+        """Close socket and wait for a 100ms. """
+        # Close socket
+        self.__s.close()
+        sleep(0.1)
+            
+    def __purge_socket(self):
         """Purge receive buffer if server is streaming naiively and likely to overshoot.
         . Ensure you have all the data you need first. Should only be required after record"""
         readers = [1]
-        self.s.setblocking(False)
-        sockets = [self.s]
+        self.__s.setblocking(False)
+        sockets = [self.__s]
             
         while readers != []:
             readers, writers, err = select.select(sockets,
@@ -212,49 +122,100 @@ class dataThread:
                                                   sockets,
                                                   2)
             try:
-                purged = self.s.recv(16384)
+                purged = self.__s.recv(16384)
                 logging.debug("{} bytes received in purge, header = {} {} {} {}".format(len(purged), purged[0], purged[1], purged[3], purged[4]))
             except Exception as e:
                 logging.debug("Purge recv error: {}".format(e))
                 break
 
-    def close_socket(self):
-        """Close socket and wait for a 100ms. """
-        # Close socket
-        self.s.close()
-        sleep(0.1)
 
-    def open_socket(self):
-        """Open generic client socket."""
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
+     # **************** Communication ****************** #
+
+    def __fetch_instructions(self):
+        """ Get and save instructions from GUI thread:
+            config: New config struct for FPGA
+            bytes_to_receive: if 0 send config else recive x bytes from FPGA
+        """
+
         try:
-            self.s.connect((self.ip, self.port))
+            self.__config, self.__bytes_to_receive = self.GUI_to_data_Queue.get(block=False)
+            logging.debug('fetch_instruction')
+            return True
+        except:
+            return False
+
+    def __send_settings_to_FPGA(self):
+        """Package FPGA_config attribute and send to server"""
+
+        # Get config and package into c-readable struct see https://docs.python.org/3/library/struct.html#format-characters
+        format_ = "i"
+
+        config_send = struct.pack(format_,
+                                    self.__config["LI_amp_mode"]
+                                    )
+
+        self.__open_socket()
+        try:
+            self.__s.sendall(np.uint32(0)) #send config request
+            ack = int.from_bytes(self.__s.recv(4), "little", signed=False) #wait for acknowledge byte from MCU
+            logging.debug("Ack value received: {}".format(ack))
+            if ack == 1:
+                self.__s.sendall(config_send)
+            else:
+                logging.debug("Socket type (config) not acknowledged by server")
         except Exception as e:
+            logging.debug("config send error")
             logging.debug(e)
 
-    def initiate_transfer(self, type='config'):
-        """ Send request info to MCU, await acknowledgement. Sends 4-byte 0 to initiate
-        config packet send, expect ack value of 2. Sends "bytes to receive" value otherwise,
-        expects ack value of bytes_to_receive. """
-        if type == 'config':
-            payload = np.uint32(0)
-            ack_value = 2
-        if type == 'recording':
-            payload = np.uint32(self.bytes_to_receive)
-            ack_value = np.uint32(self.bytes_to_receive)
+        self.__close_socket()
+        logging.debug("FPGA settings sent")
+        
+    def __initiate_record(self):
+        self.__shared_mem = SharedMemory(size=self.__bytes_to_receive, create=True)
+        #Tell GUI the memory is allocated
+        self.data_to_GUI_Queue.put([0, self.__shared_mem.name], block=False)
+        logging.debug(self.__shared_mem.name + " sent to GUI")
+        
+    def __record(self):
+        self.__open_socket()
+        try:
+            self.__s.sendall(np.uint32(self.__bytes_to_receive)) #send config request
+            ack = int.from_bytes(self.__s.recv(4), "little", signed=False) #wait for acknowledge byte from MCU
+            logging.debug("Ack value received: {}".format(ack))
+            if ack == self.__bytes_to_receive:
+                #Create view of shared memory buffer
+                view = memoryview(self.__shared_mem.buf)
+                logging.debug("memory view created")
+                
+                while (self.__bytes_to_receive):
+                    #Load info into array in nbyte chunks
+                    nbytes = self.__s.recv_into(view, self.__bytes_to_receive)
+                    view = view[nbytes:]
+                    self.__bytes_to_receive -= nbytes
+                    logging.debug("{} Bytes received {} left".format(nbytes, self.__bytes_to_receive))
+                    
+                del view
+                self.__shared_mem.close()
+                del self.__shared_mem
+                
+                #Tell GUI the data is ready
+                self.data_to_GUI_Queue.put([1, 0], block=False)
+                logging.debug("data ready")
+                
+            else:
+                logging.debug("Socket type (record) not acknowledged by server")
+        except Exception as e:
+            logging.debug("config send error")
+            logging.debug(e)
 
-        self.s.sendall(payload)
-        if (self.wait_for_ack(ack_value) == 1):
-            return 1
-        else:
-            return -1
-
+        self.__purge_socket()
+        self.__close_socket()            
+            
+        
     # ********************** MAIN LOOP ************************************* #
 
 
     def backgroundThread(self):    # retrieve data
-        """
-            """
 
         #Set up socketlog.log debug log
         logging.basicConfig(filename='socketlog.log',
@@ -270,50 +231,15 @@ class dataThread:
 
         while(True):
              # Check for instructions and dispatch accordingly
-            if self.fetch_instructions():
-
-                if self.config_change:
-                    self.send_settings_to_FPGA()
-                    self.config_change = 0
-
-                elif self.record_request:
-                    logging.debug("request received")
-                    self.initiate_record()
-                    self.record_request = False
-
-                elif self.trigger:
-                    #Trigger FPGA, start recording
-                    self.config['trigger'] = 1
-                    self.send_settings_to_FPGA()
-                    logging.debug("{} to receive".format(self.bytes_to_receive))
-
-                    self.record()
-
-                    self.config['trigger'] = 0
-                    self.send_settings_to_FPGA()
-                    logging.debug("Trigger off sent")
-
+            if self.__fetch_instructions():
+                if self.__bytes_to_receive == 0:
+                    logging.debug('config send')
+                    self.__send_settings_to_FPGA()
                 else:
-                    sleep(0.1)
-
-
-
-
-
-    def close(self):
-        """End process and close socket when GUI is closed"""
-
-        self.isrun = False
-        logging.debug("Close called")
-        logging.debug("{} s".format(self.s))
-
-        if self.process_isRun:
-            self.process.terminate()
-            self.process_isRun = False
-
-        if self.s != None:
-            self.s.close()
-            logging.debug("socket closed")
-            
-        # close logging
-        logging.shutdown() 
+                    logging.debug("{} bytes to receive".format(self.__bytes_to_receive))
+                    self.__initiate_record()
+                    self.__record()
+            else:
+                sleep(0.01)
+                    
+                    

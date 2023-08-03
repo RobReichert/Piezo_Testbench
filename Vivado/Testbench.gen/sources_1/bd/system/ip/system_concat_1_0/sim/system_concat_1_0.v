@@ -1,4 +1,4 @@
-// (c) Copyright 1995-2022 Xilinx, Inc. All rights reserved.
+// (c) Copyright 1995-2023 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -56,18 +56,22 @@
 module system_concat_1_0 (
   In0,
   In1,
+  In2,
+  In3,
   dout
 );
 
 input wire [15 : 0] In0;
 input wire [15 : 0] In1;
-output wire [31 : 0] dout;
+input wire [0 : 0] In2;
+input wire [30 : 0] In3;
+output wire [63 : 0] dout;
 
   xlconcat_v2_1_4_xlconcat #(
     .IN0_WIDTH(16),
     .IN1_WIDTH(16),
-    .IN2_WIDTH(32),
-    .IN3_WIDTH(1),
+    .IN2_WIDTH(1),
+    .IN3_WIDTH(31),
     .IN4_WIDTH(1),
     .IN5_WIDTH(1),
     .IN6_WIDTH(1),
@@ -192,13 +196,13 @@ output wire [31 : 0] dout;
     .IN125_WIDTH(1),
     .IN126_WIDTH(1),
     .IN127_WIDTH(1),
-    .dout_width(32),
-    .NUM_PORTS(2)
+    .dout_width(64),
+    .NUM_PORTS(4)
   ) inst (
     .In0(In0),
     .In1(In1),
-    .In2(32'B0),
-    .In3(1'B0),
+    .In2(In2),
+    .In3(In3),
     .In4(1'B0),
     .In5(1'B0),
     .In6(1'B0),
