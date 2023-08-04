@@ -30,43 +30,74 @@
 int interrupted = 0;
 
 typedef struct config_struct {
-	uint16_t trigger;
-	uint16_t mode;
-	uint16_t CIC_divider;
+	uint16_t load_mode;
+	int32_t param_L1;
+	int32_t param_L2;
+	int32_t param_L3;
+	int32_t param_L4;
+	uint16_t sample_mode;
+	int32_t param_S1;
+	int32_t param_S2;
+	int32_t param_S3;
+	int32_t param_S4;
+	uint16_t temp_mode;
+	int32_t param_T1;
+	int32_t param_T2;
+	uint16_t param_P;
+	uint16_t param_I;
+	uint16_t param_D;
+	int32_t param_rate;
+	uint16_t LI_amp_mode;
 	int32_t dds_phase;
-	int32_t param_b;
-	int32_t param_c;
-	int32_t param_d;
-	int32_t param_e;
-	int32_t param_f;
-	int32_t param_g;
-	int32_t param_h;
+	uint16_t measure;
 } config_t;
 
 typedef struct system_pointers {
-	volatile uint8_t *rx_com;//*rx_rst;
+	volatile uint8_t *rx_com;
 	volatile uint16_t *rx_rate;
 	volatile uint32_t *rx_addr;
 	volatile uint32_t *rx_cntr;
 	volatile uint16_t *rx_fb;
+	volatile uint8_t *rx_PWM_DAC1;
+	volatile uint8_t *rx_PWM_DAC2;
+	volatile uint8_t *rx_PWM_DAC3;
+	volatile uint8_t *rx_PWM_DAC4;
 	void *ram;
 } system_pointers_t;
 
 typedef struct parameters {
-	//volatile int32_t *param_a;
-	//volatile int32_t *param_b;
-	//volatile int32_t *param_c;
-	//volatile int32_t *param_d;
-	//volatile int32_t *param_e;
-	//volatile int32_t *param_f;
-	//volatile int32_t *param_g;
-	//volatile int32_t *param_h;
-	//volatile uint16_t *rx_rate;
-	volatile uint16_t *dds_phase;
+	volatile uint32_t *dds_phase;
+	volatile uint8_t *mode;
+	volatile int32_t *param_L1;
+	volatile int32_t *param_L2;
+	volatile int32_t *param_L3;
+	volatile int32_t *param_L4;
+	volatile int32_t *param_S1;
+	volatile int32_t *param_S2;
+	volatile int32_t *param_S3;
+	volatile int32_t *param_S4;
+	volatile int16_t *param_P;
+	volatile int16_t *param_I;
+	volatile int16_t *param_D;
+	uint16_t mode_T;
+	int32_t param_T1;
+	int32_t param_T2;
 } params_t;
 
 void signal_handler(int sig) {
 	interrupted = 1;
+}
+
+uint32_t temp_control(params_t* params_struct, system_pointers_t *system_pointers){
+	if (params_struct->mode_T==3){
+		printf("temp_mode: %d\n"
+				"param_T1: %d\n"
+				"param_T2: %d\n",
+				params_struct->mode_T,
+				params_struct->param_T1,
+				params_struct->param_T2);
+	}
+	
 }
 
 // Receive message "header" bytes. Return acknowledge of config send if header ==0, otherwise echo back
@@ -101,85 +132,102 @@ uint32_t get_socket_type(int sock_client)
 	}
 }
 
-uint32_t get_config(int sock_client, config_t* current_config_struct, config_t* fetched_config_struct, system_pointers_t *system_pointers) {
-	
+uint32_t get_config(int sock_client, config_t* config_struct, params_t* params_struct, system_pointers_t *system_pointers) {
 	//Block waiting for config struct
-	// TODO: Do we need to call mutliple times to ensure we receive the whole thing? <-- no it's only called if the massage fits sizeof(config_t) 
-	if(recv(sock_client, fetched_config_struct, sizeof(config_t), 0) > 0) {	
-		// Can't guarantee checking whole struct for inequality due to padding
-		// Can replace with a whole struct overwrite if required but this will depend on overhead
-		//difference between conditional tests and write operations. 
+	int wait_count=0;
+	while(wait_count<=1000){
+		wait_count++;
+		printf("error count: %d\n", wait_count);
+		if(recv(sock_client, config_struct, sizeof(config_t), 0) > 0) {	
+			//Print all fetched config
+			printf("\nfetched config: \n"
+					"load_mode: %d\n"
+					"param_L1: %d\n"
+					"param_L2: %d\n"
+					"param_L3: %d\n"
+					"param_L4: %d\n"
+					"sample_mode: %d\n"
+					"param_S1: %d\n"
+					"param_S2: %d\n"
+					"param_S3: %d\n"
+					"param_S4: %d\n"
+					"temp_mode: %d\n"
+					"param_T1: %d\n"
+					"param_T2: %d\n"
+					"param_P: %d\n"
+					"param_I: %d\n"
+					"param_D: %d\n"
+					"param_rate: %d\n"
+					"LI_amp_mode: %d\n"
+					"dds_phase: %d\n"
+					"measure: %d\n\n",
+					config_struct->load_mode,
+					config_struct->param_L1,
+					config_struct->param_L2,
+					config_struct->param_L3,
+					config_struct->param_L4,
+					config_struct->sample_mode,
+					config_struct->param_S1,
+					config_struct->param_S2,
+					config_struct->param_S3,
+					config_struct->param_S4,
+					config_struct->temp_mode,
+					config_struct->param_T1,
+					config_struct->param_T2,
+					config_struct->param_P,
+					config_struct->param_I,
+					config_struct->param_D,
+					config_struct->param_rate,
+					config_struct->LI_amp_mode,
+					config_struct->dds_phase,
+					config_struct->measure);
 
-		//TODO: Consider having trigger in its own branch to speed up a trigger operation 
-		
-		//Print all fetched config
-		/*printf("\nfetched config: \n"
-				"trigger: %d\n"
-				"mode: %d\n"
-				"CIC_divider: %d\n"
-				"param_a: %d\n"
-				"param_b: %d\n"
-				"param_c: %d\n"
-				"param_d: %d\n"
-				"param_e: %d\n"
-				"param_f: %d\n"
-				"param_g: %d\n"
-				"param_h: %d\n\n",
-				fetched_config_struct->trigger,
-				fetched_config_struct->mode,
-				fetched_config_struct->CIC_divider,
-				fetched_config_struct->param_a,
-				fetched_config_struct->param_b,
-				fetched_config_struct->param_c,
-				fetched_config_struct->param_d,
-				fetched_config_struct->param_e,
-				fetched_config_struct->param_f,
-				fetched_config_struct->param_g,
-				fetched_config_struct->param_h);
-		
-		// Trigger
-		if (fetched_config_struct->trigger == 0) {
-			*(system_pointers->rx_rst) &= ~TRIG_MASK;
-			printf("Trigger off \n\n");
+			//set values
+			//system input commands
+			*(params_struct->mode) = config_struct->measure;
+			*(params_struct->mode) |= config_struct->LI_amp_mode<<1;
+			//DDS
+			*(params_struct->dds_phase) = config_struct->dds_phase;
+			//Measurement modes
+			*(params_struct->mode) = config_struct->load_mode;
+			*(params_struct->mode) |= config_struct->sample_mode<<4;
+			//Test Parameters
+			*(params_struct->param_L1) = config_struct->param_L1;
+			*(params_struct->param_L2) = config_struct->param_L2;
+			*(params_struct->param_L3) = config_struct->param_L3;
+			*(params_struct->param_L4) = config_struct->param_L4;
+			*(params_struct->param_S1) = config_struct->param_S1;
+			*(params_struct->param_S2) = config_struct->param_S2;
+			*(params_struct->param_S3) = config_struct->param_S3;
+			*(params_struct->param_S4) = config_struct->param_S4;
+			//Controller Parameters
+			*(params_struct->param_P) = config_struct->param_P;
+			*(params_struct->param_I) = config_struct->param_I;
+			*(params_struct->param_D) = config_struct->param_D;
+			//Temperature Controll Parameters
+			params_struct->mode_T = config_struct->temp_mode;
+			params_struct->param_T1 = config_struct->param_T1;
+			params_struct->param_T2 = config_struct->param_T2;
+			return 0;
 		}
-		current_config_struct->trigger = fetched_config_struct->trigger;
-		
-		// mode
-		if (fetched_config_struct->mode < 4) {
-			current_config_struct->mode = fetched_config_struct->mode;
-		}
-
-		// CIC Devider
-		if (fetched_config_struct->CIC_divider <= 12500) {
-			current_config_struct->CIC_divider = fetched_config_struct->CIC_divider;
-		}
-
-		// Parameter
-		current_config_struct->param_a = fetched_config_struct->param_a;
-		current_config_struct->param_b = fetched_config_struct->param_b;
-		current_config_struct->param_c = fetched_config_struct->param_c;
-		current_config_struct->param_d = fetched_config_struct->param_d;
-		current_config_struct->param_e = fetched_config_struct->param_e;
-		current_config_struct->param_f = fetched_config_struct->param_f;
-		current_config_struct->param_g = fetched_config_struct->param_g;
-		current_config_struct->param_h = fetched_config_struct->param_h;*/
-
-	}	
+		usleep(100);
+	}
+	perror("Message get failed");
+	return EXIT_FAILURE;
 }
 
-uint32_t send_recording(int sock_client, int32_t bytes_to_send, system_pointers_t *system_pointers) {
+uint32_t send_recording(int sock_client, int32_t bytes_to_send, params_t* params_struct, system_pointers_t *system_pointers) {
 	// Enable RAM writer and CIC divider, send "go" signal to GUI
-	uint32_t position, limit, offset = 0;
+	uint32_t position, offset = 0;
+	uint32_t limit = 32*1024;
 	int buffer = 1; // set output buffer to 1
-
-	limit = 32*1024;
-	
 	
 	if (~(*(system_pointers->rx_fb) & 1)) { //check if first bit of rx_fb is 0 --> mesurement mode is off
 		//Turn on measurement mode
 		printf("Start Measurement\n");
 		*(system_pointers->rx_com) |= 1; //write 1 to bit 0
 	}
+
 	//Link lnterupt to signal_handler --> brake while with STRG+C
 	signal(SIGINT, signal_handler); 
 	while (bytes_to_send > 0 && !interrupted) {
@@ -193,6 +241,7 @@ uint32_t send_recording(int sock_client, int32_t bytes_to_send, system_pointers_
 			printf("bytes to send: %d \n", bytes_to_send);
 			bytes_to_send -= send(sock_client, (system_pointers->ram) + offset, 256*1024, MSG_NOSIGNAL);			
 		} else {
+			temp_control(params_struct, system_pointers);
 			usleep(100);
 		}
 	}
@@ -219,19 +268,24 @@ int main () {
 	uint32_t data_size;
 	int32_t bytes_to_send, message_type;
 
-	// Initialise config structs - current and next
-	config_t fetched_config, current_config = { .trigger = 0,
-												.mode = 0,
-												.CIC_divider = SAMPLING_DIVIDER_INIT,
-					    						.dds_phase = FIXED_FREQ_INIT,
-												.param_b = 0,
-												.param_c = 0,
-												.param_d = 0,
-												.param_e = 0,
-												.param_f = 0,
-												.param_g = 0,
-												.param_h = 0};
-
+	// Initialise config struct
+	config_t config = { .load_mode = 0,
+						.param_L1 = 0,
+						.param_L2 = 0,
+						.param_L3 = 0,
+						.param_L4 = 0,
+						.sample_mode = 0,
+						.param_S1 = 0,
+						.param_S2 = 0,
+						.param_S3 = 0,
+						.param_S4 = 0,
+						.temp_mode = 0,
+						.param_T1 = 20,
+						.param_T2 = 20,
+						.param_rate = SAMPLING_DIVIDER_INIT,
+						.LI_amp_mode = 0,
+						.dds_phase = FIXED_FREQ_INIT,
+						.measure = 0};
 
 //// write bitstream to FPGA
 	system("cat /usr/src/system_wrapper.bit > /dev/xdevcfg ");
@@ -254,18 +308,29 @@ int main () {
 									.rx_rate = (uint16_t *)(cfg + 2), //sample rate (Sample/Hold Config --> f=125MHz/value)
 									.rx_addr = (uint32_t *)(cfg + 4), //RAM_adress --> set address of writer
 									.rx_cntr = (uint32_t *)(sts + 0), //ram writer position counter
-									.rx_fb = (uint16_t *)(sts + 4)}; //system feedback
+									.rx_fb = (uint16_t *)(sts + 4), //system feedback
+									.rx_PWM_DAC1 = (uint8_t *)(cfg + 12), //PWM DAC1 Value 
+									.rx_PWM_DAC2 = (uint8_t *)(cfg + 13), //PWM DAC2 Value
+									.rx_PWM_DAC3 = (uint8_t *)(cfg + 14), //PWM DAC3 Value
+									.rx_PWM_DAC4 = (uint8_t *)(cfg + 15)}; //PWM DAC4 Value
 	
 	//Customisable parameter space
-	params_t params = {.dds_phase = (uint16_t *)(cfg + 8)
-					   /*.freq = (int32_t *)(cfg + 8),
-					   .param_b = (int32_t *)(cfg + 12),
-					   .param_c = (int32_t *)(cfg + 16),
-					   .param_d = (int32_t *)(cfg + 20),
-					   .param_e = (int32_t *)(cfg + 24),
-					   .param_f = (int32_t *)(cfg + 28),
-					   .param_g = (int32_t *)(cfg + 32),
-					   .param_h = (int32_t *)(cfg + 36)*/};	
+	params_t params = {	.dds_phase = (uint32_t *)(cfg + 8), //DDS phase (phase=f/125MHz*2^30-1)
+						.mode = (uint8_t *)(cfg + 1), //measurement modes
+						.param_L1 = (int32_t *)(cfg + 16),
+						.param_L2 = (int32_t *)(cfg + 20),
+						.param_L3 = (int32_t *)(cfg + 24),
+						.param_L4 = (int32_t *)(cfg + 28),
+						.param_S1 = (int32_t *)(cfg + 32),
+						.param_S2 = (int32_t *)(cfg + 36),
+						.param_S3 = (int32_t *)(cfg + 40),
+						.param_S4 = (int32_t *)(cfg + 44),
+						.param_P = (int16_t *)(cfg + 48),
+						.param_I = (int16_t *)(cfg + 50),
+						.param_D = (int16_t *)(cfg + 52),
+						.mode_T = 0,
+						.param_T1 = 20,
+						.param_T2 = 20};
 
 	// Open contiguous data memory section
 	if((fd = open("/dev/cma", O_RDWR)) < 0)	{
@@ -306,73 +371,48 @@ int main () {
 		return EXIT_FAILURE;
 	}
 
+	// Set the socket to non-blocking mode
+	int flags = fcntl(sock_server, F_GETFL, 0);
+	fcntl(sock_server, F_SETFL, flags | O_NONBLOCK);
+
 	// Listening for incomming connections
 	listen(sock_server, 1024);
 	printf("Listening on port %i ...\n", TCP_PORT);
 
+	//initial config for DDS and Sample devider
+	*(params.dds_phase) = config.dds_phase;
+	*(system_regs.rx_rate) = config.param_rate;
 
 //// Main Loop
 	while(!interrupted)	{
 		// Stop measurement
 		*(system_regs.rx_com) &= ~1; //write 0 to bit 0
 		
-		// Set sample rate
-		*(system_regs.rx_rate) = current_config.CIC_divider;
-
-		printf("reset complete\n");
-		
-		
 		if((sock_client = accept(sock_server, NULL, NULL)) >= 0)	{			
 			printf("sock client accepted\n");
 
 			message_type = get_socket_type(sock_client);
-
+			printf("Request message: %d\n", message_type);
 			if (message_type == 0) {
-				get_config(sock_client, &current_config, &fetched_config, &system_regs);
+				printf("get_config\n");
+				get_config(sock_client, &config, &params, &system_regs);
 
-				/*if (current_config.mode == 0) {
-					*(params.fixed_phase) = (uint32_t)floor(current_config.fixed_freq / 125.0e6 * (1<<30) + 0.5);
-					*(system_regs.rx_rst) = (uint8_t)((*(system_regs.rx_rst) & (~MODE_MASK)) | (current_config.mode << 6));
-					printf("Mode changed to %d\n", current_config.mode);
-				} else if (current_config.mode == 1) {
-					*(params.start_freq) = current_config.start_freq;
-					*(params.stop_freq) = current_config.stop_freq;
-					*(params.interval) = current_config.interval;
-					*(system_regs.rx_rst) = (uint8_t)((*(system_regs.rx_rst) & (~MODE_MASK)) | (current_config.mode << 6));
-					printf("Mode changed to %d\n", current_config.mode);
-				} else if (current_config.mode == 2) {
-					*(params.a_const) = current_config.a_const;
-					*(params.b_const) = current_config.b_const;
-					*(system_regs.rx_rst) = (uint8_t)((*(system_regs.rx_rst) & (~MODE_MASK)) | (current_config.mode << 6));
-					printf("Mode changed to %d\n", current_config.mode);
-				}
-				*(params.param_a) = current_config.param_a;
-				*(params.param_b) = current_config.param_b;
-				*(params.param_c) = current_config.param_c;
-				*(params.param_d) = current_config.param_d;
-				*(params.param_e) = current_config.param_e;
-				*(params.param_f) = current_config.param_f;
-				*(params.param_g) = current_config.param_g;
-				*(params.param_h) = current_config.param_h;
-				*(system_regs.rx_rst) = (uint8_t)((*(system_regs.rx_rst) & (~MODE_MASK)) | (current_config.mode << 6));
-				
-				*/
-				*(params.dds_phase) = 420;//current_config.dds_phase;
 			}
 
 			// Assume any other number is a number of bytes to receive
 			else {
 				bytes_to_send = message_type;
 
-				if (send_recording(sock_client, bytes_to_send, &system_regs) < 1) {
+				if (send_recording(sock_client, bytes_to_send, &params, &system_regs) < 1) {
 					printf("send_recording error");
 				}
 								
 			}
+			close(sock_client);
+		}else{
+			temp_control(&params, &system_regs);
 		}
-		
-		
-		close(sock_client);
+		usleep(100);
 	}
 	// Stop measurement
 	*(system_regs.rx_com) &= ~1;

@@ -51,10 +51,12 @@ class dataThread:
                           "temp_mode":0,
                           "param_T1":0,
                           "param_T2":0,
-                          "param_samp1":0,
-                          "param_samp2":0,
+                          "param_P":0,
+                          "param_I":0,
+                          "param_D":0,
+                          "param_rate": 1250,
                           "LI_amp_mode": 0,
-                          "DDS_phase": 42,
+                          "dds_phase": 42,
                           "measure":0}
 
         #internal variables
@@ -148,18 +150,36 @@ class dataThread:
         """Package FPGA_config attribute and send to server"""
 
         # Get config and package into c-readable struct see https://docs.python.org/3/library/struct.html#format-characters
-        format_ = "i"
+        format_ = "HiiiiHiiiiHiiHHHiHiH"
 
         config_send = struct.pack(format_,
-                                    self.__config["LI_amp_mode"]
-                                    )
+                                    self.__config["load_mode"],
+                                    self.__config["param_L1"],
+                                    self.__config["param_L2"],
+                                    self.__config["param_L3"],
+                                    self.__config["param_L4"],
+                                    self.__config["sample_mode"],
+                                    self.__config["param_S1"],
+                                    self.__config["param_S2"],
+                                    self.__config["param_S3"],
+                                    self.__config["param_S4"],
+                                    self.__config["temp_mode"],
+                                    self.__config["param_T1"],
+                                    self.__config["param_T2"],
+                                    self.__config["param_P"],
+                                    self.__config["param_I"],
+                                    self.__config["param_D"],
+                                    self.__config["param_rate"],
+                                    self.__config["LI_amp_mode"],
+                                    self.__config["dds_phase"],
+                                    self.__config["measure"])
 
         self.__open_socket()
         try:
             self.__s.sendall(np.uint32(0)) #send config request
             ack = int.from_bytes(self.__s.recv(4), "little", signed=False) #wait for acknowledge byte from MCU
             logging.debug("Ack value received: {}".format(ack))
-            if ack == 1:
+            if ack == 2:
                 self.__s.sendall(config_send)
             else:
                 logging.debug("Socket type (config) not acknowledged by server")

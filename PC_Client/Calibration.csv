@@ -1,0 +1,3 @@
+Calibration;Data0;Data1;Data2;Data3;Data4;Data5;Data6;Data7
+Ampitude multiplicator;2;0.25;0.5;1;1;1;1;1
+Offset after multiplication;0;0;100;0;0;0;0;0

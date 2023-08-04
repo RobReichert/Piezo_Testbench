@@ -18,9 +18,7 @@ Located in mem file with memory offset of 0x40001000 and range of 4k --> FPGA in
 Bit      | Byte Offset | Signal                          | Substructure
 -------- | ----------- | ------------------------------- | ------
 [7:0]    | 0           | system input commands           | [0:0]=measure
-&nbsp;   |             |                                 | 
-&nbsp;   |             |                                 | 
-&nbsp;   |             |                                 |  
+&nbsp;   |             |                                 | [1:2]=Lock in amp mode 
 [15:8]   | 1           | Measurement modes               | [11:8]=Load mode
 &nbsp;   |             |                                 | [15:12]=Sample mode
 [31:16]  | 2           | sample rate (Sample/Hold Config --> f=125MHz/value) |
@@ -30,8 +28,17 @@ Bit      | Byte Offset | Signal                          | Substructure
 &nbsp;   |             |                                 | [111:104] DAC 2 (Offset 13)
 &nbsp;   |             |                                 | [119:112] DAC 3 (Offset 14)
 &nbsp;   |             |                                 | [127:120] DAC 4 (Offset 15)
-[xx:128] | 16          |                                 |
-
+[383:128]| 16          | Test Parameters                 | [159:128] L1 (Offset 16)
+&nbsp;   |             |                                 | [191:160] L2 (Offset 20)
+&nbsp;   |             |                                 | [223:192] L3 (Offset 24)
+&nbsp;   |             |                                 | [255:234] L4 (Offset 28)
+&nbsp;   |             |                                 | [287:256] S1 (Offset 32)
+&nbsp;   |             |                                 | [319:288] S1 (Offset 36)
+&nbsp;   |             |                                 | [351:320] S1 (Offset 40)
+&nbsp;   |             |                                 | [383:352] S1 (Offset 44)
+[431:384]| 48          | Controller Parameters           | [399:384] P (Offset 48)
+&nbsp;   |             |                                 | [415:400] I (Offset 50)
+&nbsp;   |             |                                 | [431:416] D (Offset 52)
 
 ## ram
 Located in cma file with memory offset of 0x00000000 and range of 512M
