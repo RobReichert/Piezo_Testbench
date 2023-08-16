@@ -84,11 +84,24 @@ typedef struct parameters {
 	int32_t param_T2;
 } params_t;
 
+typedef struct thermal_values {
+	int16_t temp1;
+	int16_t temp2;
+	int16_t temp3;
+	int16_t temp4;
+	int16_t temp5;
+	int16_t temp6;
+	int16_t flow1;
+	int16_t flow2;
+} thermal_values_t;
+
 void signal_handler(int sig) {
 	interrupted = 1;
 }
 
-uint32_t temp_control(params_t* params_struct, system_pointers_t *system_pointers){
+uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointers, thermal_values_t* thermal_values_struct){
+	//every thing in heare is for testing only and can be deleted if temp control is implemented
+	//Print UI input
 	if (params_struct->mode_T==3){
 		printf("temp_mode: %d\n"
 				"param_T1: %d\n"
@@ -97,7 +110,10 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t *system_pointer
 				params_struct->param_T1,
 				params_struct->param_T2);
 	}
-	
+	//Set some PWM Values
+	*(system_pointers->rx_PWM_DAC1)=128; //50% PWM
+	//count temp2 up
+	(thermal_values_struct->temp2)++;
 }
 
 // Receive message "header" bytes. Return acknowledge of config send if header ==0, otherwise echo back
@@ -105,6 +121,7 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t *system_pointer
 uint32_t get_socket_type(int sock_client)
 {
 	int32_t message = 0;
+	uint32_t temp_ack = 1;
 	uint32_t config_ack = 2;
 
 	if(recv(sock_client, &message, sizeof(message), 0) > 0) {
@@ -118,7 +135,15 @@ uint32_t get_socket_type(int sock_client)
 				perror("Message ack send failed");
 				return EXIT_FAILURE;
 			}
-		} else {
+		} else if (message == 1) {
+			if (send(sock_client, &temp_ack, sizeof(temp_ack), MSG_NOSIGNAL) == sizeof(temp_ack)) {
+				return message;
+			} else {
+				perror("Message ack send failed");
+				return EXIT_FAILURE;
+			}
+		}
+		else {
 			if (send(sock_client, &message, sizeof(message), MSG_NOSIGNAL) == sizeof(message)) {
 				return message;
 			} else {
@@ -216,7 +241,7 @@ uint32_t get_config(int sock_client, config_t* config_struct, params_t* params_s
 	return EXIT_FAILURE;
 }
 
-uint32_t send_recording(int sock_client, int32_t bytes_to_send, params_t* params_struct, system_pointers_t *system_pointers) {
+uint32_t send_recording(int sock_client, int32_t bytes_to_send, params_t* params_struct, system_pointers_t *system_pointers, thermal_values_t* thermal_values_struct) {
 	// Enable RAM writer and CIC divider, send "go" signal to GUI
 	uint32_t position, offset = 0;
 	uint32_t limit = 32*1024;
@@ -241,7 +266,7 @@ uint32_t send_recording(int sock_client, int32_t bytes_to_send, params_t* params
 			printf("bytes to send: %d \n", bytes_to_send);
 			bytes_to_send -= send(sock_client, (system_pointers->ram) + offset, 256*1024, MSG_NOSIGNAL);			
 		} else {
-			temp_control(params_struct, system_pointers);
+			temp_control(params_struct, system_pointers, thermal_values_struct);
 			usleep(100);
 		}
 	}
@@ -253,6 +278,16 @@ uint32_t send_recording(int sock_client, int32_t bytes_to_send, params_t* params
 	*(system_pointers->rx_com) &= ~1; //write 0 to bit 0
 	
 	return 1;
+}
+
+uint32_t send_thermal(int sock_client, thermal_values_t* thermal_values_struct) {
+	if (send(sock_client, thermal_values_struct, sizeof(thermal_values_t), MSG_NOSIGNAL) == sizeof(thermal_values_t)) {
+        return 1;
+    } else {
+        perror("Thermal value send failed");
+        return EXIT_FAILURE;
+    }
+    return 0;
 }
 
 int main () {
@@ -286,6 +321,16 @@ int main () {
 						.LI_amp_mode = 0,
 						.dds_phase = FIXED_FREQ_INIT,
 						.measure = 0};
+
+	// Initialise thermal value struct
+	thermal_values_t thermal_values = { .temp1=0,
+										.temp2=0,
+										.temp3=0,
+										.temp4=0,
+										.temp5=0,
+										.temp6=0,
+										.flow1=0,
+										.flow2=0};
 
 //// write bitstream to FPGA
 	system("cat /usr/src/system_wrapper.bit > /dev/xdevcfg ");
@@ -392,25 +437,38 @@ int main () {
 			printf("sock client accepted\n");
 
 			message_type = get_socket_type(sock_client);
-			printf("Request message: %d\n", message_type);
+			//printf("Request message: %d\n", message_type);
 			if (message_type == 0) {
 				printf("get_config\n");
 				get_config(sock_client, &config, &params, &system_regs);
-
 			}
-
+			else if (message_type == 1) {
+				printf("send thermal data\n");
+				if (send_thermal(sock_client, &thermal_values) < 1) {
+					printf("send_recording error");
+				}
+				// set some values for testing
+				thermal_values.temp1++;
+				//thermal_values.temp2=555;
+				thermal_values.temp3=666;
+				thermal_values.temp4=5;
+				thermal_values.temp5=10;
+				thermal_values.temp6=20;
+				thermal_values.flow1=1000;
+				thermal_values.flow2=0;
+			}
 			// Assume any other number is a number of bytes to receive
 			else {
 				bytes_to_send = message_type;
 
-				if (send_recording(sock_client, bytes_to_send, &params, &system_regs) < 1) {
+				if (send_recording(sock_client, bytes_to_send, &params, &system_regs, &thermal_values) < 1) {
 					printf("send_recording error");
 				}
 								
 			}
 			close(sock_client);
 		}else{
-			temp_control(&params, &system_regs);
+			temp_control(&params, &system_regs, &thermal_values);
 		}
 		usleep(100);
 	}

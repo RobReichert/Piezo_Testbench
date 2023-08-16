@@ -4,6 +4,7 @@ import os
 import logging
 from matplotlib.backends.backend_qtagg import (NavigationToolbar2QT as NavigationToolbar)
 from PyQt5.QtCore import QTimer
+from multiprocessing import Array
 from multiprocessing.shared_memory import SharedMemory
 
 
@@ -32,15 +33,21 @@ class Window(QtWidgets.QMainWindow):
         # connect button press function
         self.ui.buttonSend.clicked.connect(self.ButtonPressSend)
         self.ui.buttonMeasurement.clicked.connect(self.ButtonPressMeasure)
-        self.ui.buttonReload.clicked.connect(self.ButtonPressReload)
         self.ui.AmpPhase.released.connect(self.RadioButtonMode)
         self.ui.RC.released.connect(self.RadioButtonMode)
+        self.ui.OFF.released.connect(self.RadioButtonMode)
         self.ui.inputLoad.editingFinished.connect(self.LoadMode)
         self.ui.inputSample.editingFinished.connect(self.SampleMode)
         self.ui.inputTemp.editingFinished.connect(self.TempMode)
+        self.ui.checkBoxShow_I.toggled.connect(self.ChangeCanvas)
+        self.ui.checkBoxShow_U.toggled.connect(self.ChangeCanvas)
+        self.ui.checkBoxShow_L.toggled.connect(self.ChangeCanvas)
+        self.ui.checkBoxShow_F.toggled.connect(self.ChangeCanvas)
+        self.ui.checkBoxShow_LI.toggled.connect(self.ChangeCanvas)
         
-        # Create data processing thread
-        self.data = sp.dataThread()
+        # Create data processing thread and passing the 'TempData' array to the instance
+        self.TempData = Array('i', [0, 0, 0, 0, 0, 0, 0, 0])
+        self.data = sp.dataThread(TempData=self.TempData)
         
         # insert matplotlib graph
         self.layout = QtWidgets.QVBoxLayout(self.ui.MplWidget)
@@ -84,6 +91,11 @@ class Window(QtWidgets.QMainWindow):
         #init monitor timer
         self.timer = QTimer()
         self.timer.timeout.connect(lambda: self.monitor())
+        
+        #init thermal measurement timer
+        self.timer2 = QTimer()
+        self.timer2.timeout.connect(lambda: self.GetThermalMeasuremnt())
+        self.timer2.start(1000) # Start temerature monitoring
 
     def closeEvent(self, event):
         #stop running measurement
@@ -99,6 +111,11 @@ class Window(QtWidgets.QMainWindow):
         # stop monitoring
         try:
             self.timer.stop()
+        except:
+            pass
+        # stop thermal measurement
+        try:
+            self.timer2.stop()
         except:
             pass
         # Close data processing thread
@@ -120,6 +137,32 @@ class Window(QtWidgets.QMainWindow):
         except:
             pass
         
+    def GetThermalMeasuremnt(self):
+        # Send measurement request
+        self.num_bytes = 1 #socket type for getting thermal data
+        packet = [self.FPGA_config, self.num_bytes]
+        try:
+            self.data.GUI_to_data_Queue.put(packet, block=False)
+            logging.debug("packet sent to socket process")
+        except:
+            logging.debug("Didn't send config to data process")
+        # Get Temp data and put it into an array
+        temp_data = list(self.TempData)
+        logging.debug("TempData: {}".format(temp_data))
+        
+        #Write the data to UI Wintow
+        try:
+            self.ui.lcdNumber_Temp.display(temp_data[0]/100)
+            self.ui.lcdNumber_Temp_2.display(temp_data[1]/100)
+            self.ui.lcdNumber_Temp_3.display(temp_data[2]/100)
+            self.ui.lcdNumber_Temp_4.display(temp_data[3]/100)
+            self.ui.lcdNumber_Temp_5.display(temp_data[4]/100)
+            self.ui.lcdNumber_Temp_6.display(temp_data[5]/100)
+            self.ui.lcdNumber_Heat.display(temp_data[6]/100)
+            self.ui.lcdNumber_Heat_2.display(temp_data[7]/100)
+        except:
+            pass
+        
     def MeasureFinished(self):
         # Stop data recording monitoring
         self.timer.stop()
@@ -132,11 +175,10 @@ class Window(QtWidgets.QMainWindow):
         temp = np.ndarray((self.num_samples), dtype=np.dtype([('in0', np.int16), ('in1', np.int16), ('in2', np.int16), ('in3', np.int16), ('in4', np.int16), ('in5', np.int16), ('in6', np.int16), ('in7', np.int16)]), buffer=self.shared_mem.buf)
         self.recording = np.ndarray((self.num_samples), dtype=np.dtype([('in0', float), ('in1', float), ('in2', float), ('in3', float), ('in4', float), ('in5', float), ('in6', float), ('in7', float)]))
         
-        #Get calibration information
+        #Get calibration information (todo: make lockin calibration dependent on radiobutton)
         try:
             csv_file = "Calibration.csv"
             calibration = np.genfromtxt(csv_file, delimiter=';', skip_header=1, usecols=range(1,8))
-            print(calibration)
         except:
             pass
         for i in range(0,7):
@@ -147,7 +189,7 @@ class Window(QtWidgets.QMainWindow):
         del temp
         
         # Canvas replot
-        self.ButtonPressReload()
+        self.ReloadCanvas()
         
         # Store to *.csv
         if self.ui.checkBoxStore.isChecked():
@@ -298,26 +340,47 @@ class Window(QtWidgets.QMainWindow):
             except:
                 pass
             
-    def ButtonPressReload(self):
-        print('ButtonPressReload')
+    def ReloadCanvas(self):
+        #set measurement data to 0 if there is none
+        try:
+            self.canvas_input=[self.recording['in0'], self.recording['in1'], self.recording['in2'], self.recording['in3'], self.recording['in5'], self.recording['in4'], self.recording['in6'], self.recording['in7']]
+        except:
+            self.canvas_input=[[0],[0],[0],[0],[0],[0],[0],[0]]
+        self.canvas.update_canvas(self.canvas_input, self.axis_activated)
         
-        # Update Canvas
-        #self.scale=[float(self.ui.inputScal0.text()),float(self.ui.inputScal1.text()),float(self.ui.inputScal2.text()),float(self.ui.inputScal3.text())]
-        #self.offset=[float(self.ui.inputOffset0.text()),float(self.ui.inputOffset1.text()),float(self.ui.inputOffset2.text()),float(self.ui.inputOffset3.text())]
-        #self.canvas.update_canvas([self.recording['in0'],self.recording['in1'],self.recording['in2'],self.recording['in3'],self.recording['in4'],self.recording['in5'],self.recording['in6'],self.recording['in7']],self.scale,self.offset)
+    def ChangeCanvas(self):
+        #get activated plot channels
+        self.axis_activated=[bool(self.ui.checkBoxShow_I.isChecked()), bool(self.ui.checkBoxShow_U.isChecked()), bool(self.ui.checkBoxShow_L.isChecked()), bool(self.ui.checkBoxShow_F.isChecked()), bool(self.ui.checkBoxShow_LI.isChecked()), bool(self.ui.checkBoxShow_LI.isChecked())]
+        #get lockin mode and adjust axis names
+        if self.FPGA_config["LI_amp_mode"] == 0:
+            self.axis_name=['Current', 'Voltage', 'Length', 'Force', 'nothing', 'nothing']
+            self.axis_activated[4]=False
+            self.axis_activated[5]=False
+        elif self.FPGA_config["LI_amp_mode"] == 1:
+            self.axis_name=['Current', 'Voltage', 'Length', 'Force', 'Amplitude', 'Phase']
+        else:
+            self.axis_name=['Current', 'Voltage', 'Length', 'Force', 'Resistance', 'Capacity']
+        
+        #configure canvas according activated axis 
+        self.canvas.change_canvas(self.axis_activated, self.axis_name)
+        #plot measuremnt data
+        self.ReloadCanvas()
         
     def RadioButtonMode(self):
+        #configure lockin
         if self.ui.OFF.isChecked():
             logging.debug('toggel to AmpPhase')
             self.FPGA_config["LI_amp_mode"] = 0
         
         if self.ui.AmpPhase.isChecked():
-            logging.debug('toggel to RC')
+            logging.debug('toggel to AmpPhase')
             self.FPGA_config["LI_amp_mode"] = 1
             
         if self.ui.RC.isChecked():
             logging.debug('toggel to RC')
             self.FPGA_config["LI_amp_mode"] = 2
+        #change axis names
+        self.ChangeCanvas()
             
     def LoadMode(self):
         if int(self.ui.inputLoad.text()) >=0 and int(self.ui.inputLoad.text()) <4:

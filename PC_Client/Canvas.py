@@ -2,59 +2,82 @@ import numpy as np
 from matplotlib.backends.backend_qtagg import (FigureCanvas)
 import matplotlib.figure as mpl_fig
 
+def make_patch_spines_invisible(ax):
+    ax.set_frame_on(True)
+    ax.yaxis.set_label_position('left')
+    ax.yaxis.set_ticks_position('left')
+
 ## This is the FigureCanvas in which the plot is drawn. (according https://stackoverflow.com/questions/57891219/how-to-make-a-fast-matplotlib-live-plot-in-a-pyqt5-gui)
-class MyFigureCanvas(FigureCanvas):
+class MyFigureCanvas(FigureCanvas):      
     def __init__(self) -> None:
         FigureCanvas.__init__(self, mpl_fig.Figure())
         
-        # Store a figure and ax
-        self.ax  = self.figure.subplots(2,1)
-        self.line0, = self.ax[0].plot([], [],label='IN1')
-        #self.line1, = self.ax[0].plot([], [],label='IN2')
-        self.line2, = self.ax[1].plot([], [],label='OUT1')
-        #self.line3, = self.ax[1].plot([], [],label='OUT2')
+    def change_canvas(self, activated, names):
+        # Delate all axis 
+        for index, _ in enumerate(activated):
+            ax_name = f"ax_{index}"
+            if hasattr(self, ax_name):  # if axis exist
+                getattr(self, ax_name).remove()
+                delattr(self, ax_name)  
         
-        # Set polt options
-        self.ax[0].set_title("In Chart")
-        self.ax[0].grid(True)  
-        self.ax[0].legend(loc='upper right')
-        self.ax[0].set_ylabel("ADC Counts")
-        self.ax[0].set_xlabel("Sample Count")
-        self.ax[1].set_title("Out Chart")
-        self.ax[1].grid(True) 
-        self.ax[1].legend(loc='upper right')
-        self.ax[1].set_ylabel("DAC Counts")
-        self.ax[1].set_xlabel("Sample Count")        
+        num_activated = 0
+        spacing = 0.2  # spacing between axis
         
-        # Set figure options
-        self.figure.tight_layout()
+        first_activ = True
         
-    def update_canvas(self, data, scale, offset):
+        colors = ['red', 'green', 'blue', 'purple', 'orange', 'magenta']  # axis color
         
-        # # 2 Line mode
-        scaled_data=[data[0]*scale[0]+offset[0],data[1]*scale[2]+offset[2]]
-        # ax 0
-        self.line0.set_data(range(len(scaled_data[0])), scaled_data[0])
-        self.ax[0].set_xlim((0,len(scaled_data[0])))
-        self.ax[0].set_ylim((np.min(scaled_data[0]), np.max(scaled_data[0])))
-        # ax 1
-        self.line2.set_data(range(len(scaled_data[1])), scaled_data[1])
-        self.ax[1].set_xlim((0,len(scaled_data[1])))
-        self.ax[1].set_ylim((np.min(scaled_data[1]), np.max(scaled_data[1])))
+        all_lines = []  # Array to collect all lines from different axes
+        all_labels = []  # Array to collect all line labels
         
-        # 4 Line mode
-        # scaled_data=[data[0]*scale[0]+offset[0],data[1]*scale[1]+offset[1],data[2]*scale[2]+offset[2],data[3]*scale[3]+offset[3]]
-        # # ax 0
-        # self.line0.set_data(range(len(scaled_data[0])), scaled_data[0])
-        # self.line1.set_data(range(len(scaled_data[1])), scaled_data[1])
-        # self.ax[0].set_xlim((0,np.max([len(scaled_data[0]),len(scaled_data[1])])))
-        # self.ax[0].set_ylim((np.min([scaled_data[0],scaled_data[1]]), np.max([scaled_data[0],scaled_data[1]])))
-        # # ax 1
-        # self.line2.set_data(range(len(scaled_data[2])), scaled_data[2])
-        # self.line3.set_data(range(len(scaled_data[3])), scaled_data[3])
-        # self.ax[1].set_xlim((0,np.max([len(scaled_data[2]),len(scaled_data[3])])))
-        # self.ax[1].set_ylim((np.min([scaled_data[2],scaled_data[3]]), np.max([scaled_data[2],scaled_data[3]])))
+        for index, activ in enumerate(activated):
+            ax_name = f"ax_{index}" # set variable for axis depending on index
+            line_name = f"line_{index}" # set variable for line depending on index
+            color = colors[index]  # take color according index
+            name = names[index] # take name according index
+            
+            if activ: #check if axis is activated
+                relative_position = -spacing * num_activated
+                num_activated = num_activated + 1
+                    
+                if first_activ: 
+                    setattr(self, ax_name, self.figure.subplots()) #set first axis
+                    self.ax_first = getattr(self, ax_name) #store name of first axis
+                    first_activ = False # set trigger for first axis false
+                    getattr(self, ax_name).set_xlabel("Sample Count") # set labele of x axis
+                    getattr(self, ax_name).grid(True)  # turn on grid
+                    getattr(self, ax_name).set_title("Measurement Values") # name the chart
+                else:
+                    setattr(self, ax_name, self.ax_first.twinx()) #set further axis
+                    getattr(self, ax_name).spines["left"].set_position(("axes", relative_position)) #set position of further axis depending on the number of already activated ones 
+                    make_patch_spines_invisible(getattr(self, ax_name)) # configure the axis to the same look like the first one
+                
+                getattr(self, ax_name).spines["left"].set_color(color)  # set color of axis
+                #getattr(self, ax_name).set_ylabel(name) # put axis lable to the axis
+                setattr(self, line_name, getattr(self, ax_name).plot([], [], label=name, color=color)) #initialise the lines
+                all_lines.append(getattr(self, line_name)[0])  # Append the line to the list
+                all_labels.append(name)  # Append the label to the list
+            
+        if num_activated>0: #check if at least one axis is activated
+            self.ax_first.legend(all_lines, all_labels, loc='upper right') # put a legend in the upper right corner
+            #fit the diagam to window (why ever the needed space is nonlinear --> if statement)
+            if num_activated<=4:
+                self.figure.subplots_adjust(left=0.12 + (0.1*(num_activated-1)), right=0.93, top=0.93, bottom=0.07)
+            else:
+               self.figure.subplots_adjust(left=0.23+(0.056*(num_activated-1)), right=0.93, top=0.93, bottom=0.07) 
+            
+            self.draw() # Redraw the canvas
         
-        # redraw canvas
-        self.draw()
+        
+    def update_canvas(self, data, activated):
+        #plot all activated lines
+        for index, activ in enumerate(activated): 
+            if activ:
+                line_name = f"line_{index}" # set variable for line depending on index
+                getattr(self, line_name)[0].set_data(range(len(data[index])), data[index])  # Update line data
+                ax = getattr(self, line_name)[0].axes # get axis that belong to line
+                ax.set_xlim((0, len(data[index])))  # Update x-axis limits
+                ax.set_ylim(np.min(data[index]), np.max(data[index]))  # Update y-axis limits
+    
+        self.draw() # Redraw the canvas
         

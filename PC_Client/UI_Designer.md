@@ -12,6 +12,7 @@
 2. To generate *.py code from the *.ui type into python command prompt (not Spyder console)
     ```
     pyuic5 -x <source> -o <output> 
+    e.g. pyuic5 -x UI_unformated.ui -o UI_unformated.py
     ```
     Where source and output correspond to the filenames including the path, it is also possible to navigate to the folder beforehand.
     The generated file should not be changed, as all changes will be lost if it is generated again.

@@ -1,4 +1,4 @@
-from multiprocessing import Process, Queue
+from multiprocessing import Process, Queue, Array
 from multiprocessing.shared_memory import SharedMemory
 from time import sleep
 import numpy as np
@@ -27,7 +27,8 @@ class StreamToLogger(object):
         pass
 
 class dataThread:
-    def __init__(self,
+    def __init__(self, 
+                 TempData,
                  port=1001,
                  ip="192.168.1.100",
                  ):
@@ -36,6 +37,8 @@ class dataThread:
         # Queues to pass data to and from main thread/GUI
         self.GUI_to_data_Queue = Queue()
         self.data_to_GUI_Queue = Queue()
+        # inital value of temperature data array accessable by multible prozesses
+        self.TempData = TempData
 
         #FPGA config struct
         self.__config = { "load_mode":0,
@@ -68,6 +71,7 @@ class dataThread:
         self.__ip = ip
         self.__s = None #Socket instance
         self.__start_Process()
+        
 
     def __del__(self):
         """End process and close socket when class been deleted"""
@@ -229,11 +233,31 @@ class dataThread:
             logging.debug(e)
 
         self.__purge_socket()
-        self.__close_socket()            
+        self.__close_socket()   
+    
+    def __getThermalData(self):
+        self.__open_socket()
+        try:
+            self.__s.sendall(np.uint32(1)) #send thermal measurement request
+            ack = int.from_bytes(self.__s.recv(4), "little", signed=False) #wait for acknowledge byte from MCU
+            logging.debug("Ack value received: {}".format(ack))
+            if ack == 1:
+                buffer = self.__s.recv(16)
+                temp_data_values = [int.from_bytes(buffer[i:i+2], byteorder='little') for i in range(0, len(buffer), 2)]
+                for i, value in enumerate(temp_data_values):
+                    self.TempData[i] = value
+            else:
+                logging.debug("Socket type (thermal measurement) not acknowledged by server")
+        except Exception as e:
+            logging.debug("thermal measurement send error")
+            logging.debug(e)
+
+        self.__close_socket()
+        logging.debug("thermal measurement done")
+        
             
         
     # ********************** MAIN LOOP ************************************* #
-
 
     def backgroundThread(self):    # retrieve data
 
@@ -255,6 +279,9 @@ class dataThread:
                 if self.__bytes_to_receive == 0:
                     logging.debug('config send')
                     self.__send_settings_to_FPGA()
+                elif self.__bytes_to_receive == 1:
+                    logging.debug('get thermal data')
+                    self.__getThermalData()
                 else:
                     logging.debug("{} bytes to receive".format(self.__bytes_to_receive))
                     self.__initiate_record()
