@@ -12,7 +12,7 @@ from multiprocessing.shared_memory import SharedMemory
 from UI_unformated import Ui_MainWindow, QtWidgets
 import socket_process as sp
 from Canvas import MyFigureCanvas
-from float_converter import NumpyFloatToFixConverter
+#from float_converter import NumpyFloatToFixConverter
 
 
     
@@ -86,7 +86,7 @@ class Window(QtWidgets.QMainWindow):
                             "measure":0}
         
         # init float to fix conversion
-        self.FloatToFix = NumpyFloatToFixConverter(signed=True, n_bits=32, n_frac=16)
+        #self.FloatToFix = NumpyFloatToFixConverter(signed=True, n_bits=32, n_frac=16)
         
         #init monitor timer
         self.timer = QTimer()
@@ -96,7 +96,8 @@ class Window(QtWidgets.QMainWindow):
         self.timer2 = QTimer()
         self.timer2.timeout.connect(lambda: self.GetThermalMeasuremnt())
         self.timer2.start(1000) # Start temerature monitoring
-
+    
+    # close and disconnet everything if window is closed
     def closeEvent(self, event):
         #stop running measurement
         self.FPGA_config["measure"] = 0
@@ -124,8 +125,8 @@ class Window(QtWidgets.QMainWindow):
         # close logging
         logging.shutdown()   
         
-        
-    def monitor(self): #data recording monitoring --> check for new data
+    # data recording monitoring --> check for new data   
+    def monitor(self): 
         try:
             data_ready, memory_name = self.data.data_to_GUI_Queue.get(block=False)
             logging.debug ("Ready: {}, Memory name: {}".format(data_ready, memory_name))
@@ -137,6 +138,7 @@ class Window(QtWidgets.QMainWindow):
         except:
             pass
         
+    # function to get actual thermal data from FPGA
     def GetThermalMeasuremnt(self):
         # Send measurement request
         self.num_bytes = 1 #socket type for getting thermal data
@@ -162,7 +164,8 @@ class Window(QtWidgets.QMainWindow):
             self.ui.lcdNumber_Heat_2.display(temp_data[7]/100)
         except:
             pass
-        
+    
+    # if measurement is finished get the data from socet, plot canvas and store data to an *.csv file
     def MeasureFinished(self):
         # Stop data recording monitoring
         self.timer.stop()
@@ -224,9 +227,36 @@ class Window(QtWidgets.QMainWindow):
             
             ### trigger next measurement
             self.ButtonPressMeasure()
+
+    # reload canvas data and plot them
+    def ReloadCanvas(self):
+        #set measurement data to 0 if there is none
+        try:
+            self.canvas_input=[self.recording['in0'], self.recording['in1'], self.recording['in2'], self.recording['in3'], self.recording['in5'], self.recording['in4'], self.recording['in6'], self.recording['in7']]
+        except:
+            self.canvas_input=[[0],[0],[0],[0],[0],[0],[0],[0]]
+        self.canvas.update_canvas(self.canvas_input, self.axis_activated)
+    
+    # change canvas setup to change amount of axis
+    def ChangeCanvas(self):
+        #get activated plot channels
+        self.axis_activated=[bool(self.ui.checkBoxShow_I.isChecked()), bool(self.ui.checkBoxShow_U.isChecked()), bool(self.ui.checkBoxShow_L.isChecked()), bool(self.ui.checkBoxShow_F.isChecked()), bool(self.ui.checkBoxShow_LI.isChecked()), bool(self.ui.checkBoxShow_LI.isChecked())]
+        #get lockin mode and adjust axis names
+        if self.FPGA_config["LI_amp_mode"] == 0:
+            self.axis_name=['Current', 'Voltage', 'Length', 'Force', 'nothing', 'nothing']
+            self.axis_activated[4]=False
+            self.axis_activated[5]=False
+        elif self.FPGA_config["LI_amp_mode"] == 1:
+            self.axis_name=['Current', 'Voltage', 'Length', 'Force', 'Amplitude', 'Phase']
+        else:
+            self.axis_name=['Current', 'Voltage', 'Length', 'Force', 'Resistance', 'Capacity']
         
+        #configure canvas according activated axis 
+        self.canvas.change_canvas(self.axis_activated, self.axis_name)
+        #plot measuremnt data
+        self.ReloadCanvas()
         
-## Define button functions
+### Define button functions
     def ButtonPressSend(self):
         ### Set Load parameter
         if int(self.ui.inputLoad.text()) == 0: #fixed force
@@ -272,6 +302,9 @@ class Window(QtWidgets.QMainWindow):
         if int(self.ui.inputTemp.text()) == 0:
             self.FPGA_config["param_T1"] = int(self.ui.inputT1.text())
             self.FPGA_config["param_T2"] = int(self.ui.inputT2.text())
+        elif int(self.ui.inputTemp.text()) == 3:
+            self.FPGA_config["param_T1"] = int(float(self.ui.inputT1.text())*1000)
+            self.FPGA_config["param_T2"] = int(float(self.ui.inputT2.text())*1000)
         else:
             self.FPGA_config["param_T1"] = 20
             self.FPGA_config["param_T2"] = 20
@@ -300,8 +333,7 @@ class Window(QtWidgets.QMainWindow):
             logging.debug("packet sent to socket process")
         except:
             logging.debug("Didn't send config to data process")
-            
-        
+               
     def ButtonPressMeasure(self):
         if self.measurement==0: 
             print('measure')
@@ -339,32 +371,6 @@ class Window(QtWidgets.QMainWindow):
                 self.shared_mem.unlink()
             except:
                 pass
-            
-    def ReloadCanvas(self):
-        #set measurement data to 0 if there is none
-        try:
-            self.canvas_input=[self.recording['in0'], self.recording['in1'], self.recording['in2'], self.recording['in3'], self.recording['in5'], self.recording['in4'], self.recording['in6'], self.recording['in7']]
-        except:
-            self.canvas_input=[[0],[0],[0],[0],[0],[0],[0],[0]]
-        self.canvas.update_canvas(self.canvas_input, self.axis_activated)
-        
-    def ChangeCanvas(self):
-        #get activated plot channels
-        self.axis_activated=[bool(self.ui.checkBoxShow_I.isChecked()), bool(self.ui.checkBoxShow_U.isChecked()), bool(self.ui.checkBoxShow_L.isChecked()), bool(self.ui.checkBoxShow_F.isChecked()), bool(self.ui.checkBoxShow_LI.isChecked()), bool(self.ui.checkBoxShow_LI.isChecked())]
-        #get lockin mode and adjust axis names
-        if self.FPGA_config["LI_amp_mode"] == 0:
-            self.axis_name=['Current', 'Voltage', 'Length', 'Force', 'nothing', 'nothing']
-            self.axis_activated[4]=False
-            self.axis_activated[5]=False
-        elif self.FPGA_config["LI_amp_mode"] == 1:
-            self.axis_name=['Current', 'Voltage', 'Length', 'Force', 'Amplitude', 'Phase']
-        else:
-            self.axis_name=['Current', 'Voltage', 'Length', 'Force', 'Resistance', 'Capacity']
-        
-        #configure canvas according activated axis 
-        self.canvas.change_canvas(self.axis_activated, self.axis_name)
-        #plot measuremnt data
-        self.ReloadCanvas()
         
     def RadioButtonMode(self):
         #configure lockin
@@ -382,6 +388,7 @@ class Window(QtWidgets.QMainWindow):
         #change axis names
         self.ChangeCanvas()
             
+### Define settings change if testsetup mode is changed
     def LoadMode(self):
         if int(self.ui.inputLoad.text()) >=0 and int(self.ui.inputLoad.text()) <4:
             self.FPGA_config["load_mode"] = int(self.ui.inputLoad.text())

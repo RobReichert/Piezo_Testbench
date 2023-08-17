@@ -5,8 +5,8 @@
     This library is free software.
 */
 
-//#ifndef TwoWire_h
-//#define TwoWire_h
+#ifndef TwoWire_h
+#define TwoWire_h
 
 #include <inttypes.h>
 
@@ -53,4 +53,4 @@ public:
 
 };
 
-//#endif
+#endif

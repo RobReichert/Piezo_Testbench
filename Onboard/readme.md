@@ -41,7 +41,7 @@ or follow this steps
   Account: root
   PW: changeme
   ````
-- Type ``gcc -o feedback_server -g -O3 -march=armv7-a -mtune=cortex-a9 -D_GNU_SOURCE /usr/src/feedback_server.c -lm`` to compile the *c file
+- Type ``gcc -o feedback_server -g -O3 -march=armv7-a -mtune=cortex-a9 -D_GNU_SOURCE /usr/src/feedback_server.c -lm`` to compile the *c file (only once after change)
 - Type ``./feedback_server`` to start the server
 - Press ``strg+c`` to kill the server
 - If i2c comunication is used coppy ``wire.cpp`` and ``wire.h`` to ``/usr/src`` and type ``gcc -o i2c -g -O3 -march=armv7-a -mtune=cortex-a9 -D_GNU_SOURCE /usr/src/feedback_server.cpp /usr/src/wire.cpp -lm`` for compiling

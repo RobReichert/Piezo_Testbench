@@ -99,6 +99,7 @@ void signal_handler(int sig) {
 	interrupted = 1;
 }
 
+//temperature controller will be executed every 10000us
 uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointers, thermal_values_t* thermal_values_struct){
 	//every thing in heare is for testing only and can be deleted if temp control is implemented
 	//Print UI input
@@ -116,8 +117,10 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointer
 	(thermal_values_struct->temp2)++;
 }
 
-// Receive message "header" bytes. Return acknowledge of config send if header ==0, otherwise echo back
-// bytes_to_send to confirm a recording request
+// Receive message "header" bytes. 
+// Return acknowledge of config send if header ==0
+// Return acknowledge of thermal value request if header ==1
+// otherwise echo back bytes_to_send to confirm a recording request
 uint32_t get_socket_type(int sock_client)
 {
 	int32_t message = 0;
@@ -157,7 +160,9 @@ uint32_t get_socket_type(int sock_client)
 	}
 }
 
-uint32_t get_config(int sock_client, config_t* config_struct, params_t* params_struct, system_pointers_t *system_pointers) {
+//Get config from UI and write it to params_struct
+uint32_t get_config(int sock_client, config_t* config_struct, params_t* params_struct, system_pointers_t *system_pointers) 
+{
 	//Block waiting for config struct
 	int wait_count=0;
 	while(wait_count<=1000){
@@ -241,6 +246,7 @@ uint32_t get_config(int sock_client, config_t* config_struct, params_t* params_s
 	return EXIT_FAILURE;
 }
 
+//Try to send the recorded data if possible, otherwise run a temperature controller cycle and wait 10000us
 uint32_t send_recording(int sock_client, int32_t bytes_to_send, params_t* params_struct, system_pointers_t *system_pointers, thermal_values_t* thermal_values_struct) {
 	// Enable RAM writer and CIC divider, send "go" signal to GUI
 	uint32_t position, offset = 0;
@@ -266,8 +272,9 @@ uint32_t send_recording(int sock_client, int32_t bytes_to_send, params_t* params
 			printf("bytes to send: %d \n", bytes_to_send);
 			bytes_to_send -= send(sock_client, (system_pointers->ram) + offset, 256*1024, MSG_NOSIGNAL);			
 		} else {
+			// if nothing can be send do a temperatur controller cycle and wait for 10000us
 			temp_control(params_struct, system_pointers, thermal_values_struct);
-			usleep(100);
+			usleep(10000);
 		}
 	}
 	signal(SIGINT, SIG_DFL); //reset interrupt handler to default
@@ -280,6 +287,7 @@ uint32_t send_recording(int sock_client, int32_t bytes_to_send, params_t* params
 	return 1;
 }
 
+//Send thermal sensor values to UI
 uint32_t send_thermal(int sock_client, thermal_values_t* thermal_values_struct) {
 	if (send(sock_client, thermal_values_struct, sizeof(thermal_values_t), MSG_NOSIGNAL) == sizeof(thermal_values_t)) {
         return 1;
@@ -449,7 +457,7 @@ int main () {
 				}
 				// set some values for testing
 				thermal_values.temp1++;
-				//thermal_values.temp2=555;
+				//thermal_values.temp2=555; --> counted up in temp_control for testing
 				thermal_values.temp3=666;
 				thermal_values.temp4=5;
 				thermal_values.temp5=10;
@@ -468,14 +476,13 @@ int main () {
 			}
 			close(sock_client);
 		}else{
+			// if no thing to do, do a temperatur controller cycle and wait for 10000us
 			temp_control(&params, &system_regs, &thermal_values);
+			usleep(10000);
 		}
-		usleep(100);
 	}
 	// Stop measurement
 	*(system_regs.rx_com) &= ~1;
-
 	close(sock_server);
-
 	return EXIT_SUCCESS;
 }
