@@ -332,25 +332,25 @@ int main(void)
 
         printf("(12 bit) channel voltage AD value 0: %d\n\n", voltage_AD_0);
 		
-		delay(100);
+		delay(1);
 
         voltage_AD_1 = read_channel_voltage_AD(Wire, Device_address, ADC128D818_CHANNEL_IN1);
 
         printf("(12 bit) channel voltage AD value 1: %d\n\n", voltage_AD_1);
 
-        delay(100);
+        delay(1);
         
         voltage_AD_2 = read_channel_voltage_AD(Wire, Device_address, ADC128D818_CHANNEL_IN2);
 
         printf("(12 bit) channel voltage AD value 2: %d\n\n", voltage_AD_2);
 
-        delay(100);
+        delay(1);
 
         voltage_AD_3 = read_channel_voltage_AD(Wire, Device_address, ADC128D818_CHANNEL_IN3);
 
         printf("(12 bit) channel voltage AD value 3: %d\n\n", voltage_AD_3);
 
-        delay(100);
+        delay(1);
 
 
 
