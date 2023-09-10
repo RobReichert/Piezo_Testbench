@@ -1,8 +1,9 @@
 #include "wire.h"
 #include <stdio.h>
 #include <time.h>
+#include <stdbool.h>
 
-#define DEBUG 1
+#define DEBUG 0
 #define MAX_ITER_NOT_READY 10
 #define MAX_MS_WAIT_FOR_NOT_BUSY  200 // ~ 2 x 8 (channels) x 12.2 ms ( convertion time for each channel - see 9.2.2.2.6)
 
@@ -87,41 +88,57 @@
 #define Device_address ADC128D818_ADDRESS_LOW_LOW
 
 
-void delay(int number_of_seconds)
+void delay(int number_of_mili_seconds)
 {
     // Converting time into milli_seconds
-    int milli_seconds = 1000 * number_of_seconds;
+    int micro_seconds = 1000 * number_of_mili_seconds;
  
     // Storing start time
     clock_t start_time = clock();
  
     // looping till required time is not achieved
-    while (clock() < start_time + milli_seconds)
+    while (clock() < start_time + micro_seconds)
         ;
 }
 
+/// @brief Writes a value to a specified register address of a device using the TwoWire protocol.
+/// @param Wire The TwoWire object used for communication.
+/// @param DEV_address The address of the device.
+/// @param reg_address The register address to write to.
+/// @param val The value to be written.
 void writeTo(TwoWire Wire,uint8_t DEV_address, uint8_t reg_address, int val)
 {
     Wire.beginTransmission(DEV_address);           //start transmission to the device address
-    Wire.writeData(reg_address);                      // send register address
-    Wire.writeData(val);                          // send value to write
-    Wire.endTransmission();                   //end transmission
+    Wire.writeData(reg_address);                   // send register address
+    Wire.writeData(val);                           // send value to write
+    Wire.endTransmission();                        //end transmission
 }
 
+/// @brief Reads one byte of data from a specified register address of a device using the TwoWire protocol.
+/// @param Wire The TwoWire object used for communication.
+/// @param DEV_address The address of the device.
+/// @param reg_address The register address to read from.
+/// @return The value read from the specified register address.
 uint8_t read_one_byte(TwoWire Wire,int DEV_address, uint8_t reg_address)
 {
     uint8_t val = -1;
     Wire.beginTransmission(DEV_address);
-    Wire.writeData(reg_address); // Start with ...REG
+    Wire.writeData(reg_address);        // Start with ...REG
     Wire.endTransmission();
-    Wire.requestFrom(DEV_address, 1); // Read 1 byte total
+    Wire.requestFrom(DEV_address, 1);   // Read 1 byte total
 
     val = Wire.readData();
 
     return val;
 }
 
-uint16_t read_channel_voltage_AD(TwoWire Wire,int DEV_address, uint8_t channel)
+
+/// @brief Read the 12 bit AD convertion result of ADC128D818 from the specific channel using the TwoWire protocol.
+/// @param Wire The TwoWire object used for communication.
+/// @param DEV_address The address of the device (ADC128D818).
+/// @param channel The channel number of the ADC128D818 to read from
+/// @return The AD value (12 bit) read from the channel
+static uint16_t _read_channel_voltage_AD(TwoWire Wire,int DEV_address, uint8_t channel)
 {
     uint8_t channel_adr;
     uint16_t result;
@@ -134,9 +151,9 @@ uint16_t read_channel_voltage_AD(TwoWire Wire,int DEV_address, uint8_t channel)
 
     // the register for this chanel
     channel_adr = ADC128D818_REG_Channel_Readings_Registers + channel;
-#ifdef DEBUG
-    printf("channel: 0x%x\n",channel_adr);
-#endif
+    #if DEBUG==1
+        printf("channel: 0x%x\n",channel_adr);
+    #endif
 
     // test shutdown mode
     //TODO, or can skip
@@ -150,8 +167,8 @@ uint16_t read_channel_voltage_AD(TwoWire Wire,int DEV_address, uint8_t channel)
     }
     else
     {
-        #ifdef DEBUG
-        printf("config_reg_val: 0x%02x\n",config_reg_val);
+        #if DEBUG==1
+            printf("config_reg_val: 0x%02x\n",config_reg_val);
         #endif
     }
 
@@ -164,9 +181,9 @@ uint16_t read_channel_voltage_AD(TwoWire Wire,int DEV_address, uint8_t channel)
 
     //result = ( Wire.readData() | Wire.readData() << 8); //TODO: to be confirmed
     result = ( Wire.readData() << 8 | Wire.readData() );
-#ifdef DEBUG
-    printf("result 16 bit: 0x%02x\n",result);
-#endif
+    #if DEBUG==1
+        printf("result 16 bit: 0x%02x\n",result);
+    #endif
 
     return (result >> 4); // 12 bits for voltage
 }
@@ -181,19 +198,14 @@ void write_Bytes_To(TwoWire Wire,int DEV_address, int reg_address, int val, int 
 }
 */
 
-
-
-int main(void)
+uint16_t read_channel_ADC128D818(TwoWire Wire, uint8_t channel)
 {
-    TwoWire Wire;
-	Wire.begin(); // to start the IIC communication
+    return _read_channel_voltage_AD(Wire,Device_address,channel);
+}
 
+bool init_ADC128D818(TwoWire Wire)
+{
     //adc128d818_init
-
-    // Wire.beginTransmission(ADC128D818_ADDRESS_LOW_LOW);
-    // Wire.writeData(ADC128D818_REG_Manufacturer_ID_Register); // Start with ADC128D818_REG_Manufacturer_ID_Register
-    // Wire.endTransmission();
-    // Wire.requestFrom(ADC128D818_ADDRESS_LOW_LOW, 1); // Read 1 register total
 
     // test alive: read the Manufacturer ID register (should be 0x01)
     uint8_t check = read_one_byte(Wire, Device_address, ADC128D818_REG_Manufacturer_ID_Register);
@@ -202,11 +214,13 @@ int main(void)
     {
         printf("The device is not ADC128D818 (or not connected).\n");
         printf("Manufacturer_ID:%d\n", check);
-        return 0;
+        return false;
     }
     else
     {
+    #if Debug==1
         printf("The device is ADC128D818!.\n");
+    #endif
     }
 
     // page 33: Quick start
@@ -225,7 +239,7 @@ int main(void)
 
                 printf("Wait for not busy ADC128D818 timeout\r\n");
 
-                return 0; 
+                return false; 
             }
             //printf("> Wait for device ready. Trial #%u\r\n", cont);
 
@@ -241,145 +255,151 @@ int main(void)
         } while (busy_reg&( ADC128D818_STATUS_NOT_READY_BIT )); // if not ready 0x02, try again
 
 
-        //    * 4. Program the Advanced Configuration Register -- Address 0Bh:
-        // * - a. Choose to use the internal or external VREF (bit 0).
-        // * - b. Choose the mode of operation (bits [2:1]).
-        writeTo(Wire, Device_address, ADC128D818_REG_Advanced_Configuration_Register, ADC128D818_VREF_EXT | (ADC128D818_OPERATION_MODE_1 << 1));
+    //    * 4. Program the Advanced Configuration Register -- Address 0Bh:
+    // * - a. Choose to use the internal or external VREF (bit 0).
+    // * - b. Choose the mode of operation (bits [2:1]).
+    writeTo(Wire, Device_address, ADC128D818_REG_Advanced_Configuration_Register, ADC128D818_VREF_EXT | (ADC128D818_OPERATION_MODE_1 << 1));
 
-        // 5. Program the Conversion Rate Register (address 07h).
-        //ADC128D818_RATE_CONTINUOUS 0b00000001
-        writeTo(Wire, Device_address, ADC128D818_REG_Conversion_Rate_Register, 0b00000001);
-
-
-        // 6. Choose to enable or disable the channels using the Channel Disable Register (address 08h).
-        // enable all the channels:0b00000000 (1 means disable)
-        //writeTo(Wire, Device_address, ADC128D818_REG_Channel_Disable_Register, 0b00000000);
-        writeTo(Wire, Device_address, ADC128D818_REG_Channel_Disable_Register, 0x00);
-
-        printf("Will read channel disable status.\n\n");    
-        uint8_t channel_enable_status = read_one_byte(Wire, Device_address, ADC128D818_REG_Channel_Disable_Register);
-        
+    // 5. Program the Conversion Rate Register (address 07h).
+    //ADC128D818_RATE_CONTINUOUS 0b00000001
+    writeTo(Wire, Device_address, ADC128D818_REG_Conversion_Rate_Register, 0b00000001);
 
 
-        if (channel_enable_status == 0b00000000)
-        {
-            // should be 0000 0000
-            printf("channel_enable_status: 0x%02x\n", channel_enable_status); 
-            printf("Channel enable 1st time: successful!\n\n");
-        }
-        else
-        {
-            printf("channel_enable_status 1st time: 0x%02x\n", channel_enable_status);
-            printf("Channel enable 1st time: not successful?\n");
-        }
-        
+    // 6. Choose to enable or disable the channels using the Channel Disable Register (address 08h).
+    // enable all the channels:0b00000000 (1 means disable)
+    //writeTo(Wire, Device_address, ADC128D818_REG_Channel_Disable_Register, 0b00000000);
+    writeTo(Wire, Device_address, ADC128D818_REG_Channel_Disable_Register, 0x00);
+
+#if Debug==1
+    printf("Will read channel disable status.\n\n");    
+    uint8_t channel_enable_status = read_one_byte(Wire, Device_address, ADC128D818_REG_Channel_Disable_Register);
+    
 
 
-        // 7. Using the Interrupt Mask Register (address 03h), choose to mask or not to mask the interrupt status from propagating to the interrupt output pin, INT.
-        // default: not masked
+    if (channel_enable_status == 0b00000000)
+    {
+        // should be 0000 0000
+        printf("channel_enable_status: 0x%02x\n", channel_enable_status); 
+        printf("Channel enable 1st time: successful!\n\n");
+    }
+    else
+    {
+        printf("channel_enable_status 1st time: 0x%02x\n", channel_enable_status);
+        printf("Channel enable 1st time: not successful?\n");
+    }
+#endif
+    
 
 
-        // 8. Program the Limit Registers (addresses 2Ah - 39h).
-        // can skip?
-        writeTo(Wire, Device_address, ADC128D818_REG_Limit_Registers+ ADC128D818_CHANNEL_IN0 * 2 + ADC128D818_LIMIT_HIGH,0xFF);
+    // 7. Using the Interrupt Mask Register (address 03h), choose to mask or not to mask the interrupt status from propagating to the interrupt output pin, INT.
+    // default: not masked
 
 
-        // 9. Set the 'START' bit of the Configuration Register (address 00h, bit 0) to 1.
-        writeTo(Wire, Device_address, ADC128D818_REG_Configuration_Register, 1);
-
-        // 10. Set the 'INT_Clear' bit (address 00h, bit 3) to 0. If needed, program the 'INT_Enable' bit (address 00h, bit 1) to 1 to enable the INT output.
-        // already done in step 9?
+    // 8. Program the Limit Registers (addresses 2Ah - 39h).
+    // can skip?
+    writeTo(Wire, Device_address, ADC128D818_REG_Limit_Registers+ ADC128D818_CHANNEL_IN0 * 2 + ADC128D818_LIMIT_HIGH,0xFF);
 
 
+    // 9. Set the 'START' bit of the Configuration Register (address 00h, bit 0) to 1.
+    writeTo(Wire, Device_address, ADC128D818_REG_Configuration_Register, 1);
+
+    // 10. Set the 'INT_Clear' bit (address 00h, bit 3) to 0. If needed, program the 'INT_Enable' bit (address 00h, bit 1) to 1 to enable the INT output.
+    // already done in step 9?
+
+    #if Debug==1
         printf("To the end of the configuration\n\n");
+    #endif
+
+    // cheak config
+#if Debug==1
+    channel_enable_status = read_one_byte(Wire, Device_address, ADC128D818_REG_Channel_Disable_Register);
 
 
-        // cheak config
+    if (channel_enable_status == 0b00000000)
+    {
+        // should be 0000 0000
+        printf("channel_enable_status: %d\n", channel_enable_status); 
+        printf("Channel enable 2nd time: successful!\n\n");
+    }
+    else
+    {
+        printf("channel_enable_status 2nd time: %d\n", channel_enable_status);
+        printf("Channel enable 2nd time: not successful?\n");
+    }
+#endif
 
+    delay(100); // it is necessary to wait here before going further
+
+    return true;
+}
+
+
+
+
+int main(void)
+{
+    TwoWire Wire;
+	Wire.begin(); // to start the IIC communication
+
+    bool init_status = init_ADC128D818(Wire);
+    if (init_status != true)
+    {
+        printf("Fail to initialize ADC128D818.");
+        return 0;
+    }
+
+
+    // read channel value
+    
+    uint16_t val_channel_0;
+    uint16_t val_channel_1;
+    uint16_t val_channel_2;
+    uint16_t val_channel_3;
+    uint16_t val_channel_4;
+    uint16_t val_channel_5;
+    uint16_t val_channel_6;
+    uint16_t val_channel_7;
+
+    for(int i=1;i<2;i++)
+    {
+        val_channel_0 = read_channel_ADC128D818(Wire, 0);
+        printf("(12 bit) channel value 0: %d\n\n", val_channel_0);
         
 
-
-        channel_enable_status = read_one_byte(Wire, Device_address, ADC128D818_REG_Channel_Disable_Register);
-
-        if (channel_enable_status == 0b00000000)
-        {
-            // should be 0000 0000
-            printf("channel_enable_status: %d\n", channel_enable_status); 
-            printf("Channel enable 2nd time: successful!\n\n");
-        }
-        else
-        {
-            printf("channel_enable_status 2nd time: %d\n", channel_enable_status);
-            printf("Channel enable 2nd time: not successful?\n");
-        }
+        val_channel_1 = read_channel_ADC128D818(Wire, 1);
+        printf("(12 bit) channel value 1: %d\n\n", val_channel_1);
 
 
+        val_channel_2 = read_channel_ADC128D818(Wire, 2);
+        printf("(12 bit) channel value 2: %d\n\n", val_channel_2);
+
+
+        val_channel_3 = read_channel_ADC128D818(Wire, 3);
+        printf("(12 bit) channel value 3: %d\n\n", val_channel_3);
+
+
+        val_channel_4 = read_channel_ADC128D818(Wire, 4);
+        printf("(12 bit) channel value 4: %d\n\n", val_channel_4);
         
 
+        val_channel_5 = read_channel_ADC128D818(Wire, 5);
+        printf("(12 bit) channel value 5: %d\n\n", val_channel_5);
 
-        // read channel value
-        uint16_t voltage_AD_0;
-        uint16_t voltage_AD_1;
-        uint16_t voltage_AD_2;
-        uint16_t voltage_AD_3;
 
-        uint16_t voltage_AD_4;
-        uint16_t voltage_AD_5;
-        uint16_t voltage_AD_6;
-        uint16_t voltage_AD_7;
+        val_channel_6 = read_channel_ADC128D818(Wire, 6);
+        printf("(12 bit) channel value 6: %d\n\n", val_channel_6);
 
-        voltage_AD_0 = read_channel_voltage_AD(Wire, Device_address, ADC128D818_CHANNEL_IN0);
 
-        printf("(12 bit) channel voltage AD value 0: %d\n\n", voltage_AD_0);
-		
-		delay(1);
+        val_channel_7 = read_channel_ADC128D818(Wire, 7);
+        printf("(12 bit) channel value 7: %d\n\n", val_channel_7);
 
-        voltage_AD_1 = read_channel_voltage_AD(Wire, Device_address, ADC128D818_CHANNEL_IN1);
-
-        printf("(12 bit) channel voltage AD value 1: %d\n\n", voltage_AD_1);
-
-        delay(1);
-        
-        voltage_AD_2 = read_channel_voltage_AD(Wire, Device_address, ADC128D818_CHANNEL_IN2);
-
-        printf("(12 bit) channel voltage AD value 2: %d\n\n", voltage_AD_2);
-
-        delay(1);
-
-        voltage_AD_3 = read_channel_voltage_AD(Wire, Device_address, ADC128D818_CHANNEL_IN3);
-
-        printf("(12 bit) channel voltage AD value 3: %d\n\n", voltage_AD_3);
-
-        delay(1);
+        //delay(1000);
+    }
 
 
 
-        voltage_AD_4 = read_channel_voltage_AD(Wire, Device_address, ADC128D818_CHANNEL_IN4);
 
-        printf("(12 bit) channel voltage AD value 4: %d\n\n", voltage_AD_4);
-		
-		delay(100);
-
-        voltage_AD_5 = read_channel_voltage_AD(Wire, Device_address, ADC128D818_CHANNEL_IN5);
-
-        printf("(12 bit) channel voltage AD value 5: %d\n\n", voltage_AD_5);
-
-        delay(100);
-        
-        voltage_AD_6 = read_channel_voltage_AD(Wire, Device_address, ADC128D818_CHANNEL_IN6);
-
-        printf("(12 bit) channel voltage AD value 6: %d\n\n", voltage_AD_6);
-
-        delay(100);
-
-        voltage_AD_7 = read_channel_voltage_AD(Wire, Device_address, ADC128D818_CHANNEL_IN7);
-
-        printf("(12 bit) channel voltage AD value 7: %d\n\n", voltage_AD_7);
-
-        delay(100);
-
-
-
+    //printf("new complie\n");
 
     return 0;
 }
