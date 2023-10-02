@@ -418,9 +418,13 @@ if __name__ == "__main__":
     
     #Open QT Window and import as ui
     app=QtWidgets.QApplication(sys.argv)
-    self=Window()
-    self.showMaximized() #setGeometry(300, 300, 800, 600) #X co-ordinate, Y co-ordinate, Width, Height
-    self.show()
+    # self=Window()
+    # self.showMaximized() #setGeometry(300, 300, 800, 600) #X co-ordinate, Y co-ordinate, Width, Height
+    # self.show()
+    
+    main_win = Window()  # 创建窗体
+    main_win.show()
+    sys.exit(app.exec_()) # 进入程序的主循环直到exit()被调用,随后退出进程
     
     #crate client
     #serverClient=Client()
