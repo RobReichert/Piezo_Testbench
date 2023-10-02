@@ -248,9 +248,9 @@ bool init_ADC128D818(TwoWire Wire)
             // busy: 0000 0001    not ready: 0000 0010 = 0x02
             // not busy and ready: 0x00
             busy_reg = read_one_byte(Wire, Device_address, ADC128D818_REG_Busy_Status_Register);
-
+        #if DEBUG==1
             printf(">>> Busy Status Register value: 0x%x\r\n", busy_reg);
-
+        #endif
 
         } while (busy_reg&( ADC128D818_STATUS_NOT_READY_BIT )); // if not ready 0x02, try again
 
