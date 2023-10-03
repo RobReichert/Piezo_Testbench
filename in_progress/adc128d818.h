@@ -95,14 +95,14 @@ void delay(int);
 class ADC128D818
 {
     private:
-        TwoWire Wire;
+        static TwoWire Wire;
         void writeTo(TwoWire Wire,uint8_t DEV_address, uint8_t reg_address, int val);
         uint8_t read_one_byte(TwoWire Wire,int DEV_address, uint8_t reg_address);
         uint16_t _read_channel_voltage_AD(TwoWire Wire,int DEV_address, uint8_t channel);
 
 
     public:
-        ADC128D818();
+        ADC128D818(); // constructor, initialize the ADC128D818
         uint16_t read_channel(uint8_t channel);
 
 };
