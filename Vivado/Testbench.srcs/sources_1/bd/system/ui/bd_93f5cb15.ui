@@ -1,111 +1,56 @@
 {
    "ActiveEmotionalView":"Default View",
-   "Default View_ScaleFactor":"2.12269",
-   "Default View_TopLeft":"2622,441",
+   "Default View_ScaleFactor":"1.07791",
+   "Default View_TopLeft":"-173,-32",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS
 #  -string -flagsOSRD
-preplace port DDR -pg 1 -lvl 5 -x 3360 -y 380 -defaultsOSRD
-preplace port FIXED_IO -pg 1 -lvl 5 -x 3360 -y 400 -defaultsOSRD
-preplace port S_AXIS -pg 1 -lvl 0 -x -70 -y 120 -defaultsOSRD
-preplace port M_AXIS -pg 1 -lvl 5 -x 3360 -y 110 -defaultsOSRD
-preplace port M_AXIS_dds_out -pg 1 -lvl 5 -x 3360 -y 280 -defaultsOSRD
-preplace port aclk -pg 1 -lvl 5 -x 3360 -y 420 -defaultsOSRD
-preplace port locked -pg 1 -lvl 5 -x 3360 -y 480 -defaultsOSRD
-preplace port adc_clk_p_i -pg 1 -lvl 0 -x -70 -y 450 -defaultsOSRD
-preplace port adc_clk_n_i -pg 1 -lvl 0 -x -70 -y 470 -defaultsOSRD
-preplace port clk_out2 -pg 1 -lvl 5 -x 3360 -y 520 -defaultsOSRD
-preplace portBus aresetn -pg 1 -lvl 5 -x 3360 -y 500 -defaultsOSRD
-preplace inst Core -pg 1 -lvl 3 -x 1370 -y 200 -defaultsOSRD
-preplace inst Memory_IO -pg 1 -lvl 2 -x 650 -y 160 -defaultsOSRD
-preplace inst Reg_Brakeout -pg 1 -lvl 4 -x 2648 -y 120 -defaultsOSRD
-preplace inst dds_compiler_0 -pg 1 -lvl 4 -x 2648 -y 790 -defaultsOSRD
-preplace inst Measurment_control_0 -pg 1 -lvl 1 -x 160 -y 340 -defaultsOSRD
-preplace inst Core|rst_0 -pg 1 -lvl 2 -x 1670 -y 460 -defaultsOSRD
-preplace inst Core|pll_0 -pg 1 -lvl 2 -x 1670 -y 640 -defaultsOSRD
-preplace inst Core|ps_0 -pg 1 -lvl 2 -x 1670 -y 230 -defaultsOSRD
-preplace inst Core|ps_0_axi_periph -pg 1 -lvl 3 -x 2040 -y 340 -defaultsOSRD
-preplace inst Core|external_reset_fake -pg 1 -lvl 1 -x 1380 -y 440 -defaultsOSRD
-preplace inst Memory_IO|axi_sts_register_0 -pg 1 -lvl 1 -x 770 -y 310 -defaultsOSRD
-preplace inst Memory_IO|axi_cfg_register_0 -pg 1 -lvl 1 -x 770 -y 460 -defaultsOSRD
-preplace inst Memory_IO|axis_ram_writer_0 -pg 1 -lvl 1 -x 770 -y 150 -defaultsOSRD
-preplace inst Reg_Brakeout|status_concat_1 -pg 1 -lvl 2 -x 2988 -y 130 -defaultsOSRD
-preplace inst Reg_Brakeout|sample_rate_divider -pg 1 -lvl 1 -x 2708 -y 290 -defaultsOSRD
-preplace inst Reg_Brakeout|RAM_addres -pg 1 -lvl 2 -x 2988 -y 540 -defaultsOSRD
-preplace inst Reg_Brakeout|measure -pg 1 -lvl 2 -x 2988 -y 640 -defaultsOSRD
-preplace inst Reg_Brakeout|axis_variable_0 -pg 1 -lvl 2 -x 2988 -y 280 -defaultsOSRD
-preplace inst Reg_Brakeout|zero_add_to_address -pg 1 -lvl 1 -x 2708 -y 130 -defaultsOSRD
-preplace inst Reg_Brakeout|axis_variable_1 -pg 1 -lvl 2 -x 2988 -y 420 -defaultsOSRD
-preplace inst Reg_Brakeout|DDS_phase -pg 1 -lvl 1 -x 2708 -y 430 -defaultsOSRD
-preplace inst Reg_Brakeout|zero_add_2 -pg 1 -lvl 1 -x 2708 -y 530 -defaultsOSRD
-preplace netloc slice_3_dout 1 1 4 380 930 NJ 930 NJ 930 3280
-preplace netloc writer_0_sts_data 1 2 2 1050 60 2440J
-preplace netloc Memory_IO_cfg_data 1 2 2 1070 70 2420J
-preplace netloc pll_0_clk_out1 1 0 5 -30 250 370 10 NJ 10 2400 870 3290J
-preplace netloc pll_0_locked 1 3 2 2380J 890 3300J
-preplace netloc rst_0_peripheral_aresetn 1 0 5 -30 430 350 740 NJ 740 2430 900 3320J
-preplace netloc adc_clk_p_i_1 1 0 3 NJ 450 340J 620 NJ
-preplace netloc adc_clk_n_i_1 1 0 3 NJ 470 330J 640 NJ
-preplace netloc pll_0_clk_out2 1 3 2 2370J 880 3310J
-preplace netloc Reg_Brakeout_dout 1 1 4 390 910 NJ 910 NJ 910 3250
-preplace netloc Reg_Brakeout_dout5 1 0 5 -40 920 NJ 920 NJ 920 NJ 920 3270
-preplace netloc In3_1 1 1 3 360J 0 NJ 0 2370
-preplace netloc rate_0_M_AXIS 1 4 1 3250J 110n
-preplace netloc ps_0_axi_periph_M00_AXI 1 1 3 380 20 NJ 20 2380
-preplace netloc ps_0_axi_periph_M01_AXI 1 1 3 390 30 NJ 30 2360
-preplace netloc writer_0_M_AXI 1 2 1 1060 140n
-preplace netloc ps_0_FIXED_IO 1 3 2 2390J 0 3310J
-preplace netloc ps_0_DDR 1 3 2 2410J 10 3260J
-preplace netloc conv_0_M_AXIS 1 0 2 NJ 120 350J
-preplace netloc Measurment_control_0_M_AXIS_dds_out 1 1 4 330 -10 NJ -10 NJ -10 3320J
-preplace netloc Reg_Brakeout_M_AXIS2 1 3 2 2440 720 3260
-preplace netloc dds_compiler_0_M_AXIS_DATA 1 0 5 -50 860 N 860 N 860 N 860 3240J
-preplace netloc Core|pll_0_clk_out1 1 1 3 1470 360 1870 480 NJ
-preplace netloc Core|pll_0_locked 1 1 3 1470 560 1890 500 NJ
-preplace netloc Core|rst_0_peripheral_aresetn 1 2 2 1880 520 NJ
-preplace netloc Core|adc_clk_p_i_1 1 0 2 NJ 620 1470
-preplace netloc Core|adc_clk_n_i_1 1 0 2 NJ 640 N
-preplace netloc Core|pll_0_clk_out2 1 2 2 N 640 NJ
-preplace netloc Core|xlconstant_0_dout 1 1 1 N 440
-preplace netloc Core|ps_0_axi_periph_M01_AXI 1 3 1 N 350
-preplace netloc Core|ps_0_M_AXI_GP0 1 2 1 N 260
-preplace netloc Core|ps_0_FIXED_IO 1 2 2 N 200 NJ
-preplace netloc Core|writer_0_M_AXI 1 0 2 NJ 210 N
-preplace netloc Core|ps_0_DDR 1 2 2 N 180 NJ
-preplace netloc Core|ps_0_axi_periph_M00_AXI 1 3 1 N 330
-preplace netloc Memory_IO|pll_0_clk_out1 1 0 1 620 140n
-preplace netloc Memory_IO|rst_0_peripheral_aresetn 1 0 1 630 320n
-preplace netloc Memory_IO|axi_cfg_register_0_cfg_data 1 1 1 N 460
-preplace netloc Memory_IO|axis_ram_writer_0_sts_data 1 1 1 N 160
-preplace netloc Memory_IO|aresetn1_1 1 0 1 590 160n
-preplace netloc Memory_IO|cfg_data1_1 1 0 1 610 180n
-preplace netloc Memory_IO|sts_data_1 1 0 1 640 340n
-preplace netloc Memory_IO|S_AXI1_1 1 0 1 N 280
-preplace netloc Memory_IO|S_AXI_1 1 0 1 600 260n
-preplace netloc Memory_IO|axis_ram_writer_0_M_AXI 1 1 1 N 140
-preplace netloc Memory_IO|S_AXIS_1 1 0 1 580 120n
-preplace netloc Reg_Brakeout|pll_0_clk_out1 1 0 2 NJ 190 2858
-preplace netloc Reg_Brakeout|rst_0_peripheral_aresetn 1 0 2 NJ 210 2838
-preplace netloc Reg_Brakeout|sample_rate_divider_Dout 1 1 1 2848 290n
-preplace netloc Reg_Brakeout|RAM_addres_Dout 1 2 1 NJ 540
-preplace netloc Reg_Brakeout|ram_writer_reset_Dout 1 2 1 NJ 640
-preplace netloc Reg_Brakeout|Din1_1 1 0 2 2588 370 2828
-preplace netloc Reg_Brakeout|In2_1 1 0 2 2588J 70 2868
-preplace netloc Reg_Brakeout|external_reset_fake_1_dout 1 1 1 2868J 120n
-preplace netloc Reg_Brakeout|In3_1 1 0 2 2598J 200 2838
-preplace netloc Reg_Brakeout|sample_rate_divider1_Dout 1 1 1 2818 430n
-preplace netloc Reg_Brakeout|zero_add_2_dout 1 1 1 2868 160n
-preplace netloc Reg_Brakeout|status_concat_1_dout 1 2 1 3108 130n
-preplace netloc Reg_Brakeout|axis_variable_0_M_AXIS 1 2 1 N 280
-preplace netloc Reg_Brakeout|Conn1 1 2 1 N 420
-levelinfo -pg 1 -70 160 650 1370 2648 3360
-levelinfo -hier Core * 1380 1670 2040 *
-levelinfo -hier Memory_IO * 770 *
-levelinfo -hier Reg_Brakeout * 2708 2988 *
-pagesize -pg 1 -db -bbox -sgen -200 -20 3520 1840
-pagesize -hier Core -db -bbox -sgen 1250 100 2220 720
-pagesize -hier Memory_IO -db -bbox -sgen 550 60 930 540
-pagesize -hier Reg_Brakeout -db -bbox -sgen 2558 40 3138 700
+preplace port DDR -pg 1 -lvl 4 -x 1350 -y 710 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -lvl 4 -x 1350 -y 730 -defaultsOSRD
+preplace port S_AXIS -pg 1 -lvl 0 -x 0 -y 300 -defaultsOSRD
+preplace port M_AXIS -pg 1 -lvl 4 -x 1350 -y 200 -defaultsOSRD
+preplace port M_AXIS_dds_out -pg 1 -lvl 4 -x 1350 -y 280 -defaultsOSRD
+preplace port M_AXIS2 -pg 1 -lvl 4 -x 1350 -y 480 -defaultsOSRD
+preplace port aclk -pg 1 -lvl 4 -x 1350 -y 750 -defaultsOSRD
+preplace port locked -pg 1 -lvl 4 -x 1350 -y 1260 -defaultsOSRD
+preplace port adc_clk_p_i -pg 1 -lvl 0 -x 0 -y 1280 -defaultsOSRD
+preplace port adc_clk_n_i -pg 1 -lvl 0 -x 0 -y 1300 -defaultsOSRD
+preplace port clk_out2 -pg 1 -lvl 4 -x 1350 -y 1300 -defaultsOSRD
+preplace portBus aresetn -pg 1 -lvl 4 -x 1350 -y 1280 -defaultsOSRD
+preplace portBus dac_pwm_o -pg 1 -lvl 4 -x 1350 -y 380 -defaultsOSRD
+preplace inst Core -pg 1 -lvl 2 -x 724 -y 728 -defaultsOSRD
+preplace inst Memory_IO -pg 1 -lvl 1 -x 300 -y 138 -defaultsOSRD
+preplace inst Reg_Brakeout -pg 1 -lvl 2 -x 724 -y 260 -defaultsOSRD
+preplace inst dds_compiler_0 -pg 1 -lvl 2 -x 724 -y 70 -defaultsOSRD
+preplace inst Measurment_control_0 -pg 1 -lvl 3 -x 1140 -y 290 -defaultsOSRD
+preplace inst ch1_output_dac_mem_split_1 -pg 1 -lvl 3 -x 1140 -y 470 -defaultsOSRD
+preplace netloc slice_3_dout 1 0 3 80 258 460J 150 890
+preplace netloc writer_0_sts_data 1 1 1 470 138n
+preplace netloc Memory_IO_cfg_data 1 1 1 450 158n
+preplace netloc pll_0_clk_out1 1 0 4 80 8 490 -10 940 750 NJ
+preplace netloc pll_0_locked 1 2 2 910J 1260 NJ
+preplace netloc rst_0_peripheral_aresetn 1 0 4 60 268 440 360 960 1280 NJ
+preplace netloc adc_clk_p_i_1 1 0 2 40J 728 NJ
+preplace netloc adc_clk_n_i_1 1 0 2 70J 748 NJ
+preplace netloc pll_0_clk_out2 1 2 2 890J 1300 NJ
+preplace netloc Reg_Brakeout_dout 1 0 3 50 -20 NJ -20 900
+preplace netloc Reg_Brakeout_dout5 1 2 1 920 270n
+preplace netloc In3_1 1 0 4 70 278 480 140 NJ 140 1310
+preplace netloc Reg_Brakeout_dac_pwm_o 1 2 2 910J 190 1330J
+preplace netloc ps_0_DDR 1 2 2 NJ 658 1320J
+preplace netloc writer_0_M_AXI 1 1 1 430 118n
+preplace netloc ps_0_axi_periph_M01_AXI 1 0 3 30 370 NJ 370 900
+preplace netloc ps_0_axi_periph_M00_AXI 1 0 3 40 380 NJ 380 890
+preplace netloc Reg_Brakeout_M_AXIS2 1 2 1 930 230n
+preplace netloc Measurment_control_0_M_AXIS_dds_out 1 3 1 NJ 280
+preplace netloc dds_compiler_0_M_AXIS_DATA 1 2 1 960 70n
+preplace netloc ch1_output_dac_mem_split_1_M01_AXIS 1 3 1 NJ 480
+preplace netloc ch1_output_dac_mem_split_1_M00_AXIS 1 1 3 500 0 NJ 0 1320
+preplace netloc ps_0_FIXED_IO 1 2 2 950J 730 NJ
+preplace netloc rate_0_M_AXIS 1 2 2 930J 200 NJ
+preplace netloc conv_0_M_AXIS 1 0 1 20J 108n
+levelinfo -pg 1 0 300 724 1140 1350
+pagesize -pg 1 -db -bbox -sgen -130 -30 1510 1400
 "
 }
 0

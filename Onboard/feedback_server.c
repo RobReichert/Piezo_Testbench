@@ -15,6 +15,9 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include "sensor.h"
+
+
 #define TCP_PORT 1001
 
 #define CMA_ALLOC _IOWR('Z', 0, uint32_t)
@@ -311,6 +314,9 @@ int main () {
 	uint32_t data_size;
 	int32_t bytes_to_send, message_type;
 
+
+	Sensor sensor; // initialise sensor and ADC
+
 	// Initialise config struct
 	config_t config = { .load_mode = 0,
 						.param_L1 = 0,
@@ -456,6 +462,7 @@ int main () {
 					printf("send_recording error");
 				}
 				// set some values for testing
+				thermal_values.temp0=(int)(sensor.get_channel_temperature(0)*100);
 				thermal_values.temp1++;
 				//thermal_values.temp2=555; --> counted up in temp_control for testing
 				thermal_values.temp3=666;
@@ -478,6 +485,7 @@ int main () {
 		}else{
 			// if no thing to do, do a temperatur controller cycle and wait for 10000us
 			temp_control(&params, &system_regs, &thermal_values);
+			printf("temp_control just executed\n");
 			usleep(10000);
 		}
 	}

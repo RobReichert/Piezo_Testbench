@@ -16,6 +16,8 @@ void delay(int number_of_mili_seconds)
         ;
 }
 
+TwoWire ADC128D818::Wire; //define the static TwoWire variable
+
 void ADC128D818::writeTo(TwoWire Wire,uint8_t DEV_address, uint8_t reg_address, int val)
 {
     Wire.beginTransmission(DEV_address);           //start transmission to the device address
@@ -151,8 +153,9 @@ ADC128D818::ADC128D818() // Constructor
             // busy: 0000 0001    not ready: 0000 0010 = 0x02
             // not busy and ready: 0x00
             busy_reg = read_one_byte(this->Wire, Device_address, ADC128D818_REG_Busy_Status_Register);
-
+        #if Debug==1
             printf(">>> Busy Status Register value: 0x%x\r\n", busy_reg);
+        #endif
 
 
         } while (busy_reg&( ADC128D818_STATUS_NOT_READY_BIT )); // if not ready 0x02, try again

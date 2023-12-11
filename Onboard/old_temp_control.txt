@@ -1,0 +1,16 @@
+uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointers, thermal_values_t* thermal_values_struct){
+	//every thing in heare is for testing only and can be deleted if temp control is implemented
+	//Print UI input
+	if (params_struct->mode_T==3){
+		printf("temp_mode: %d\n"
+				"param_T1: %d\n"
+				"param_T2: %d\n",
+				params_struct->mode_T,
+				params_struct->param_T1,
+				params_struct->param_T2);
+	}
+	//Set some PWM Values
+	*(system_pointers->rx_PWM_DAC1)=128; //50% PWM
+	//count temp2 up
+	(thermal_values_struct->temp2)++;
+}

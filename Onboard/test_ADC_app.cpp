@@ -2,7 +2,7 @@
 
 int main(void)
 {
-    ADC128D818 adc;
+    ADC128D818 adc; // create ADC object, ADC128D818 (with i2c) will be initialized
 
     // read channel value
     

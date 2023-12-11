@@ -2,7 +2,10 @@ import sys
 import numpy as np
 import os
 import logging
+import datetime
 from matplotlib.backends.backend_qtagg import (NavigationToolbar2QT as NavigationToolbar)
+from PyQt5.QtWidgets import QGraphicsScene
+from PyQt5.QtCore import Qt
 from PyQt5.QtCore import QTimer
 from multiprocessing import Array
 from multiprocessing.shared_memory import SharedMemory
@@ -11,8 +14,10 @@ from multiprocessing.shared_memory import SharedMemory
 ##Include clases from other files
 from UI_unformated import Ui_MainWindow, QtWidgets
 import socket_process as sp
-from Canvas import MyFigureCanvas
+from Canvas import MyFigureCanvas, MyFigure_thermal
 #from float_converter import NumpyFloatToFixConverter
+
+
 
 
     
@@ -96,6 +101,12 @@ class Window(QtWidgets.QMainWindow):
         self.timer2 = QTimer()
         self.timer2.timeout.connect(lambda: self.GetThermalMeasuremnt())
         self.timer2.start(1000) # Start temerature monitoring
+        
+        # thermal data
+        self.temp_data_history = []  # Initialize an empty array to store historical temperature data
+    
+        # variable to track the first entry
+        self.first_entry = True
     
     # close and disconnet everything if window is closed
     def closeEvent(self, event):
@@ -137,7 +148,78 @@ class Window(QtWidgets.QMainWindow):
                 self.MeasureFinished()
         except:
             pass
+    
         
+    def plot_thermal(self, temp_data_history):
+        # to generate the realtime temperature curve in the GUI
+        
+        F1 = MyFigure_thermal(width=5, height=4, dpi=70)
+        F1.axes1 = F1.fig.add_subplot(111)
+
+        # Convert the temperature data to a NumPy array for plotting
+        temp_data_np = np.array(temp_data_history)
+
+        # Generate the time axis
+        time_axis = np.arange(temp_data_np.shape[0])
+
+        # Plot the temperature curve for each sensor
+        for i in range(temp_data_np.shape[1]):
+            F1.axes1.plot(time_axis, temp_data_np[:, i], label=f"Sensor {i+1}")
+
+        F1.axes1.set_xlabel('Time (s)', fontsize=18)
+        F1.axes1.set_ylabel('Temperature (C)', fontsize=18)
+        F1.axes1.set_title('Temperature Over Time', fontsize=20)
+        F1.axes1.legend()
+
+        F1.fig.tight_layout()
+
+    
+        # Get the width and height from the graphicsView_temp widget
+        width, height = self.ui.graphicsView_temp.width(), self.ui.graphicsView_temp.height()
+        F1.resize(width, height)
+        
+        # Create a scene and add the figure to it
+        scene = QGraphicsScene()
+        scene.addWidget(F1)
+
+        # Disable scroll bars for the QGraphicsView widget
+        self.ui.graphicsView_temp.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.ui.graphicsView_temp.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        
+        # Set the scene to the QGraphicsView widget
+        self.ui.graphicsView_temp.setScene(scene)
+        
+    def log_thermal_data(self):
+        # to record the thermal data (temperature) in "temperature_log.txt"
+        
+        log_file_path = "temperature_log.txt"
+
+        # Check if it's the first entry
+        if self.first_entry:
+            # Write a separator line and update the flag
+            with open(log_file_path, "a") as log_file:
+                log_file.write("######\n")
+                log_file.write("Time\t\t\ttemp0\ttemp1\ttemp2\ttemp3\ttemp4\ttemp5\ttemp6\ttemp7\n")
+            self.first_entry = False
+
+        # Get the current timestamp
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+        
+        # Retrieve temperature data from self.TempData
+        temp_data = [temp / 100 for temp in self.TempData]
+
+        # Create the log entry string
+        log_entry = f"{timestamp}\t" + "\t".join(str(temp) for temp in temp_data)
+
+        # Write the log entry to the log file
+        with open(log_file_path, "a") as log_file:
+            log_file.write(log_entry + "\n")
+
+        # Log the action of logging temperature data
+        logging.debug("Logged temperature data: " + log_entry)
+        
+    
+    
     # function to get actual thermal data from FPGA
     def GetThermalMeasuremnt(self):
         # Send measurement request
@@ -151,7 +233,7 @@ class Window(QtWidgets.QMainWindow):
         # Get Temp data and put it into an array
         temp_data = list(self.TempData)
         logging.debug("TempData: {}".format(temp_data))
-        
+
         #Write the data to UI Wintow
         try:
             self.ui.lcdNumber_Temp.display(temp_data[0]/100)
@@ -164,6 +246,18 @@ class Window(QtWidgets.QMainWindow):
             self.ui.lcdNumber_Heat_2.display(temp_data[7]/100)
         except:
             pass
+        
+        # user define the number of sensors (min:1  max:6)
+        first_n_tempsensors = 2 
+        # Append current temperature data to the historical data array
+        self.temp_data_history.append([temp / 100 for temp in temp_data[:first_n_tempsensors]])  # Store only the first six temperature values
+
+        # Call the plot function and pass the temperature data
+        self.plot_thermal(self.temp_data_history)
+        
+        self.log_thermal_data()
+
+
     
     # if measurement is finished get the data from socet, plot canvas and store data to an *.csv file
     def MeasureFinished(self):
@@ -418,13 +512,9 @@ if __name__ == "__main__":
     
     #Open QT Window and import as ui
     app=QtWidgets.QApplication(sys.argv)
-    # self=Window()
-    # self.showMaximized() #setGeometry(300, 300, 800, 600) #X co-ordinate, Y co-ordinate, Width, Height
-    # self.show()
-    
-    main_win = Window()  # 创建窗体
-    main_win.show()
-    sys.exit(app.exec_()) # 进入程序的主循环直到exit()被调用,随后退出进程
+    self=Window()
+    self.showMaximized() #setGeometry(300, 300, 800, 600) #X co-ordinate, Y co-ordinate, Width, Height
+    self.show()
     
     #crate client
     #serverClient=Client()

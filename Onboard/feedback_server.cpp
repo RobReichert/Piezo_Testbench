@@ -15,7 +15,10 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "sensor.h"
+#include <termios.h> // for keyboard detection
+#include <time.h>
+#include <sys/time.h> // for time difference calculation
+#include "sensor.h" // to read data from ADC128D818 (c++ code)
 
 
 #define TCP_PORT 1001
@@ -66,6 +69,7 @@ typedef struct system_pointers {
 	volatile uint8_t *rx_PWM_DAC3;
 	volatile uint8_t *rx_PWM_DAC4;
 	void *ram;
+	volatile uint8_t *rx_PWM_DAC_change_indicator; // to let FPGA know PWM DAC value has changed
 } system_pointers_t;
 
 typedef struct parameters {
@@ -98,26 +102,157 @@ typedef struct thermal_values {
 	int16_t flow2;
 } thermal_values_t;
 
+
+// Check if a keyboard key is pressed (for linux)
+int _kbhit(void) {
+    struct termios oldt, newt;
+    int ch;
+    int oldf;
+
+    tcgetattr(STDIN_FILENO, &oldt); // Get the current terminal I/O settings
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO); // Set terminal to non-canonical, no echo mode
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt); // Apply new settings
+    oldf = fcntl(STDIN_FILENO, F_GETFL, 0); // Get current file status flags
+    fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK); // Set non-blocking mode
+
+    ch = getchar(); // Try to read a character
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // Restore old settings
+    fcntl(STDIN_FILENO, F_SETFL, oldf); // Restore file status flags
+
+    if(ch != EOF) {
+        ungetc(ch, stdin); // Put the character back if it was read
+        return 1;
+    }
+
+    return 0;
+}
+
+// Get a keyboard input character (for linux)
+char _getch(void) {
+    char ch;
+    struct termios oldt;
+    struct termios newt;
+
+    tcgetattr(STDIN_FILENO, &oldt); // Get the current terminal I/O settings
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO); // Set terminal to non-canonical, no echo mode
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt); // Apply new settings
+
+    ch = getchar(); // Read a character
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // Restore old settings
+
+    return ch;
+}
+
+// Get the current time in microseconds
+uint64_t _get_time_in_us() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return tv.tv_sec * 1000000ULL + tv.tv_usec;
+}
+
 void signal_handler(int sig) {
 	interrupted = 1;
 }
 
-//temperature controller will be executed every 10000us
+//temperature controller will be executed every 10000us (0.01s)
 uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointers, thermal_values_t* thermal_values_struct){
-	//every thing in heare is for testing only and can be deleted if temp control is implemented
-	//Print UI input
-	if (params_struct->mode_T==3){
-		printf("temp_mode: %d\n"
-				"param_T1: %d\n"
-				"param_T2: %d\n",
-				params_struct->mode_T,
-				params_struct->param_T1,
-				params_struct->param_T2);
+	static time_t last_time = 0; // Static variable to store the time of the last execution
+    time_t current_time;		 // Variable to store the current time
+    double time_diff;			 // Variable to store the time difference since the last execution
+
+	time(&current_time); // Get current time
+    time_diff = difftime(current_time, last_time); // Calculate the time difference
+/////////////// to show the time difference in 0.01ms
+	static uint64_t last_time_us = 0; // Static variable to store the last execution time in microseconds
+	uint64_t current_time_us;         // Variable to store the current time in microseconds
+	uint64_t time_diff_us;            // Variable to store the time difference in microseconds
+
+	current_time_us = _get_time_in_us(); // Get current time in microseconds
+/////////////////////////////////////////////
+
+	//static uint8_t pwm_value = 0;	// Static variable to store the current PWM value
+	static uint8_t pwm_value = 32; // for 1 heater, PWM 32/256 corresponds to 80 degree Celsius final stable temperature when room temperature is 20 degree Celsius
+
+
+    // Check if 1 second has passed
+    if(time_diff >= 1){
+
+/////////////// to show the time difference in 0.01ms
+		time_diff_us = current_time_us - last_time_us; // Calculate the time difference in microseconds
+		last_time_us = current_time_us;                // Update the last execution time
+
+		// Print the time difference in 0.01 milliseconds (10 microseconds)
+		printf("Time difference: %.2f ms\n", time_diff_us / 1000.0);
+/////////////////////////////////////////////
+
+        // Update the last execution time
+        last_time = current_time;
+
+		if (_kbhit()) {
+            char ch = _getch();
+            if (ch == '+') {	//if "+" is pressed increase PWM value by 1
+                if (pwm_value < 255) {
+                    pwm_value++;
+					*(system_pointers->rx_PWM_DAC1) = pwm_value;
+                }
+
+            } else if (ch == '-') {	//if "-" is pressed decrease PWM value by 1
+                if (pwm_value > 0) {
+                    pwm_value--;
+					*(system_pointers->rx_PWM_DAC1) = pwm_value;
+                }
+
+            }
+			else if (ch == '8') { //if "8" is pressed increase PWM value by 10
+				if (pwm_value <= 245) {
+                    pwm_value += 10;
+					*(system_pointers->rx_PWM_DAC1) = pwm_value;
+                }
+			}
+			else if (ch == '2') {	//if "2" is pressed decrease PWM value by 10
+                if (pwm_value >= 10) {
+                    pwm_value -= 10;
+					*(system_pointers->rx_PWM_DAC1) = pwm_value;
+                }
+			}
+			
+        }
+
+
+		*(system_pointers->rx_com) ^= (1 << 3); // toggle bit 3 every 1s (PWM DAC1 change indicator)
+
+		// Perform control and print information
+        printf("Control performed at %s", ctime(&current_time));
+		printf("Current PWM value (0-255): %u\n", pwm_value);
+
+		//control code goes here...
+
+
+
+
+
+		// //every thing in heare is for testing only and can be deleted if temp control is implemented
+		// //Print UI input
+		// if (params_struct->mode_T==3){
+		// 	printf("temp_mode: %d\n"
+		// 			"param_T1: %d\n"
+		// 			"param_T2: %d\n",
+		// 			params_struct->mode_T,
+		// 			params_struct->param_T1,
+		// 			params_struct->param_T2);
+		// }
+		// //Set some PWM Values
+		// *(system_pointers->rx_PWM_DAC1)=128; //50% PWM
+		// //count temp2 up
+		// (thermal_values_struct->temp2)++;
 	}
-	//Set some PWM Values
-	*(system_pointers->rx_PWM_DAC1)=128; //50% PWM
-	//count temp2 up
-	(thermal_values_struct->temp2)++;
+	//printf("the code out ouf the 1-s area is executed every 10000us (0.01s)\n");
+
+
 }
 
 // Receive message "header" bytes. 
@@ -374,7 +509,8 @@ int main () {
 									.rx_PWM_DAC2 = (uint8_t *)(cfg + 13), //PWM DAC2 Value
 									.rx_PWM_DAC3 = (uint8_t *)(cfg + 14), //PWM DAC3 Value
 									.rx_PWM_DAC4 = (uint8_t *)(cfg + 15), //PWM DAC4 Value
-                                    .ram = 0}; 
+                                    .ram = 0,
+									.rx_PWM_DAC_change_indicator = (uint8_t *)(cfg + 54)}; 
 	
 	//Customisable parameter space
 	params_t params = {	.dds_phase = (uint32_t *)(cfg + 8), //DDS phase (phase=f/125MHz*2^30-1)
@@ -465,9 +601,11 @@ int main () {
 					printf("send_recording error");
 				}
 				// set some values for testing
-				thermal_values.temp1=(int)(sensor.get_channel_temperature(0)*100);
+				//thermal_values.temp1=(int)(100*sensor.get_channel_temperature(0)); //get temperature from sensor *100 and convert to int
+				thermal_values.temp1=(int)(100 * sensor.get_channel_temp_calibration(0, 10240, 3210.0));
 				//thermal_values.temp1++;
-				//thermal_values.temp2=555; --> counted up in temp_control for testing
+				//thermal_values.temp2=555; //--> counted up in temp_control for testing
+				thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 10080, 3219.745));
 				thermal_values.temp3=666;
 				thermal_values.temp4=5;
 				thermal_values.temp5=10;

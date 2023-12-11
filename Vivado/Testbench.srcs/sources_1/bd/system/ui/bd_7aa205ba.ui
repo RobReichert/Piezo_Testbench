@@ -1,46 +1,45 @@
 {
    "ActiveEmotionalView":"Default View",
-   "Default View_ScaleFactor":"0.709859",
-   "Default View_TopLeft":"-255,0",
+   "Default View_ScaleFactor":"0.756506",
+   "Default View_TopLeft":"-225,-54",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS
 #  -string -flagsOSRD
-preplace port S_AXIS_CFG -pg 1 -lvl 0 -x 0 -y 490 -defaultsOSRD
-preplace port S_AXIS -pg 1 -lvl 0 -x 0 -y 200 -defaultsOSRD
-preplace port M00_AXIS -pg 1 -lvl 5 -x 1230 -y 200 -defaultsOSRD
-preplace port M00_AXIS1 -pg 1 -lvl 5 -x 1230 -y 360 -defaultsOSRD
-preplace port M_AXIS -pg 1 -lvl 5 -x 1230 -y 290 -defaultsOSRD
-preplace port M03_AXIS -pg 1 -lvl 5 -x 1230 -y 220 -defaultsOSRD
-preplace port aclk -pg 1 -lvl 0 -x 0 -y 20 -defaultsOSRD
-preplace port trig_in -pg 1 -lvl 0 -x 0 -y 530 -defaultsOSRD
-preplace port exp_p_tri_io -pg 1 -lvl 5 -x 1230 -y 690 -defaultsOSRD
-preplace port aresetn -pg 1 -lvl 0 -x 0 -y 240 -defaultsOSRD
-preplace portBus sel -pg 1 -lvl 0 -x 0 -y 550 -defaultsOSRD
+preplace port S_AXIS_CFG -pg 1 -lvl 0 -x -90 -y 490 -defaultsOSRD
+preplace port S_AXIS -pg 1 -lvl 0 -x -90 -y 200 -defaultsOSRD
+preplace port M00_AXIS -pg 1 -lvl 5 -x 1260 -y 200 -defaultsOSRD
+preplace port M00_AXIS1 -pg 1 -lvl 5 -x 1260 -y 360 -defaultsOSRD
+preplace port M03_AXIS -pg 1 -lvl 5 -x 1260 -y 220 -defaultsOSRD
+preplace port M01_AXIS -pg 1 -lvl 5 -x 1260 -y 340 -defaultsOSRD
+preplace port M_AXIS -pg 1 -lvl 5 -x 1260 -y 290 -defaultsOSRD
+preplace port aclk -pg 1 -lvl 0 -x -90 -y 20 -defaultsOSRD
+preplace port trig_in -pg 1 -lvl 0 -x -90 -y 530 -defaultsOSRD
+preplace port exp_p_tri_io -pg 1 -lvl 5 -x 1260 -y 690 -defaultsOSRD
+preplace port aresetn -pg 1 -lvl 0 -x -90 -y 240 -defaultsOSRD
+preplace portBus sel -pg 1 -lvl 0 -x -90 -y 550 -defaultsOSRD
 preplace inst xlconstant_0 -pg 1 -lvl 1 -x 100 -y 80 -defaultsOSRD
-preplace inst axis_constant_0 -pg 1 -lvl 2 -x 340 -y 60 -defaultsOSRD
-preplace inst ch1_mem_fb_split -pg 1 -lvl 2 -x 340 -y 220 -defaultsOSRD
-preplace inst ch1_output_dac_mem_split -pg 1 -lvl 4 -x 1040 -y 370 -defaultsOSRD
-preplace inst axis_combiner_1 -pg 1 -lvl 3 -x 710 -y 290 -defaultsOSRD
-preplace inst feedback_combined_0 -pg 1 -lvl 3 -x 710 -y 500 -defaultsOSRD
+preplace inst axis_constant_0 -pg 1 -lvl 2 -x 400 -y 60 -defaultsOSRD
+preplace inst ch1_mem_fb_split -pg 1 -lvl 2 -x 400 -y 220 -defaultsOSRD
+preplace inst ch1_output_dac_mem_split -pg 1 -lvl 4 -x 1080 -y 370 -defaultsOSRD
+preplace inst feedback_combined_0 -pg 1 -lvl 3 -x 750 -y 500 -defaultsOSRD
 preplace netloc xlconstant_0_dout 1 1 1 190J 70n
-preplace netloc pll_0_clk_out1 1 0 4 NJ 20 180 310 540 380 890
+preplace netloc pll_0_clk_out1 1 0 4 NJ 20 180 370 560 370 N
+preplace netloc feedback_combined_0_trig_out 1 3 2 NJ 510 1240J
+preplace netloc rst_0_peripheral_aresetn 1 0 4 NJ 240 190 360 N 360 890J
 preplace netloc slice_9_dout 1 0 3 NJ 530 NJ 530 NJ
 preplace netloc slice_7_dout 1 0 3 NJ 550 NJ 550 NJ
-preplace netloc feedback_combined_0_trig_out 1 3 2 NJ 510 1200J
-preplace netloc rst_0_peripheral_aresetn 1 0 4 NJ 240 190 320 520 180 870J
-preplace netloc ch1_mem_fb_split_M01_AXIS 1 2 1 510 210n
-preplace netloc Conn1 1 3 2 NJ 290 NJ
-preplace netloc ch1_mem_fb_split_M03_AXIS 1 2 3 500J 170 NJ 170 1210J
-preplace netloc ch1_mem_fb_split_M02_AXIS 1 2 1 490 230n
-preplace netloc axis_constant_0_M_AXIS 1 2 1 530 60n
-preplace netloc fb_cfg_M_AXIS 1 0 3 NJ 490 NJ 490 NJ
+preplace netloc ch1_mem_fb_split_M00_AXIS 1 2 3 NJ 190 NJ 190 1230J
 preplace netloc ch1_output_dac_mem_split_M00_AXIS 1 4 1 NJ 360
-preplace netloc feedback_combined_0_M_AXIS 1 3 1 880 350n
+preplace netloc fb_cfg_M_AXIS 1 0 3 NJ 490 NJ 490 NJ
+preplace netloc feedback_combined_0_M_AXIS 1 3 1 900 350n
+preplace netloc ch1_mem_fb_split_M03_AXIS 1 2 3 560J 220 NJ 220 NJ
+preplace netloc ch1_mem_fb_split_M02_AXIS 1 2 1 550 230n
+preplace netloc ch1_mem_fb_split_M01_AXIS 1 2 1 570 210n
 preplace netloc axis_red_pitaya_adc_0_M_AXIS 1 0 2 NJ 200 NJ
-preplace netloc ch1_output_dac_mem_split_M01_AXIS 1 2 3 540 200 NJ 200 1190
-preplace netloc ch1_mem_fb_split_M00_AXIS 1 2 3 NJ 190 NJ 190 1200J
-levelinfo -pg 1 0 100 340 710 1040 1230
-pagesize -pg 1 -db -bbox -sgen -140 -10 1360 710
+preplace netloc Conn1 1 4 1 1230J 340n
+preplace netloc Conn2 1 2 3 NJ 60 NJ 60 1240
+levelinfo -pg 1 -90 100 400 750 1080 1260
+pagesize -pg 1 -db -bbox -sgen -230 -10 1390 770
 "
 }
 0
