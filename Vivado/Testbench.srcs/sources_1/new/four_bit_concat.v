@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Muzhi Zhang
 // 
 // Create Date: 2023/11/26 11:06:01
 // Design Name: 
@@ -9,7 +9,7 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: 
+// Description: combine the 4 input signals into a vector
 // 
 // Dependencies: 
 // 
@@ -27,6 +27,6 @@ input dac_pwm_o_2,
 input dac_pwm_o_3,
 output [3:0] Dout
     );
-    assign Dout = {1'b1,1'b0,1'b0,dac_pwm_o_0};
+    assign Dout = {dac_pwm_o_3, dac_pwm_o_2, dac_pwm_o_1, dac_pwm_o_0};
     
 endmodule

@@ -69,7 +69,6 @@ typedef struct system_pointers {
 	volatile uint8_t *rx_PWM_DAC3;
 	volatile uint8_t *rx_PWM_DAC4;
 	void *ram;
-	volatile uint8_t *rx_PWM_DAC_change_indicator; // to let FPGA know PWM DAC value has changed
 } system_pointers_t;
 
 typedef struct parameters {
@@ -102,6 +101,140 @@ typedef struct thermal_values {
 	int16_t flow2;
 } thermal_values_t;
 
+// PID structure (temperature control)
+typedef struct temp_PID{
+    double Kp;         // Proportional coefficient
+    double Ki;         // Integral coefficient
+    double Kd;         // Derivative coefficient
+    double pre_error;  // Previous error
+    double integral;   // Error integral
+    double K2;         // Static gain of the controlled process (default 5.63)
+    double room_temperature; // Room temperature (default 20 degrees)
+    double safe_temperature; // Safe temperature (default 105 degrees)
+} Temperature_PID_t;
+
+
+
+
+/// @brief Initialize the PID structure (temperature control)
+/// @param pid the pointer to the PID structure
+/// @param Kp the proportional coefficient
+/// @param Ki the integral coefficient
+/// @param Kd the derivative coefficient
+void PID_Init(Temperature_PID_t *pid, double Kp, double Ki, double Kd) {
+    pid->Kp = Kp;
+    pid->Ki = Ki;
+    pid->Kd = Kd;
+    pid->pre_error = 0;         // the previous error is set to 0
+    pid->integral = 0;          // the integral is set to 0
+    pid->K2 = 5.63;             // the static gain K2 is of the process (bottom plate) is 5.63 (unit: Kelvin / Watt, achieved from parameter identification) (this parameter is for prefilter to eliminate steady-state error caused by the static gain of the process)
+    pid->room_temperature = 22.0; // the default room temperature is 20 degrees
+    pid->safe_temperature = 105.0; // the default safe temperature is 100 degrees
+}
+
+
+
+/// @brief Update PID calculation (temperature control)
+/// @param pid the pointer to the PID structure
+/// @param setpoint the target value (unit: degree Celsius)
+/// @param measured_value the measured value (unit: degree Celsius)
+/// @return the control output (unit: Watt)
+double PID_Update(Temperature_PID_t *pid, int32_t setpoint, double measured_value) 
+{
+    // Check if the measured value is within the safe temperature range
+    if (measured_value > pid->safe_temperature) 
+    {
+        // If the measured value is too high, turn off the heater
+        double output = 0;
+
+        return 0;
+    }
+
+
+    // Adjust the setpoint temperature using prefilter to eliminate steady-state error
+    // Gain of the prefilter is calculated to 1 + 1 / (Kp * K2)
+    // Kp is the proportional gain of the PID controller, K2 (unit: Kelvin / Watt) is the static gain of the process (bottom plate)
+
+    // The adjusted setpoint is : (setpoint - room_temperature) * Gain_prefilter + room_temperature:
+    double setpoint_adjusted = setpoint + (setpoint - pid->room_temperature) / (pid->Kp * pid->K2);
+
+    // Calculate error
+    double error_adjusted = setpoint_adjusted - measured_value;
+
+	double error_standard = setpoint - measured_value;
+
+	double error = error_adjusted;
+	
+
+
+    // Integrate error
+    //pid->integral += error;
+
+	// Anti-windup
+	if (abs(error)<=10)
+	{
+		pid->integral += error;
+	}
+	else
+	{
+		pid->integral = 0;
+	}
+
+
+	
+	printf("power of I (w):%f\n",(pid->Ki * pid->integral));
+	printf("pid->integral:%f\n",pid->integral);
+
+    // Calculate derivative of error
+    double derivative = error - pid->pre_error;
+
+    // Calculate control output
+    //double output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+	double output = 0.0;
+	if (error >-0.1 && error <10)
+	{
+		// PID
+		output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+	}
+	else
+	{
+		// PD
+		output = (pid->Kp * error)  + (pid->Kd * derivative); 
+	}
+
+    // Update previous error
+    pid->pre_error = error;
+
+    return output;
+}
+
+/// @brief Convert heating power to PWM value
+/// @param power the heating power (unit: Watt)
+/// @param heaterAmount the amount of heaters (the power of each heater is 100 Watt)
+/// @return the PWM value (0 - 255)
+uint8_t powerToPWM(double power, uint8_t heaterAmount) {
+	if (power < 0) 
+	{
+        // If the power is negative, turn off the heater
+        return 0;
+    }
+
+    // Total power is the sum of power of all heaters
+    double totalMaxPower = heaterAmount * 100.0; // 100W per heater at full PWM
+
+    // Calculate the ratio of required power to the maximum power
+    double ratio = power / totalMaxPower;
+
+    // Ensure the ratio does not exceed 1.0
+    if (ratio > 1.0) {
+        ratio = 1.0;
+    }
+
+    // Map the ratio to the PWM range
+    uint8_t pwm = (uint8_t)(ratio * 255);
+
+    return pwm;
+}
 
 // Check if a keyboard key is pressed (for linux)
 int _kbhit(void) {
@@ -147,6 +280,52 @@ char _getch(void) {
     return ch;
 }
 
+/// @brief Adjusts the PWM value (0 - 255) based on keyboard. ("+": +1, "-": -1, "8": +10, "2": -10)
+/// @param pwm_value Pointer to an uint8_t integer that represents the current PWM value. This value will be modified based on the keyboard input.
+/// @param system_pointers 
+void change_PWM_using_keyboard(uint8_t *pwm_value, system_pointers_t* system_pointers) {
+    if (_kbhit()) {
+        char ch = _getch();
+        switch (ch) {
+            case '+':
+                // If "+" is pressed, increase PWM value by 1
+                if (*pwm_value < 255) {
+                    (*pwm_value)++;
+                    *(system_pointers->rx_PWM_DAC1) = *pwm_value;
+                    *(system_pointers->rx_PWM_DAC2) = *pwm_value;
+                }
+                break;
+            case '-':
+                // If "-" is pressed, decrease PWM value by 1
+                if (*pwm_value > 0) {
+                    (*pwm_value)--;
+                    *(system_pointers->rx_PWM_DAC1) = *pwm_value;
+                    *(system_pointers->rx_PWM_DAC2) = *pwm_value;
+                }
+                break;
+            case '8':
+                // If "8" is pressed, increase PWM value by 10
+                if (*pwm_value <= 245) {
+                    *pwm_value += 10;
+                    *(system_pointers->rx_PWM_DAC1) = *pwm_value;
+                    *(system_pointers->rx_PWM_DAC2) = *pwm_value;
+                }
+                break;
+            case '2':
+                // If "2" is pressed, decrease PWM value by 10
+                if (*pwm_value >= 10) {
+                    *pwm_value -= 10;
+                    *(system_pointers->rx_PWM_DAC1) = *pwm_value;
+                    *(system_pointers->rx_PWM_DAC2) = *pwm_value;
+                }
+                break;
+            // Additional key presses can be handled here
+        }
+    }
+}
+
+
+
 // Get the current time in microseconds
 uint64_t _get_time_in_us() {
     struct timeval tv;
@@ -174,8 +353,8 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointer
 	current_time_us = _get_time_in_us(); // Get current time in microseconds
 /////////////////////////////////////////////
 
-	//static uint8_t pwm_value = 0;	// Static variable to store the current PWM value
-	static uint8_t pwm_value = 32; // for 1 heater, PWM 32/256 corresponds to 80 degree Celsius final stable temperature when room temperature is 20 degree Celsius
+	static uint8_t pwm_value = 0;	// Static variable to store the current PWM value
+	//static uint8_t pwm_value_2 = 0; // for 1 heater, PWM 32/256 corresponds to 80 degree Celsius final stable temperature when room temperature is 20 degree Celsius
 
 
     // Check if 1 second has passed
@@ -186,48 +365,47 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointer
 		last_time_us = current_time_us;                // Update the last execution time
 
 		// Print the time difference in 0.01 milliseconds (10 microseconds)
-		printf("Time difference: %.2f ms\n", time_diff_us / 1000.0);
+		printf("\t\t\tTime difference: %.2f ms\n", time_diff_us / 1000.0);
 /////////////////////////////////////////////
 
         // Update the last execution time
         last_time = current_time;
 
-		if (_kbhit()) {
-            char ch = _getch();
-            if (ch == '+') {	//if "+" is pressed increase PWM value by 1
-                if (pwm_value < 255) {
-                    pwm_value++;
-					*(system_pointers->rx_PWM_DAC1) = pwm_value;
-                }
+		// control the PWM manually using keyboard
+		//change_PWM_using_keyboard(&pwm_value, system_pointers);
 
-            } else if (ch == '-') {	//if "-" is pressed decrease PWM value by 1
-                if (pwm_value > 0) {
-                    pwm_value--;
-					*(system_pointers->rx_PWM_DAC1) = pwm_value;
-                }
+		// PID controller (temperature control)
+		static Temperature_PID_t PID_bottom_plate;
+		static int isInitialized = 0; // Static variable to store the initialization flag
+		// Check if the PID is initialized
 
-            }
-			else if (ch == '8') { //if "8" is pressed increase PWM value by 10
-				if (pwm_value <= 245) {
-                    pwm_value += 10;
-					*(system_pointers->rx_PWM_DAC1) = pwm_value;
-                }
-			}
-			else if (ch == '2') {	//if "2" is pressed decrease PWM value by 10
-                if (pwm_value >= 10) {
-                    pwm_value -= 10;
-					*(system_pointers->rx_PWM_DAC1) = pwm_value;
-                }
-			}
+		if (!isInitialized) 
+		{
+			PID_Init(&PID_bottom_plate, 4, 0.0, 0.0); // Initialize the PID controller
+			isInitialized = 1; // Set the initialization flag
+
 			
-        }
+    	}
+
+		double power_bottom_plate = PID_Update(&PID_bottom_plate, params_struct->param_T1, (double)thermal_values_struct->temp1/100.0);
+		*(system_pointers->rx_PWM_DAC1) = powerToPWM(power_bottom_plate, 1);
+		
+		// // test PID controller
+		// printf("\t\t\ttarget temperature in control: %d\n", params_struct->param_T1);
+		// printf("\t\t\tmeasured temperature in control: %.2f\n", (double)thermal_values_struct->temp1/100.0);
+		// printf("\t\t\tpower_bottom_plate: %.2f\n", power_bottom_plate);
 
 
+		// toggle synchronization signal for FPGA PWM DAC to enter a new PWM period (every 1s)
 		*(system_pointers->rx_com) ^= (1 << 3); // toggle bit 3 every 1s (PWM DAC1 change indicator)
+		*(system_pointers->rx_com) ^= (1 << 4); // toggle bit 4 every 1s (PWM DAC2 change indicator)
 
 		// Perform control and print information
-        printf("Control performed at %s", ctime(&current_time));
-		printf("Current PWM value (0-255): %u\n", pwm_value);
+        printf("\t\t\tControl performed at %s", ctime(&current_time));
+		//printf("\t\t\tCurrent PWM value (0-255): %u\n", pwm_value);
+		printf("\t\t\tCurrent PWM value (0-255): %u\n", *(system_pointers->rx_PWM_DAC1));
+
+
 
 		//control code goes here...
 
@@ -452,6 +630,7 @@ int main () {
 
 	Sensor sensor; // initialise sensor and ADC
 
+	
 	// Initialise config struct
 	config_t config = { .load_mode = 0,
 						.param_L1 = 0,
@@ -509,8 +688,8 @@ int main () {
 									.rx_PWM_DAC2 = (uint8_t *)(cfg + 13), //PWM DAC2 Value
 									.rx_PWM_DAC3 = (uint8_t *)(cfg + 14), //PWM DAC3 Value
 									.rx_PWM_DAC4 = (uint8_t *)(cfg + 15), //PWM DAC4 Value
-                                    .ram = 0,
-									.rx_PWM_DAC_change_indicator = (uint8_t *)(cfg + 54)}; 
+                                    .ram = 0
+									}; 
 	
 	//Customisable parameter space
 	params_t params = {	.dds_phase = (uint32_t *)(cfg + 8), //DDS phase (phase=f/125MHz*2^30-1)
@@ -585,6 +764,45 @@ int main () {
 	while(!interrupted)	{
 		// Stop measurement
 		*(system_regs.rx_com) &= ~1; //write 0 to bit 0
+
+
+		// get the temperature values here first, otherwise the "detected temperature" will be 0 before getting in touch with python client. The "detected temperature" < target temperature, therefore the PID temperature controller will heat accidentially. This can be dangerous.
+
+		/* usage examples for temperature sensor
+
+		1) look up table method (data from datasheet, not from individual calibration)
+
+		thermal_values.temp1=(int)(100*sensor.get_channel_temperature_lookup_table(0)); //get temperature from sensor *100 and convert to int
+		thermal_values.temp2=(int)(100*sensor.get_channel_temperature_lookup_table(1)); //get temperature from sensor *100 and convert to int
+
+
+		2) calibration method (Beta parameter equation)
+
+		thermal_values.temp1=(int)(100 * sensor.get_channel_temp_calibration(0, 9770, 3167.23));
+		thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 9895, 3124.64));
+
+		old calibration parameter
+		thermal_values.temp1=(int)(100 * sensor.get_channel_temp_calibration(0, 9890, 3196.22));
+		thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 10010, 3225.12));
+		
+
+		3) calibration method (Steinhart-Hart equation)
+
+		thermal_values.temp1=(int)(100 * sensor.get_channel_temp_Steinhart(1, 0.0008159, 0.0002485, 3.29766787739819E-07));
+		thermal_values.temp2=(int)(100 * sensor.get_channel_temp_Steinhart(3, 0.0007564, 0.0002564, 3.06324334315379E-07));
+
+		*/
+
+		//calibration method (Beta parameter equation)
+		thermal_values.temp1=(int)(100 * sensor.get_channel_temp_calibration(0, 9770, 3167.23));
+		thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 9895, 3124.64));
+		thermal_values.temp3=666;
+		thermal_values.temp4=5;
+		thermal_values.temp5=10;
+		thermal_values.temp6=20;
+		thermal_values.flow1=1000;
+		thermal_values.flow2=0;
+
 		
 		if((sock_client = accept(sock_server, NULL, NULL)) >= 0)	{			
 			printf("sock client accepted\n");
@@ -600,18 +818,30 @@ int main () {
 				if (send_thermal(sock_client, &thermal_values) < 1) {
 					printf("send_recording error");
 				}
-				// set some values for testing
-				//thermal_values.temp1=(int)(100*sensor.get_channel_temperature(0)); //get temperature from sensor *100 and convert to int
-				thermal_values.temp1=(int)(100 * sensor.get_channel_temp_calibration(0, 10240, 3210.0));
+				
+				// The following temperature detection has been moved to a few lines above (to get the temperature values before getting in touch with python client)
 				//thermal_values.temp1++;
 				//thermal_values.temp2=555; //--> counted up in temp_control for testing
-				thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 10080, 3219.745));
-				thermal_values.temp3=666;
-				thermal_values.temp4=5;
-				thermal_values.temp5=10;
-				thermal_values.temp6=20;
-				thermal_values.flow1=1000;
-				thermal_values.flow2=0;
+				// thermal_values.temp3=666;
+				// thermal_values.temp4=5;
+				// thermal_values.temp5=10;
+				// thermal_values.temp6=20;
+				// thermal_values.flow1=1000;
+				// thermal_values.flow2=0;
+
+				// // for sensor calibration (get the resistance of each channel)
+				// float R0 = sensor.get_channel_R(0);
+				// printf("R0: %.2f\n", R0);
+				// float R1 = sensor.get_channel_R(1);
+				// printf("R1: %.2f\n", R1);
+				// float R2 = sensor.get_channel_R(2);
+				// printf("R2: %.2f\n", R2);
+				// float R3 = sensor.get_channel_R(3);
+				// printf("R3: %.2f\n", R3);
+				// float R4 = sensor.get_channel_R(4);
+				// printf("R4: %.2f\n", R4);
+				// float R5 = sensor.get_channel_R(5);
+				// printf("R5: %.2f\n", R5);
 			}
 			// Assume any other number is a number of bytes to receive
 			else {
@@ -625,6 +855,8 @@ int main () {
 			close(sock_client);
 		}else{
 			// if no thing to do, do a temperatur controller cycle and wait for 10000us
+
+
 			temp_control(&params, &system_regs, &thermal_values);
 			//printf("temp_control just executed\n");
 			usleep(10000);

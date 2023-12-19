@@ -102,11 +102,15 @@ class Window(QtWidgets.QMainWindow):
         self.timer2.timeout.connect(lambda: self.GetThermalMeasuremnt())
         self.timer2.start(1000) # Start temerature monitoring
         
+        # for temperature log
         # thermal data
         self.temp_data_history = []  # Initialize an empty array to store historical temperature data
     
         # variable to track the first entry
         self.first_entry = True
+        
+        self.initial_directory = os.getcwd()  # Record the current working directory
+        self.log_file_path = "temperature_log.txt"  # Set the log file path
     
     # close and disconnet everything if window is closed
     def closeEvent(self, event):
@@ -189,34 +193,48 @@ class Window(QtWidgets.QMainWindow):
         # Set the scene to the QGraphicsView widget
         self.ui.graphicsView_temp.setScene(scene)
         
-    def log_thermal_data(self):
-        # to record the thermal data (temperature) in "temperature_log.txt"
+
         
-        log_file_path = "temperature_log.txt"
+    def log_thermal_data(self):
+        # Function to record thermal data in "temperature_log.txt"
+
+        # Ensure we're in the correct directory
+        if os.getcwd() != self.initial_directory:
+            os.chdir(self.initial_directory)
 
         # Check if it's the first entry
         if self.first_entry:
-            # Write a separator line and update the flag
-            with open(log_file_path, "a") as log_file:
-                log_file.write("######\n")
-                log_file.write("Time\t\t\ttemp0\ttemp1\ttemp2\ttemp3\ttemp4\ttemp5\ttemp6\ttemp7\n")
-            self.first_entry = False
+            try:
+                # Write a separator line and update the flag
+                with open(self.log_file_path, "a") as log_file:
+                    log_file.write("######\n")
+                    log_file.write("Time\t\t\ttemp0\ttemp1\ttemp2\ttemp3\ttemp4\ttemp5\th_flux0\th_flux1\n")
+                self.first_entry = False
+            except Exception as e:
+                logging.error("Error writing to log file: " + str(e))
+                return
 
         # Get the current timestamp
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-        
+
         # Retrieve temperature data from self.TempData
         temp_data = [temp / 100 for temp in self.TempData]
 
         # Create the log entry string
         log_entry = f"{timestamp}\t" + "\t".join(str(temp) for temp in temp_data)
 
-        # Write the log entry to the log file
-        with open(log_file_path, "a") as log_file:
-            log_file.write(log_entry + "\n")
+        try:
+            # Write the log entry to the log file
+            with open(self.log_file_path, "a") as log_file:
+                log_file.write(log_entry + "\n")
+        except Exception as e:
+            logging.error("Error writing to log file: " + str(e))
 
         # Log the action of logging temperature data
         logging.debug("Logged temperature data: " + log_entry)
+    
+    
+    
         
     
     
@@ -256,6 +274,7 @@ class Window(QtWidgets.QMainWindow):
         self.plot_thermal(self.temp_data_history)
         
         self.log_thermal_data()
+        #print("in get thermal measurement")
 
 
     
@@ -500,9 +519,18 @@ class Window(QtWidgets.QMainWindow):
     def TempMode(self):
         if int(self.ui.inputTemp.text()) >=0 and int(self.ui.inputTemp.text()) <4:
             self.FPGA_config["temp_mode"] = int(self.ui.inputTemp.text())
+            
+
+
+            
         else:
             self.ui.inputTemp.setText("0")
             self.FPGA_config["temp_mode"] = 0
+        
+        if int(self.ui.inputTemp.text()) == 1:
+            self.ui.labelT1.setText("Setpoint 1-1 [°C]")
+            self.ui.inputT1.setText("10")
+        
             
 
 ## Main Loop

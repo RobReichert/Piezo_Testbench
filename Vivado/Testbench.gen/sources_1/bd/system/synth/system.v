@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-//Date        : Sun Nov 26 11:07:57 2023
+//Date        : Wed Dec 13 16:57:30 2023
 //Host        : LAPTOP-4VBD454D running 64-bit major release  (build 9200)
 //Command     : generate_target system.bd
 //Design      : system
@@ -889,7 +889,7 @@ module Memory_IO_imp_1UEKTOT
   input aclk;
   input aresetn;
   input aresetn1;
-  output [439:0]cfg_data;
+  output [319:0]cfg_data;
   input [31:0]cfg_data1;
   input [63:0]sts_data;
   output [15:0]sts_data1;
@@ -931,7 +931,7 @@ module Memory_IO_imp_1UEKTOT
   wire [3:0]S_AXI_1_WSTRB;
   wire S_AXI_1_WVALID;
   wire aresetn1_1;
-  wire [439:0]axi_cfg_register_0_cfg_data;
+  wire [319:0]axi_cfg_register_0_cfg_data;
   wire [31:0]axis_ram_writer_0_M_AXI_AWADDR;
   wire [1:0]axis_ram_writer_0_M_AXI_AWBURST;
   wire [3:0]axis_ram_writer_0_M_AXI_AWCACHE;
@@ -1007,7 +1007,7 @@ module Memory_IO_imp_1UEKTOT
   assign axis_ram_writer_0_M_AXI_AWREADY = M_AXI_awready;
   assign axis_ram_writer_0_M_AXI_BVALID = M_AXI_bvalid;
   assign axis_ram_writer_0_M_AXI_WREADY = M_AXI_wready;
-  assign cfg_data[439:0] = axi_cfg_register_0_cfg_data;
+  assign cfg_data[319:0] = axi_cfg_register_0_cfg_data;
   assign cfg_data1_1 = cfg_data1[31:0];
   assign pll_0_clk_out1 = aclk;
   assign rst_0_peripheral_aresetn = aresetn;
@@ -1159,7 +1159,7 @@ module Prozessing_System_imp_VE239K
   wire In3_1;
   wire [31:0]Measurment_control_0_M_AXIS_dds_out_TDATA;
   wire Measurment_control_0_M_AXIS_dds_out_TVALID;
-  wire [439:0]Memory_IO_cfg_data;
+  wire [319:0]Memory_IO_cfg_data;
   wire [31:0]Reg_Brakeout_M_AXIS2_TDATA;
   wire Reg_Brakeout_M_AXIS2_TREADY;
   wire Reg_Brakeout_M_AXIS2_TVALID;
@@ -1465,7 +1465,7 @@ module Reg_Brakeout_imp_1144GQA
     dout,
     dout1,
     dout5);
-  input [439:0]Din1;
+  input [319:0]Din1;
   input [15:0]In2;
   input [0:0]In3;
   output [31:0]M_AXIS2_tdata;
@@ -1483,28 +1483,24 @@ module Reg_Brakeout_imp_1144GQA
   wire [31:0]Conn1_TDATA;
   wire Conn1_TREADY;
   wire Conn1_TVALID;
-  wire [439:0]Din1_1;
+  wire [319:0]Din1_1;
   wire [15:0]In2_1;
   wire [0:0]In3_1;
   wire [31:0]RAM_addres_Dout;
   wire [15:0]axis_variable_0_M_AXIS_TDATA;
   wire axis_variable_0_M_AXIS_TVALID;
-  wire clock_divider_2560Hz_0_clk_out;
   wire [15:0]external_reset_fake_1_dout;
   wire [3:0]four_bit_concat_0_Dout;
   wire pll_0_clk_out1;
-  wire pwm_safe_sync_0_pwm_out;
   wire [0:0]ram_writer_reset_Dout;
   wire rst_0_peripheral_aresetn;
-  wire [7:0]rx_PWM_DAC1_Dout;
-  wire [0:0]rx_com_bit3_Dout;
   wire [31:0]sample_rate_divider1_Dout;
   wire [15:0]sample_rate_divider_Dout;
   wire [63:0]status_concat_1_dout;
   wire [30:0]zero_add_2_dout;
 
   assign Conn1_TREADY = M_AXIS2_tready;
-  assign Din1_1 = Din1[439:0];
+  assign Din1_1 = Din1[319:0];
   assign In2_1 = In2[15:0];
   assign In3_1 = In3[0];
   assign M_AXIS2_tdata[31:0] = Conn1_TDATA;
@@ -1518,10 +1514,10 @@ module Reg_Brakeout_imp_1144GQA
   assign pll_0_clk_out1 = aclk;
   assign rst_0_peripheral_aresetn = aresetn;
   system_sample_rate_divider_2 DDS_phase
-       (.Din(Din1_1[319:0]),
+       (.Din(Din1_1),
         .Dout(sample_rate_divider1_Dout));
   system_Feedback_State_0 RAM_addres
-       (.Din(Din1_1[319:0]),
+       (.Din(Din1_1),
         .Dout(RAM_addres_Dout));
   system_axis_variable_0_0 axis_variable_0
        (.aclk(pll_0_clk_out1),
@@ -1537,31 +1533,11 @@ module Reg_Brakeout_imp_1144GQA
         .m_axis_tdata(Conn1_TDATA),
         .m_axis_tready(Conn1_TREADY),
         .m_axis_tvalid(Conn1_TVALID));
-  system_clock_divider_2560Hz_0_0 clock_divider_2560Hz_0
-       (.clk_in(pll_0_clk_out1),
-        .clk_out(clock_divider_2560Hz_0_clk_out));
-  system_four_bit_concat_0_0 four_bit_concat_0
-       (.Dout(four_bit_concat_0_Dout),
-        .dac_pwm_o_0(pwm_safe_sync_0_pwm_out),
-        .dac_pwm_o_1(1'b0),
-        .dac_pwm_o_2(1'b0),
-        .dac_pwm_o_3(1'b0));
   system_pre_memory_reset_0 measure
-       (.Din(Din1_1[319:0]),
+       (.Din(Din1_1),
         .Dout(ram_writer_reset_Dout));
-  system_pwm_safe_sync_0_0 pwm_safe_sync_0
-       (.DAC_value(rx_PWM_DAC1_Dout),
-        .clk(clock_divider_2560Hz_0_clk_out),
-        .pwm_out(pwm_safe_sync_0_pwm_out),
-        .sync(rx_com_bit3_Dout));
-  system_RAM_addres_1 rx_PWM_DAC1
-       (.Din(Din1_1[319:0]),
-        .Dout(rx_PWM_DAC1_Dout));
-  system_rx_PWM_DAC1_0 rx_com_bit3
-       (.Din(Din1_1[319:0]),
-        .Dout(rx_com_bit3_Dout));
   system_Feedback_config_bus_0 sample_rate_divider
-       (.Din(Din1_1[319:0]),
+       (.Din(Din1_1),
         .Dout(sample_rate_divider_Dout));
   system_concat_1_0 status_concat_1
        (.In0(In2_1),
@@ -1569,6 +1545,10 @@ module Reg_Brakeout_imp_1144GQA
         .In2(In3_1),
         .In3(zero_add_2_dout),
         .dout(status_concat_1_dout));
+  thermal_control_imp_NNIPHT thermal_control
+       (.Din1(Din1_1),
+        .aclk(pll_0_clk_out1),
+        .dac_pwm_o(four_bit_concat_0_Dout));
   system_zero_add_to_address_0 zero_add_2
        (.dout(zero_add_2_dout));
   system_external_reset_fake_0 zero_add_to_address
@@ -2317,7 +2297,7 @@ module s00_couplers_imp_17W2P32
         .s_axi_wvalid(s00_couplers_to_auto_pc_WVALID));
 endmodule
 
-(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=56,numReposBlks=45,numNonXlnxBlks=0,numHierBlks=11,maxHierDepth=2,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=6,numPkgbdBlks=0,bdsource=USER,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=13,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=10,\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"=3,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
+(* CORE_GENERATION_INFO = "system,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=system,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=60,numReposBlks=48,numNonXlnxBlks=0,numHierBlks=12,maxHierDepth=2,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=7,numPkgbdBlks=0,bdsource=USER,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=13,\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"=10,\"\"\"\"\"\"\"\"\"\"\"\"\"da_clkrst_cnt\"\"\"\"\"\"\"\"\"\"\"\"\"=3,synth_mode=Global}" *) (* HW_HANDOFF = "system.hwdef" *) 
 module system
    (DDR_addr,
     DDR_ba,
@@ -3202,4 +3182,59 @@ module system_ps_0_axi_periph_0
         .s_axi_wready(s00_couplers_to_xbar_WREADY),
         .s_axi_wstrb(s00_couplers_to_xbar_WSTRB),
         .s_axi_wvalid(s00_couplers_to_xbar_WVALID));
+endmodule
+
+module thermal_control_imp_NNIPHT
+   (Din1,
+    aclk,
+    dac_pwm_o);
+  input [319:0]Din1;
+  input aclk;
+  output [3:0]dac_pwm_o;
+
+  wire [319:0]Din1_1;
+  wire clock_divider_2560Hz_0_clk_out;
+  wire [3:0]four_bit_concat_0_Dout;
+  wire pll_0_clk_out1;
+  wire pwm_safe_sync_0_pwm_out;
+  wire pwm_safe_sync_1_pwm_out;
+  wire [7:0]rx_PWM_DAC1_Dout;
+  wire [7:0]rx_PWM_DAC2_Dout;
+  wire [0:0]rx_com_bit3_Dout;
+  wire [0:0]rx_com_bit4_Dout;
+
+  assign Din1_1 = Din1[319:0];
+  assign dac_pwm_o[3:0] = four_bit_concat_0_Dout;
+  assign pll_0_clk_out1 = aclk;
+  system_clock_divider_2560Hz_0_0 clock_divider_2560Hz_0
+       (.clk_in(pll_0_clk_out1),
+        .clk_out(clock_divider_2560Hz_0_clk_out));
+  system_four_bit_concat_0_0 four_bit_concat_0
+       (.Dout(four_bit_concat_0_Dout),
+        .dac_pwm_o_0(pwm_safe_sync_0_pwm_out),
+        .dac_pwm_o_1(pwm_safe_sync_1_pwm_out),
+        .dac_pwm_o_2(1'b0),
+        .dac_pwm_o_3(1'b0));
+  system_pwm_safe_sync_0_0 pwm_safe_sync_0
+       (.DAC_value(rx_PWM_DAC1_Dout),
+        .clk(clock_divider_2560Hz_0_clk_out),
+        .pwm_out(pwm_safe_sync_0_pwm_out),
+        .sync(rx_com_bit3_Dout));
+  system_pwm_safe_sync_0_1 pwm_safe_sync_1
+       (.DAC_value(rx_PWM_DAC2_Dout),
+        .clk(clock_divider_2560Hz_0_clk_out),
+        .pwm_out(pwm_safe_sync_1_pwm_out),
+        .sync(rx_com_bit4_Dout));
+  system_RAM_addres_1 rx_PWM_DAC1
+       (.Din(Din1_1),
+        .Dout(rx_PWM_DAC1_Dout));
+  system_rx_PWM_DAC1_1 rx_PWM_DAC2
+       (.Din(Din1_1),
+        .Dout(rx_PWM_DAC2_Dout));
+  system_rx_PWM_DAC1_0 rx_com_bit3
+       (.Din(Din1_1),
+        .Dout(rx_com_bit3_Dout));
+  system_rx_com_bit3_0 rx_com_bit4
+       (.Din(Din1_1),
+        .Dout(rx_com_bit4_Dout));
 endmodule

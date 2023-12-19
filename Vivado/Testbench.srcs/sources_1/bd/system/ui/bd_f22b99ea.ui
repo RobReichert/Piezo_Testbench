@@ -26,10 +26,10 @@ preplace netloc axis_ram_writer_0_sts_data 1 1 1 310 390n
 preplace netloc aresetn1_1 1 0 1 0 390n
 preplace netloc cfg_data1_1 1 0 1 -10 410n
 preplace netloc sts_data_1 1 0 1 20 30n
-preplace netloc S_AXI_1 1 0 1 NJ 210
-preplace netloc axis_ram_writer_0_M_AXI 1 1 1 300 370n
 preplace netloc S_AXI1_1 1 0 1 NJ 50
 preplace netloc S_AXIS_1 1 0 1 0 350n
+preplace netloc S_AXI_1 1 0 1 NJ 210
+preplace netloc axis_ram_writer_0_M_AXI 1 1 1 300 370n
 levelinfo -pg 1 -30 170 340
 pagesize -pg 1 -db -bbox -sgen -180 -10 490 500
 "

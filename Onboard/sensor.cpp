@@ -129,6 +129,22 @@ float Sensor::_temp_resistance_to_temperature_calibration(float resistance, int 
     return temperature;
 }
 
+float Sensor::_temp_resistance_to_temperature_Steinhart(float resistance, float A, float B, float C) 
+{
+    // Check for valid resistance value (greater than zero)
+    if (resistance <= 0.0f) {
+        return -273.15f; // Return absolute zero as an indicator of invalid input
+    }
+
+    // Calculate the reciprocal of the temperature using Steinhart-Hart equation
+    float invT = A + B * log(resistance) + C * pow(log(resistance), 3);
+
+    // Convert temperature from Kelvin to Celsius
+    float temperatureC = (1.0f / invT) - 273.15f;
+
+    return temperatureC;
+}
+
 
 
 
@@ -193,6 +209,24 @@ float Sensor::get_channel_temp_calibration(int channel, int R_0, float B)
     return temperature;
 }
 
+float Sensor::get_channel_temp_Steinhart(int channel, float A, float B, float C)
+{
+    // Ensure channel is within a valid range
+    if (channel < 0 || channel > 5) {
+        std::cerr << "Error: Invalid channel value for temperature. Please provide a value between 0 and 5." << std::endl;
+        // return a special value -100.0 to indicate an error
+        return -999.0;
+    }
+
+    int ad_value = this->adc.read_channel(channel);
+    float voltage = _AD_to_voltage(ad_value);
+    float resistance = _voltage_to_temp_resistance(voltage);
+
+    float temperature = _temp_resistance_to_temperature_Steinhart(resistance, A, B, C);
+
+    return temperature;
+}
+
 
 float Sensor::get_channel_heat_flux(int channel)
 {
@@ -204,4 +238,20 @@ float Sensor::get_channel_heat_flux(int channel)
     }
 
     // to be implemented in the future
+}
+
+float Sensor::get_channel_R(int channel)
+{
+    // Ensure channel is within a valid range
+    if (channel < 0 || channel > 5) {
+        std::cerr << "Error: Invalid channel value for temperature. Please provide a value between 0 and 5." << std::endl;
+        // return a special value -100.0 to indicate an error
+        return -999.0;
+    }
+
+    int ad_value = this->adc.read_channel(channel);
+    float voltage = _AD_to_voltage(ad_value);
+    float resistance = _voltage_to_temp_resistance(voltage);
+
+    return resistance;
 }

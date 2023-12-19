@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Muzhi Zhang
 // 
 // Create Date: 2023/11/25 21:45:49
 // Design Name: 
@@ -9,7 +9,7 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: 
+// Description: To divide 125 MHz down to 2560 Hz for PWM generator for thermal control
 // 
 // Dependencies: 
 // 

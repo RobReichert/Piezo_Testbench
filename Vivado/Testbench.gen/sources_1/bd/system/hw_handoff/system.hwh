@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sun Nov 26 11:07:58 2023" VIVADOVERSION="2020.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Dec 13 16:57:32 2023" VIVADOVERSION="2020.2">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z010" NAME="system" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -56,14 +56,64 @@
         <CONNECTION INSTANCE="axis_red_pitaya_dac_0" PORT="dac_wrt"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="O" LEFT="3" NAME="dac_pwm_o" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_four_bit_concat_0_Dout">
+    <PORT DIR="O" LEFT="3" NAME="dac_pwm_o" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_four_bit_concat_0_Dout">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_four_bit_concat_0" PORT="Dout"/>
+        <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_four_bit_concat_0" PORT="Dout"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="IO" LEFT="7" NAME="exp_p_tri_io" RIGHT="0" SIGIS="undef"/>
     <PORT DIR="IO" LEFT="7" NAME="exp_n_tri_io" RIGHT="0" SIGIS="undef"/>
     <PORT DIR="O" LEFT="7" NAME="led_o" RIGHT="0" SIGIS="undef"/>
+    <PORT DIR="I" NAME="Vaux9_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn9">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn9"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="Vaux9_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxp9">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxp9"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" LEFT="53" NAME="FIXED_IO_mio" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_MIO">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="MIO"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrn" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_DDR_VRN">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="DDR_VRN"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrp" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_DDR_VRP">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="DDR_VRP"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_PS_SRSTB">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="PS_SRSTB"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_PS_CLK">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="PS_CLK"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_PS_PORB">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="PS_PORB"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="Vaux0_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn0">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn0"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="Vaux0_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxp0">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxp0"/>
+      </CONNECTIONS>
+    </PORT>
     <PORT DIR="I" NAME="Vaux1_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn1">
       <CONNECTIONS>
         <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn1"/>
@@ -82,6 +132,16 @@
     <PORT DIR="I" NAME="Vp_Vn_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vp_in">
       <CONNECTIONS>
         <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vp_in"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="Vaux8_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn8">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn8"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="Vaux8_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxp8">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxp8"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="IO" NAME="DDR_cas_n" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_DDR_CAS_n">
@@ -157,66 +217,6 @@
     <PORT DIR="IO" LEFT="3" NAME="DDR_dqs_p" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_DDR_DQS">
       <CONNECTIONS>
         <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="DDR_DQS"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="Vaux8_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn8">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn8"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="Vaux8_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxp8">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxp8"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="Vaux9_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn9">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn9"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="Vaux9_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxp9">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxp9"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" LEFT="53" NAME="FIXED_IO_mio" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_MIO">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="MIO"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrn" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_DDR_VRN">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="DDR_VRN"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrp" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_DDR_VRP">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="DDR_VRP"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_PS_SRSTB">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="PS_SRSTB"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_PS_CLK">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="PS_CLK"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_PS_PORB">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="PS_PORB"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="Vaux0_v_n" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxn0">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxn0"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="Vaux0_v_p" SIGIS="undef" SIGNAME="Analog_Input_xadc_wiz_0_vauxp0">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="Analog_Input_xadc_wiz_0" PORT="vauxp0"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -2062,7 +2062,7 @@
             <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axis_ram_writer_0" PORT="aclk"/>
             <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_axis_variable_0" PORT="aclk"/>
             <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_axis_variable_1" PORT="aclk"/>
-            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_clock_divider_2560Hz_0" PORT="clk_in"/>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_clock_divider_2560Hz_0" PORT="clk_in"/>
             <CONNECTION INSTANCE="Prozessing_System_dds_compiler_0" PORT="aclk"/>
             <CONNECTION INSTANCE="Prozessing_System_Measurment_control_0" PORT="aclk"/>
             <CONNECTION INSTANCE="Prozessing_System_ch1_output_dac_mem_split_1" PORT="aclk"/>
@@ -4076,6 +4076,89 @@
             <CONNECTION INSTANCE="Prozessing_System_Core_rst_0" PORT="peripheral_aresetn"/>
           </CONNECTIONS>
         </PORT>
+        <PORT DIR="O" LEFT="31" NAME="M00_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_awaddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_awaddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_awprot" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M00_AXI_awvalid" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_awvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_awvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_awready" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_awready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_awready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="M00_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_wdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_wdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_wstrb" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M00_AXI_wvalid" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_wvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_wvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_wready" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_wready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_wready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M00_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_bresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_bresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_bvalid" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_bvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_bvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_bready" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_bready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_bready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="M00_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_araddr">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_araddr"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_arprot" SIGIS="undef"/>
+        <PORT DIR="O" NAME="M00_AXI_arvalid" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_arvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_arvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_arready" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_arready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_arready"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="31" NAME="M00_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_rdata">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_rdata"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="1" NAME="M00_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_rresp">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_rresp"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="M00_AXI_rvalid" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_rvalid">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_rvalid"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="M00_AXI_rready" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_rready">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_rready"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="I" LEFT="11" NAME="S00_AXI_awid" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_M_AXI_GP0_AWID">
           <CONNECTIONS>
             <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="M_AXI_GP0_AWID"/>
@@ -4264,89 +4347,6 @@
         <PORT DIR="I" NAME="S00_AXI_rready" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_M_AXI_GP0_RREADY">
           <CONNECTIONS>
             <CONNECTION INSTANCE="Prozessing_System_Core_ps_0" PORT="M_AXI_GP0_RREADY"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="31" NAME="M00_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_awaddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_awaddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M00_AXI_awprot" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M00_AXI_awvalid" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_awvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_awvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M00_AXI_awready" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_awready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_awready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="31" NAME="M00_AXI_wdata" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_wdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_wdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M00_AXI_wstrb" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M00_AXI_wvalid" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_wvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_wvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M00_AXI_wready" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_wready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_wready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M00_AXI_bresp" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_bresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_bresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M00_AXI_bvalid" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_bvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_bvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M00_AXI_bready" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_bready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_bready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="31" NAME="M00_AXI_araddr" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_araddr">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_araddr"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M00_AXI_arprot" SIGIS="undef"/>
-        <PORT DIR="O" NAME="M00_AXI_arvalid" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_arvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_arvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M00_AXI_arready" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_arready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_arready"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="31" NAME="M00_AXI_rdata" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_rdata">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_rdata"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="1" NAME="M00_AXI_rresp" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_rresp">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_rresp"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="M00_AXI_rvalid" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_rvalid">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_rvalid"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="M00_AXI_rready" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M00_AXI_rready">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="s_axi_rready"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" LEFT="31" NAME="M01_AXI_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M01_AXI_awaddr">
@@ -4696,7 +4696,7 @@
         <ADDRESSBLOCK ACCESS="" INTERFACE="s_axi" NAME="reg0" RANGE="4294967296" USAGE="register"/>
       </ADDRESSBLOCKS>
       <PARAMETERS>
-        <PARAMETER NAME="CFG_DATA_WIDTH" VALUE="440"/>
+        <PARAMETER NAME="CFG_DATA_WIDTH" VALUE="320"/>
         <PARAMETER NAME="AXI_DATA_WIDTH" VALUE="32"/>
         <PARAMETER NAME="AXI_ADDR_WIDTH" VALUE="32"/>
         <PARAMETER NAME="Component_Name" VALUE="system_axi_cfg_register_0_0"/>
@@ -4715,14 +4715,16 @@
             <CONNECTION INSTANCE="Prozessing_System_Core_rst_0" PORT="peripheral_aresetn"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="439" NAME="cfg_data" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Memory_IO_axi_cfg_register_0_cfg_data">
+        <PORT DIR="O" LEFT="319" NAME="cfg_data" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Memory_IO_axi_cfg_register_0_cfg_data">
           <CONNECTIONS>
             <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_RAM_addres" PORT="Din"/>
             <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_sample_rate_divider" PORT="Din"/>
             <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_measure" PORT="Din"/>
             <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_DDS_phase" PORT="Din"/>
-            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_rx_PWM_DAC1" PORT="Din"/>
-            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_rx_com_bit3" PORT="Din"/>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_com_bit4" PORT="Din"/>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_PWM_DAC2" PORT="Din"/>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_com_bit3" PORT="Din"/>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_PWM_DAC1" PORT="Din"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="31" NAME="s_axi_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Core_ps_0_axi_periph_M01_AXI_awaddr">
@@ -5407,49 +5409,6 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
-    <MODULE COREREVISION="1" FULLNAME="/Prozessing_System/Reg_Brakeout/clock_divider_2560Hz_0" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_clock_divider_2560Hz_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="clock_divider_2560Hz" VLNV="xilinx.com:module_ref:clock_divider_2560Hz:1.0">
-      <DOCUMENTS/>
-      <PARAMETERS>
-        <PARAMETER NAME="Component_Name" VALUE="system_clock_divider_2560Hz_0_0"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT DIR="I" NAME="clk_in" SIGIS="undef" SIGNAME="Prozessing_System_Core_pll_0_clk_out1">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Core_pll_0" PORT="clk_out1"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="clk_out" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_clock_divider_2560Hz_0_clk_out">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_pwm_safe_sync_0" PORT="clk"/>
-          </CONNECTIONS>
-        </PORT>
-      </PORTS>
-      <BUSINTERFACES/>
-    </MODULE>
-    <MODULE COREREVISION="1" FULLNAME="/Prozessing_System/Reg_Brakeout/four_bit_concat_0" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_four_bit_concat_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="four_bit_concat" VLNV="xilinx.com:module_ref:four_bit_concat:1.0">
-      <DOCUMENTS/>
-      <PARAMETERS>
-        <PARAMETER NAME="Component_Name" VALUE="system_four_bit_concat_0_0"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT DIR="I" NAME="dac_pwm_o_0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_pwm_safe_sync_0_pwm_out">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_pwm_safe_sync_0" PORT="pwm_out"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="dac_pwm_o_1" SIGIS="undef"/>
-        <PORT DIR="I" NAME="dac_pwm_o_2" SIGIS="undef"/>
-        <PORT DIR="I" NAME="dac_pwm_o_3" SIGIS="undef"/>
-        <PORT DIR="O" LEFT="3" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_four_bit_concat_0_Dout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="External_Ports" PORT="dac_pwm_o"/>
-          </CONNECTIONS>
-        </PORT>
-      </PORTS>
-      <BUSINTERFACES/>
-    </MODULE>
     <MODULE COREREVISION="2" FULLNAME="/Prozessing_System/Reg_Brakeout/measure" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_measure" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:1.0">
       <DOCUMENTS/>
       <PARAMETERS>
@@ -5469,84 +5428,6 @@
         <PORT DIR="O" LEFT="0" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_measure_Dout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="Prozessing_System_Measurment_control_0" PORT="measure"/>
-          </CONNECTIONS>
-        </PORT>
-      </PORTS>
-      <BUSINTERFACES/>
-    </MODULE>
-    <MODULE COREREVISION="1" FULLNAME="/Prozessing_System/Reg_Brakeout/pwm_safe_sync_0" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_pwm_safe_sync_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="pwm_safe_sync" VLNV="xilinx.com:module_ref:pwm_safe_sync:1.0">
-      <DOCUMENTS/>
-      <PARAMETERS>
-        <PARAMETER NAME="Component_Name" VALUE="system_pwm_safe_sync_0_0"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="Prozessing_System_Reg_Brakeout_clock_divider_2560Hz_0_clk_out">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_clock_divider_2560Hz_0" PORT="clk_out"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" LEFT="7" NAME="DAC_value" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_rx_PWM_DAC1_Dout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_rx_PWM_DAC1" PORT="Dout"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="I" NAME="sync" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_rx_com_bit3_Dout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_rx_com_bit3" PORT="Dout"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" NAME="pwm_out" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_pwm_safe_sync_0_pwm_out">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_four_bit_concat_0" PORT="dac_pwm_o_0"/>
-          </CONNECTIONS>
-        </PORT>
-      </PORTS>
-      <BUSINTERFACES/>
-    </MODULE>
-    <MODULE COREREVISION="2" FULLNAME="/Prozessing_System/Reg_Brakeout/rx_PWM_DAC1" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_rx_PWM_DAC1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:1.0">
-      <DOCUMENTS/>
-      <PARAMETERS>
-        <PARAMETER NAME="DIN_WIDTH" VALUE="320"/>
-        <PARAMETER NAME="DIN_FROM" VALUE="103"/>
-        <PARAMETER NAME="DIN_TO" VALUE="96"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_RAM_addres_1"/>
-        <PARAMETER NAME="DOUT_WIDTH" VALUE="8"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT DIR="I" LEFT="319" NAME="Din" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Memory_IO_axi_cfg_register_0_cfg_data">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_cfg_register_0" PORT="cfg_data"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="7" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_rx_PWM_DAC1_Dout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_pwm_safe_sync_0" PORT="DAC_value"/>
-          </CONNECTIONS>
-        </PORT>
-      </PORTS>
-      <BUSINTERFACES/>
-    </MODULE>
-    <MODULE COREREVISION="2" FULLNAME="/Prozessing_System/Reg_Brakeout/rx_com_bit3" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_rx_com_bit3" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:1.0">
-      <DOCUMENTS/>
-      <PARAMETERS>
-        <PARAMETER NAME="DIN_WIDTH" VALUE="320"/>
-        <PARAMETER NAME="DIN_FROM" VALUE="3"/>
-        <PARAMETER NAME="DIN_TO" VALUE="3"/>
-        <PARAMETER NAME="Component_Name" VALUE="system_rx_PWM_DAC1_0"/>
-        <PARAMETER NAME="DOUT_WIDTH" VALUE="1"/>
-        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
-      </PARAMETERS>
-      <PORTS>
-        <PORT DIR="I" LEFT="319" NAME="Din" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Memory_IO_axi_cfg_register_0_cfg_data">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_cfg_register_0" PORT="cfg_data"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="0" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_rx_com_bit3_Dout">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_pwm_safe_sync_0" PORT="sync"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -5736,6 +5617,210 @@
         <PORT DIR="O" LEFT="63" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_status_concat_1_dout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_sts_register_0" PORT="sts_data"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="1" FULLNAME="/Prozessing_System/Reg_Brakeout/thermal_control/clock_divider_2560Hz_0" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_clock_divider_2560Hz_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="clock_divider_2560Hz" VLNV="xilinx.com:module_ref:clock_divider_2560Hz:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="Component_Name" VALUE="system_clock_divider_2560Hz_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="clk_in" SIGIS="undef" SIGNAME="Prozessing_System_Core_pll_0_clk_out1">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Core_pll_0" PORT="clk_out1"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="clk_out" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_clock_divider_2560Hz_0_clk_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_0" PORT="clk"/>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_1" PORT="clk"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="1" FULLNAME="/Prozessing_System/Reg_Brakeout/thermal_control/four_bit_concat_0" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_four_bit_concat_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="four_bit_concat" VLNV="xilinx.com:module_ref:four_bit_concat:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="Component_Name" VALUE="system_four_bit_concat_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" NAME="dac_pwm_o_0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_0_pwm_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_0" PORT="pwm_out"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="dac_pwm_o_1" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_1_pwm_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_1" PORT="pwm_out"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="dac_pwm_o_2" SIGIS="undef"/>
+        <PORT DIR="I" NAME="dac_pwm_o_3" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="3" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_four_bit_concat_0_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="dac_pwm_o"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="1" FULLNAME="/Prozessing_System/Reg_Brakeout/thermal_control/pwm_safe_sync_0" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="pwm_safe_sync" VLNV="xilinx.com:module_ref:pwm_safe_sync:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="Component_Name" VALUE="system_pwm_safe_sync_0_0"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_clock_divider_2560Hz_0_clk_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_clock_divider_2560Hz_0" PORT="clk_out"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="7" NAME="DAC_value" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_rx_PWM_DAC1_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_PWM_DAC1" PORT="Dout"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="sync" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_rx_com_bit3_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_com_bit3" PORT="Dout"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="pwm_out" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_0_pwm_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_four_bit_concat_0" PORT="dac_pwm_o_0"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="1" FULLNAME="/Prozessing_System/Reg_Brakeout/thermal_control/pwm_safe_sync_1" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="pwm_safe_sync" VLNV="xilinx.com:module_ref:pwm_safe_sync:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="Component_Name" VALUE="system_pwm_safe_sync_0_1"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_clock_divider_2560Hz_0_clk_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_clock_divider_2560Hz_0" PORT="clk_out"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" LEFT="7" NAME="DAC_value" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_rx_PWM_DAC2_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_PWM_DAC2" PORT="Dout"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="I" NAME="sync" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_rx_com_bit4_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_com_bit4" PORT="Dout"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="pwm_out" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_1_pwm_out">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_four_bit_concat_0" PORT="dac_pwm_o_1"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="2" FULLNAME="/Prozessing_System/Reg_Brakeout/thermal_control/rx_PWM_DAC1" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_PWM_DAC1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="DIN_WIDTH" VALUE="320"/>
+        <PARAMETER NAME="DIN_FROM" VALUE="103"/>
+        <PARAMETER NAME="DIN_TO" VALUE="96"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_RAM_addres_1"/>
+        <PARAMETER NAME="DOUT_WIDTH" VALUE="8"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" LEFT="319" NAME="Din" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Memory_IO_axi_cfg_register_0_cfg_data">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_cfg_register_0" PORT="cfg_data"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="7" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_rx_PWM_DAC1_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_0" PORT="DAC_value"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="2" FULLNAME="/Prozessing_System/Reg_Brakeout/thermal_control/rx_PWM_DAC2" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_PWM_DAC2" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="DIN_WIDTH" VALUE="320"/>
+        <PARAMETER NAME="DIN_FROM" VALUE="111"/>
+        <PARAMETER NAME="DIN_TO" VALUE="104"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_rx_PWM_DAC1_1"/>
+        <PARAMETER NAME="DOUT_WIDTH" VALUE="8"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" LEFT="319" NAME="Din" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Memory_IO_axi_cfg_register_0_cfg_data">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_cfg_register_0" PORT="cfg_data"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="7" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_rx_PWM_DAC2_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_1" PORT="DAC_value"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="2" FULLNAME="/Prozessing_System/Reg_Brakeout/thermal_control/rx_com_bit3" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_com_bit3" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="DIN_WIDTH" VALUE="320"/>
+        <PARAMETER NAME="DIN_FROM" VALUE="3"/>
+        <PARAMETER NAME="DIN_TO" VALUE="3"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_rx_PWM_DAC1_0"/>
+        <PARAMETER NAME="DOUT_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" LEFT="319" NAME="Din" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Memory_IO_axi_cfg_register_0_cfg_data">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_cfg_register_0" PORT="cfg_data"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="0" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_rx_com_bit3_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_0" PORT="sync"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE COREREVISION="2" FULLNAME="/Prozessing_System/Reg_Brakeout/thermal_control/rx_com_bit4" HWVERSION="1.0" INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_rx_com_bit4" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="DIN_WIDTH" VALUE="320"/>
+        <PARAMETER NAME="DIN_FROM" VALUE="4"/>
+        <PARAMETER NAME="DIN_TO" VALUE="4"/>
+        <PARAMETER NAME="Component_Name" VALUE="system_rx_com_bit3_0"/>
+        <PARAMETER NAME="DOUT_WIDTH" VALUE="1"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" LEFT="319" NAME="Din" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Memory_IO_axi_cfg_register_0_cfg_data">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Memory_IO_axi_cfg_register_0" PORT="cfg_data"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="0" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="Prozessing_System_Reg_Brakeout_thermal_control_rx_com_bit4_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="Prozessing_System_Reg_Brakeout_thermal_control_pwm_safe_sync_1" PORT="sync"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

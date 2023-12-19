@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Muzhi Zhang
 // 
 // Create Date: 2023/11/25 22:22:28
 // Design Name: 
@@ -9,7 +9,9 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: 
+// Description: to generate a PWM signal with a duty cycle controlled by an 8-bit input value and synchronized with an external signal.
+// When the external sync signal toggles, then starts a new one-second-period of PWM.
+// The sync signal should be toggled every 1000ms to ensure the one-second-period of PWM. (guaranteed by the cpp code)
 // 
 // Dependencies: 
 // 
@@ -21,9 +23,9 @@
 
 
 module pwm_safe_sync(
-    input clk,                  // Input clock with a frequency of approximately 2560Hz
+    input clk,                  // Input clock which should be approximately 2560Hz
     input [7:0] DAC_value,      // 8-bit input value for PWM duty cycle
-    input sync,                 // Synchronization signal for the start of PWM period
+    input sync,                 // Synchronization signal for the start of PWM period (which should be toggled every 1s)
     output reg pwm_out = 0      // PWM output, initialized to 0
 );
 

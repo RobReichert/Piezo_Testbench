@@ -40,7 +40,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 
 # The design that will be created by this Tcl script contains the following 
 # module references:
-# xadc_read, Measurment_control, Sample_Hold, clock_divider_2560Hz, four_bit_concat, pwm_safe_sync
+# xadc_read, Measurment_control, Sample_Hold, clock_divider_2560Hz, four_bit_concat, pwm_safe_sync, pwm_safe_sync
 
 # Please add the sources of those modules before sourcing this Tcl script.
 
@@ -128,6 +128,143 @@ if { $nRet != 0 } {
 ##################################################################
 
 
+# Hierarchical cell: thermal_control
+proc create_hier_cell_thermal_control { parentCell nameHier } {
+
+  variable script_folder
+
+  if { $parentCell eq "" || $nameHier eq "" } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2092 -severity "ERROR" "create_hier_cell_thermal_control() - Empty argument(s)!"}
+     return
+  }
+
+  # Get object for parentCell
+  set parentObj [get_bd_cells $parentCell]
+  if { $parentObj == "" } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2090 -severity "ERROR" "Unable to find parent cell <$parentCell>!"}
+     return
+  }
+
+  # Make sure parentObj is hier blk
+  set parentType [get_property TYPE $parentObj]
+  if { $parentType ne "hier" } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2091 -severity "ERROR" "Parent <$parentObj> has TYPE = <$parentType>. Expected to be <hier>."}
+     return
+  }
+
+  # Save current instance; Restore later
+  set oldCurInst [current_bd_instance .]
+
+  # Set parent object as current
+  current_bd_instance $parentObj
+
+  # Create cell and set as current instance
+  set hier_obj [create_bd_cell -type hier $nameHier]
+  current_bd_instance $hier_obj
+
+  # Create interface pins
+
+  # Create pins
+  create_bd_pin -dir I -from 319 -to 0 Din1
+  create_bd_pin -dir I -type clk aclk
+  create_bd_pin -dir O -from 3 -to 0 dac_pwm_o
+
+  # Create instance: clock_divider_2560Hz_0, and set properties
+  set block_name clock_divider_2560Hz
+  set block_cell_name clock_divider_2560Hz_0
+  if { [catch {set clock_divider_2560Hz_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2095 -severity "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $clock_divider_2560Hz_0 eq "" } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2096 -severity "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
+  # Create instance: four_bit_concat_0, and set properties
+  set block_name four_bit_concat
+  set block_cell_name four_bit_concat_0
+  if { [catch {set four_bit_concat_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2095 -severity "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $four_bit_concat_0 eq "" } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2096 -severity "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
+  # Create instance: pwm_safe_sync_0, and set properties
+  set block_name pwm_safe_sync
+  set block_cell_name pwm_safe_sync_0
+  if { [catch {set pwm_safe_sync_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2095 -severity "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $pwm_safe_sync_0 eq "" } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2096 -severity "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
+  # Create instance: pwm_safe_sync_1, and set properties
+  set block_name pwm_safe_sync
+  set block_cell_name pwm_safe_sync_1
+  if { [catch {set pwm_safe_sync_1 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2095 -severity "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   } elseif { $pwm_safe_sync_1 eq "" } {
+     catch {common::send_gid_msg -ssname BD::TCL -id 2096 -severity "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
+     return 1
+   }
+  
+  # Create instance: rx_PWM_DAC1, and set properties
+  set rx_PWM_DAC1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 rx_PWM_DAC1 ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {103} \
+   CONFIG.DIN_TO {96} \
+   CONFIG.DIN_WIDTH {320} \
+   CONFIG.DOUT_WIDTH {8} \
+ ] $rx_PWM_DAC1
+
+  # Create instance: rx_PWM_DAC2, and set properties
+  set rx_PWM_DAC2 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 rx_PWM_DAC2 ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {111} \
+   CONFIG.DIN_TO {104} \
+   CONFIG.DIN_WIDTH {320} \
+   CONFIG.DOUT_WIDTH {8} \
+ ] $rx_PWM_DAC2
+
+  # Create instance: rx_com_bit3, and set properties
+  set rx_com_bit3 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 rx_com_bit3 ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {3} \
+   CONFIG.DIN_TO {3} \
+   CONFIG.DIN_WIDTH {320} \
+   CONFIG.DOUT_WIDTH {1} \
+ ] $rx_com_bit3
+
+  # Create instance: rx_com_bit4, and set properties
+  set rx_com_bit4 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 rx_com_bit4 ]
+  set_property -dict [ list \
+   CONFIG.DIN_FROM {4} \
+   CONFIG.DIN_TO {4} \
+   CONFIG.DIN_WIDTH {320} \
+   CONFIG.DOUT_WIDTH {1} \
+ ] $rx_com_bit4
+
+  # Create port connections
+  connect_bd_net -net Din1_1 [get_bd_pins Din1] [get_bd_pins rx_PWM_DAC1/Din] [get_bd_pins rx_PWM_DAC2/Din] [get_bd_pins rx_com_bit3/Din] [get_bd_pins rx_com_bit4/Din]
+  connect_bd_net -net clock_divider_2560Hz_0_clk_out [get_bd_pins clock_divider_2560Hz_0/clk_out] [get_bd_pins pwm_safe_sync_0/clk] [get_bd_pins pwm_safe_sync_1/clk]
+  connect_bd_net -net four_bit_concat_0_Dout [get_bd_pins dac_pwm_o] [get_bd_pins four_bit_concat_0/Dout]
+  connect_bd_net -net pll_0_clk_out1 [get_bd_pins aclk] [get_bd_pins clock_divider_2560Hz_0/clk_in]
+  connect_bd_net -net pwm_safe_sync_0_pwm_out [get_bd_pins four_bit_concat_0/dac_pwm_o_0] [get_bd_pins pwm_safe_sync_0/pwm_out]
+  connect_bd_net -net pwm_safe_sync_1_pwm_out [get_bd_pins four_bit_concat_0/dac_pwm_o_1] [get_bd_pins pwm_safe_sync_1/pwm_out]
+  connect_bd_net -net rx_PWM_DAC1_Dout [get_bd_pins pwm_safe_sync_0/DAC_value] [get_bd_pins rx_PWM_DAC1/Dout]
+  connect_bd_net -net rx_PWM_DAC2_Dout [get_bd_pins pwm_safe_sync_1/DAC_value] [get_bd_pins rx_PWM_DAC2/Dout]
+  connect_bd_net -net rx_com_bit3_Dout [get_bd_pins pwm_safe_sync_0/sync] [get_bd_pins rx_com_bit3/Dout]
+  connect_bd_net -net rx_com_bit4_Dout [get_bd_pins pwm_safe_sync_1/sync] [get_bd_pins rx_com_bit4/Dout]
+
+  # Restore current instance
+  current_bd_instance $oldCurInst
+}
+
 # Hierarchical cell: Reg_Brakeout
 proc create_hier_cell_Reg_Brakeout { parentCell nameHier } {
 
@@ -169,7 +306,7 @@ proc create_hier_cell_Reg_Brakeout { parentCell nameHier } {
 
 
   # Create pins
-  create_bd_pin -dir I -from 439 -to 0 Din1
+  create_bd_pin -dir I -from 319 -to 0 Din1
   create_bd_pin -dir I -from 15 -to 0 In2
   create_bd_pin -dir I -from 0 -to 0 In3
   create_bd_pin -dir I -type clk aclk
@@ -209,28 +346,6 @@ proc create_hier_cell_Reg_Brakeout { parentCell nameHier } {
    CONFIG.AXIS_TDATA_WIDTH {32} \
  ] $axis_variable_1
 
-  # Create instance: clock_divider_2560Hz_0, and set properties
-  set block_name clock_divider_2560Hz
-  set block_cell_name clock_divider_2560Hz_0
-  if { [catch {set clock_divider_2560Hz_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
-     catch {common::send_gid_msg -ssname BD::TCL -id 2095 -severity "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
-     return 1
-   } elseif { $clock_divider_2560Hz_0 eq "" } {
-     catch {common::send_gid_msg -ssname BD::TCL -id 2096 -severity "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
-     return 1
-   }
-  
-  # Create instance: four_bit_concat_0, and set properties
-  set block_name four_bit_concat
-  set block_cell_name four_bit_concat_0
-  if { [catch {set four_bit_concat_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
-     catch {common::send_gid_msg -ssname BD::TCL -id 2095 -severity "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
-     return 1
-   } elseif { $four_bit_concat_0 eq "" } {
-     catch {common::send_gid_msg -ssname BD::TCL -id 2096 -severity "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
-     return 1
-   }
-  
   # Create instance: measure, and set properties
   set measure [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 measure ]
   set_property -dict [ list \
@@ -239,35 +354,6 @@ proc create_hier_cell_Reg_Brakeout { parentCell nameHier } {
    CONFIG.DIN_WIDTH {320} \
    CONFIG.DOUT_WIDTH {1} \
  ] $measure
-
-  # Create instance: pwm_safe_sync_0, and set properties
-  set block_name pwm_safe_sync
-  set block_cell_name pwm_safe_sync_0
-  if { [catch {set pwm_safe_sync_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
-     catch {common::send_gid_msg -ssname BD::TCL -id 2095 -severity "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
-     return 1
-   } elseif { $pwm_safe_sync_0 eq "" } {
-     catch {common::send_gid_msg -ssname BD::TCL -id 2096 -severity "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
-     return 1
-   }
-  
-  # Create instance: rx_PWM_DAC1, and set properties
-  set rx_PWM_DAC1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 rx_PWM_DAC1 ]
-  set_property -dict [ list \
-   CONFIG.DIN_FROM {103} \
-   CONFIG.DIN_TO {96} \
-   CONFIG.DIN_WIDTH {320} \
-   CONFIG.DOUT_WIDTH {8} \
- ] $rx_PWM_DAC1
-
-  # Create instance: rx_com_bit3, and set properties
-  set rx_com_bit3 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 rx_com_bit3 ]
-  set_property -dict [ list \
-   CONFIG.DIN_FROM {3} \
-   CONFIG.DIN_TO {3} \
-   CONFIG.DIN_WIDTH {320} \
-   CONFIG.DOUT_WIDTH {1} \
- ] $rx_com_bit3
 
   # Create instance: sample_rate_divider, and set properties
   set sample_rate_divider [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlslice:1.0 sample_rate_divider ]
@@ -288,6 +374,9 @@ proc create_hier_cell_Reg_Brakeout { parentCell nameHier } {
    CONFIG.NUM_PORTS {4} \
  ] $status_concat_1
 
+  # Create instance: thermal_control
+  create_hier_cell_thermal_control $hier_obj thermal_control
+
   # Create instance: zero_add_2, and set properties
   set zero_add_2 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 zero_add_2 ]
   set_property -dict [ list \
@@ -307,19 +396,15 @@ proc create_hier_cell_Reg_Brakeout { parentCell nameHier } {
   connect_bd_intf_net -intf_net axis_variable_0_M_AXIS [get_bd_intf_pins M_AXIS] [get_bd_intf_pins axis_variable_0/M_AXIS]
 
   # Create port connections
-  connect_bd_net -net Din1_1 [get_bd_pins Din1] [get_bd_pins DDS_phase/Din] [get_bd_pins RAM_addres/Din] [get_bd_pins measure/Din] [get_bd_pins rx_PWM_DAC1/Din] [get_bd_pins rx_com_bit3/Din] [get_bd_pins sample_rate_divider/Din]
+  connect_bd_net -net Din1_1 [get_bd_pins Din1] [get_bd_pins DDS_phase/Din] [get_bd_pins RAM_addres/Din] [get_bd_pins measure/Din] [get_bd_pins sample_rate_divider/Din] [get_bd_pins thermal_control/Din1]
   connect_bd_net -net In2_1 [get_bd_pins In2] [get_bd_pins status_concat_1/In0]
   connect_bd_net -net In3_1 [get_bd_pins In3] [get_bd_pins status_concat_1/In2]
   connect_bd_net -net RAM_addres_Dout [get_bd_pins dout1] [get_bd_pins RAM_addres/Dout]
-  connect_bd_net -net clock_divider_2560Hz_0_clk_out [get_bd_pins clock_divider_2560Hz_0/clk_out] [get_bd_pins pwm_safe_sync_0/clk]
   connect_bd_net -net external_reset_fake_1_dout [get_bd_pins status_concat_1/In1] [get_bd_pins zero_add_to_address/dout]
-  connect_bd_net -net four_bit_concat_0_Dout [get_bd_pins dac_pwm_o] [get_bd_pins four_bit_concat_0/Dout]
-  connect_bd_net -net pll_0_clk_out1 [get_bd_pins aclk] [get_bd_pins axis_variable_0/aclk] [get_bd_pins axis_variable_1/aclk] [get_bd_pins clock_divider_2560Hz_0/clk_in]
-  connect_bd_net -net pwm_safe_sync_0_pwm_out [get_bd_pins four_bit_concat_0/dac_pwm_o_0] [get_bd_pins pwm_safe_sync_0/pwm_out]
+  connect_bd_net -net four_bit_concat_0_Dout [get_bd_pins dac_pwm_o] [get_bd_pins thermal_control/dac_pwm_o]
+  connect_bd_net -net pll_0_clk_out1 [get_bd_pins aclk] [get_bd_pins axis_variable_0/aclk] [get_bd_pins axis_variable_1/aclk] [get_bd_pins thermal_control/aclk]
   connect_bd_net -net ram_writer_reset_Dout [get_bd_pins dout5] [get_bd_pins measure/Dout]
   connect_bd_net -net rst_0_peripheral_aresetn [get_bd_pins aresetn] [get_bd_pins axis_variable_0/aresetn] [get_bd_pins axis_variable_1/aresetn]
-  connect_bd_net -net rx_PWM_DAC1_Dout [get_bd_pins pwm_safe_sync_0/DAC_value] [get_bd_pins rx_PWM_DAC1/Dout]
-  connect_bd_net -net rx_com_bit3_Dout [get_bd_pins pwm_safe_sync_0/sync] [get_bd_pins rx_com_bit3/Dout]
   connect_bd_net -net sample_rate_divider1_Dout [get_bd_pins DDS_phase/Dout] [get_bd_pins axis_variable_1/cfg_data]
   connect_bd_net -net sample_rate_divider_Dout [get_bd_pins axis_variable_0/cfg_data] [get_bd_pins sample_rate_divider/Dout]
   connect_bd_net -net status_concat_1_dout [get_bd_pins dout] [get_bd_pins status_concat_1/dout]
@@ -377,7 +462,7 @@ proc create_hier_cell_Memory_IO { parentCell nameHier } {
   create_bd_pin -dir I -type clk aclk
   create_bd_pin -dir I -type rst aresetn
   create_bd_pin -dir I -type rst aresetn1
-  create_bd_pin -dir O -from 439 -to 0 cfg_data
+  create_bd_pin -dir O -from 319 -to 0 cfg_data
   create_bd_pin -dir I -from 31 -to 0 cfg_data1
   create_bd_pin -dir I -from 63 -to 0 sts_data
   create_bd_pin -dir O -from 15 -to 0 sts_data1
@@ -386,7 +471,7 @@ proc create_hier_cell_Memory_IO { parentCell nameHier } {
   set axi_cfg_register_0 [ create_bd_cell -type ip -vlnv xilinx.com:user:axi_cfg_register:1.0 axi_cfg_register_0 ]
   set_property -dict [ list \
    CONFIG.AXI_ADDR_WIDTH {32} \
-   CONFIG.CFG_DATA_WIDTH {440} \
+   CONFIG.CFG_DATA_WIDTH {320} \
  ] $axi_cfg_register_0
 
   # Create instance: axi_sts_register_0, and set properties

@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Muzhi Zhang
 // 
 // Create Date: 2023/11/25 21:49:34
 // Design Name: 
@@ -9,7 +9,7 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: 
+// Description: to simulate the behaviour of module clock_divider_2560Hz
 // 
 // Dependencies: 
 // 
