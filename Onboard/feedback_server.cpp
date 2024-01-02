@@ -114,6 +114,10 @@ typedef struct temp_PID{
 } Temperature_PID_t;
 
 
+// Define a structure to hold the filter state
+typedef struct {
+    double previous_filtered_value;
+} ExponentialFilterState;
 
 
 /// @brief Initialize the PID structure (temperature control)
@@ -134,18 +138,95 @@ void PID_Init(Temperature_PID_t *pid, double Kp, double Ki, double Kd) {
 
 
 
-/// @brief Update PID calculation (temperature control)
+// /// @brief Update PID calculation (temperature control)
+// /// @param pid the pointer to the PID structure
+// /// @param setpoint the target value (unit: degree Celsius)
+// /// @param measured_value the measured value (unit: degree Celsius)
+// /// @return the control output (unit: Watt)
+// double PID_Update(Temperature_PID_t *pid, int32_t setpoint, double measured_value) 
+// {
+// 	static double output = 0.0; // output power (unit: Watt)
+//     // Check if the measured value is within the safe temperature range
+//     if (measured_value > pid->safe_temperature) 
+//     {
+//         // If the measured value is too high, turn off the heater
+//         output = 0.0;
+
+//         return 0;
+//     }
+
+
+//     // Adjust the setpoint temperature using prefilter to eliminate steady-state error
+//     // Gain of the prefilter is calculated to 1 + 1 / (Kp * K2)
+//     // Kp is the proportional gain of the PID controller, K2 (unit: Kelvin / Watt) is the static gain of the process (bottom plate)
+
+//     // The adjusted setpoint is : (setpoint - room_temperature) * Gain_prefilter + room_temperature:
+//     double setpoint_adjusted = setpoint + (setpoint - pid->room_temperature) / (pid->Kp * pid->K2);
+
+//     // Calculate error
+//     double error_adjusted = setpoint_adjusted - measured_value;
+
+// 	double error_standard = setpoint - measured_value;
+
+// 	double error = error_adjusted;
+	
+
+
+//     // Integrate error
+//     //pid->integral += error;
+
+// 	// Anti-windup
+// 	if (abs(error)<=10)
+// 	{
+// 		pid->integral += error;
+// 	}
+// 	else
+// 	{
+// 		pid->integral = 0;
+// 	}
+
+
+	
+// 	printf("power of I (w):%f\n",(pid->Ki * pid->integral));
+// 	printf("pid->integral:%f\n",pid->integral);
+
+//     // Calculate derivative of error
+//     double derivative = error - pid->pre_error;
+
+//     // Calculate control output
+//     //output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+// 	output = 0.0;
+// 	if (error >-0.1 && error <10)
+// 	{
+// 		// PID
+// 		output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+// 	}
+// 	else
+// 	{
+// 		// PD
+// 		output = (pid->Kp * error)  + (pid->Kd * derivative); 
+// 	}
+
+//     // Update previous error
+//     pid->pre_error = error;
+
+//     return output;
+// }
+
+
+/// @brief Update PID calculation (temperature control) (use prefilter to eliminate steady-state error)
 /// @param pid the pointer to the PID structure
 /// @param setpoint the target value (unit: degree Celsius)
 /// @param measured_value the measured value (unit: degree Celsius)
 /// @return the control output (unit: Watt)
-double PID_Update(Temperature_PID_t *pid, int32_t setpoint, double measured_value) 
+double PID_Update_prefilter(Temperature_PID_t *pid, int32_t setpoint, double measured_value) 
 {
+	static double output = 0.0; // output power (unit: Watt)
     // Check if the measured value is within the safe temperature range
     if (measured_value > pid->safe_temperature) 
     {
         // If the measured value is too high, turn off the heater
-        double output = 0;
+        output = 0.0;
 
         return 0;
     }
@@ -164,22 +245,9 @@ double PID_Update(Temperature_PID_t *pid, int32_t setpoint, double measured_valu
 	double error_standard = setpoint - measured_value;
 
 	double error = error_adjusted;
+
+	pid->integral += error;
 	
-
-
-    // Integrate error
-    //pid->integral += error;
-
-	// Anti-windup
-	if (abs(error)<=10)
-	{
-		pid->integral += error;
-	}
-	else
-	{
-		pid->integral = 0;
-	}
-
 
 	
 	printf("power of I (w):%f\n",(pid->Ki * pid->integral));
@@ -189,24 +257,75 @@ double PID_Update(Temperature_PID_t *pid, int32_t setpoint, double measured_valu
     double derivative = error - pid->pre_error;
 
     // Calculate control output
-    //double output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
-	double output = 0.0;
-	if (error >-0.1 && error <10)
-	{
-		// PID
-		output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
-	}
-	else
-	{
-		// PD
-		output = (pid->Kp * error)  + (pid->Kd * derivative); 
-	}
+    //output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+	output = 0.0;
+
+	output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+
 
     // Update previous error
     pid->pre_error = error;
 
     return output;
 }
+
+
+
+/// @brief Update PID calculation (temperature control)(use conditional integration to eliminate steady-state error and to avoid integral windup)
+/// @param pid the pointer to the PID structure
+/// @param setpoint the target value (unit: degree Celsius)
+/// @param measured_value the measured temperature (unit: degree Celsius)
+/// @param power_upper_limit the upper limit of the output power (unit: Watt) (for anti-windup)
+/// @param power_lower_limit the lower limit of the output power (unit: Watt) (for anti-windup)
+/// @return the control output (unit: Watt)
+double PID_Update_conditional_integration(Temperature_PID_t *pid, int32_t setpoint, double measured_value, double power_upper_limit, double power_lower_limit) 
+{
+    static double output = 0.0; // output power u(kT) (unit: Watt)
+    static double output_previous = 0.0; // previous output power u(kT-T) (unit: Watt)
+
+    // Check if the measured value is within the safe temperature range
+    if (measured_value > pid->safe_temperature) 
+    {
+        // If the measured value is too high, turn off the heater
+        output = 0.0;
+        pid->integral = 0; // Reset integral part
+        return 0;
+    }
+
+    double error = setpoint - measured_value;
+
+    // Conditional integration to prevent windup
+	// if (u(kT-T) > u_max and e(kT) >= 0) or (u(kT-T) < u_min and e(kT) <= 0), then do not integrate
+    if (!((output_previous > power_upper_limit && error >= 0) ||
+          (output_previous < power_lower_limit && error <= 0)))
+    {
+        pid->integral += error;
+    }
+
+    printf("power of I (w): %f\n", (pid->Ki * pid->integral));
+    printf("pid->integral: %f\n", pid->integral);
+
+    // Calculate derivative of error
+    double derivative = error - pid->pre_error;
+
+    // Calculate control output
+    output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+
+    // // Enforce power limits
+    // if (output > power_upper_limit) {
+    //     output = power_upper_limit;
+    // } else if (output < power_lower_limit) {
+    //     output = power_lower_limit;
+    // }
+
+    // Update previous error and output
+    pid->pre_error = error;
+    output_previous = output;
+
+    return output;
+}
+
+
 
 /// @brief Convert heating power to PWM value
 /// @param power the heating power (unit: Watt)
@@ -337,40 +456,58 @@ void signal_handler(int sig) {
 	interrupted = 1;
 }
 
+
+
+/// @brief Exponential filter function
+/// @param state Pointer to the filter state
+/// @param current_value Current value to be filtered
+/// @param sampling_interval Time interval between samples
+/// @param time_constant Time constant of the low-pass filter
+/// @return Filtered value
+double exponential_filter(ExponentialFilterState *state, double current_value, double sampling_interval, double time_constant) {
+    // Calculate alpha (smoothing factor)
+    double alpha = sampling_interval / (time_constant + sampling_interval);
+
+    // Apply the exponential filter
+    double filtered_value = alpha * current_value + (1 - alpha) * state->previous_filtered_value;
+
+    // Update the previous filtered value for next use
+    state->previous_filtered_value = filtered_value;
+
+    return filtered_value;
+}
+
 //temperature controller will be executed every 10000us (0.01s)
 uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointers, thermal_values_t* thermal_values_struct){
-	static time_t last_time = 0; // Static variable to store the time of the last execution
-    time_t current_time;		 // Variable to store the current time
-    double time_diff;			 // Variable to store the time difference since the last execution
 
-	time(&current_time); // Get current time
-    time_diff = difftime(current_time, last_time); // Calculate the time difference
-/////////////// to show the time difference in 0.01ms
 	static uint64_t last_time_us = 0; // Static variable to store the last execution time in microseconds
 	uint64_t current_time_us;         // Variable to store the current time in microseconds
 	uint64_t time_diff_us;            // Variable to store the time difference in microseconds
 
 	current_time_us = _get_time_in_us(); // Get current time in microseconds
-/////////////////////////////////////////////
+
+	time_diff_us = current_time_us - last_time_us; // Calculate the time difference in microseconds
+	
+
 
 	static uint8_t pwm_value = 0;	// Static variable to store the current PWM value
 	//static uint8_t pwm_value_2 = 0; // for 1 heater, PWM 32/256 corresponds to 80 degree Celsius final stable temperature when room temperature is 20 degree Celsius
 
 
-    // Check if 1 second has passed
-    if(time_diff >= 1){
+    // execute the control every 1000ms (1s)
+    if(time_diff_us >= 1e6-1.5e3)
+	{
 
-/////////////// to show the time difference in 0.01ms
-		time_diff_us = current_time_us - last_time_us; // Calculate the time difference in microseconds
 		last_time_us = current_time_us;                // Update the last execution time
 
+/////////////// to show the time difference in 0.01ms
+
+
 		// Print the time difference in 0.01 milliseconds (10 microseconds)
-		printf("\t\t\tTime difference: %.2f ms\n", time_diff_us / 1000.0);
+		printf("\t\t\tTime difference between two temp controls: %.2f ms\n", time_diff_us / 1000.0);
 /////////////////////////////////////////////
 
-        // Update the last execution time
-        last_time = current_time;
-
+        
 		// control the PWM manually using keyboard
 		//change_PWM_using_keyboard(&pwm_value, system_pointers);
 
@@ -381,13 +518,13 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointer
 
 		if (!isInitialized) 
 		{
-			PID_Init(&PID_bottom_plate, 4, 0.0, 0.0); // Initialize the PID controller
+			PID_Init(&PID_bottom_plate, 6, 0.002, 0.0); // Initialize the PID controller
 			isInitialized = 1; // Set the initialization flag
 
 			
     	}
 
-		double power_bottom_plate = PID_Update(&PID_bottom_plate, params_struct->param_T1, (double)thermal_values_struct->temp1/100.0);
+		double power_bottom_plate = PID_Update_conditional_integration(&PID_bottom_plate, params_struct->param_T1, (double)thermal_values_struct->temp1/100.0, 100.0, 0.0); 
 		*(system_pointers->rx_PWM_DAC1) = powerToPWM(power_bottom_plate, 1);
 		
 		// // test PID controller
@@ -401,7 +538,7 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointer
 		*(system_pointers->rx_com) ^= (1 << 4); // toggle bit 4 every 1s (PWM DAC2 change indicator)
 
 		// Perform control and print information
-        printf("\t\t\tControl performed at %s", ctime(&current_time));
+
 		//printf("\t\t\tCurrent PWM value (0-255): %u\n", pwm_value);
 		printf("\t\t\tCurrent PWM value (0-255): %u\n", *(system_pointers->rx_PWM_DAC1));
 
@@ -760,48 +897,89 @@ int main () {
 	*(params.dds_phase) = config.dds_phase;
 	*(system_regs.rx_rate) = config.param_rate;
 
+
+	// Initialize filter states for two sensors
+    ExponentialFilterState sensor1_state = {20.0}; // Initial temperature is 20 degree Celsius for exponential filter
+    ExponentialFilterState sensor2_state = {20.0}; // Initial temperature is 20 degree Celsius for exponential filter
+
 //// Main Loop
 	while(!interrupted)	{
 		// Stop measurement
 		*(system_regs.rx_com) &= ~1; //write 0 to bit 0
 
+		static uint64_t last_time_us = 0; // Static variable to store the last execution time in microseconds
+		uint64_t current_time_us;         // Variable to store the current time in microseconds
+		uint64_t time_diff_us;            // Variable to store the time difference in microseconds
 
-		// get the temperature values here first, otherwise the "detected temperature" will be 0 before getting in touch with python client. The "detected temperature" < target temperature, therefore the PID temperature controller will heat accidentially. This can be dangerous.
+		current_time_us = _get_time_in_us(); // Get current time in microseconds
 
-		/* usage examples for temperature sensor
+		time_diff_us = current_time_us - last_time_us; // Calculate the time difference in microseconds
 
-		1) look up table method (data from datasheet, not from individual calibration)
+		// sample every 100ms (0.1s)
+		if(time_diff_us >= 1e5-3e3)
+		{
+			last_time_us = current_time_us;                // Update the last execution time
+			//printf("time difference of sampling: %.2f ms\n", time_diff_us / 1000.0);
 
-		thermal_values.temp1=(int)(100*sensor.get_channel_temperature_lookup_table(0)); //get temperature from sensor *100 and convert to int
-		thermal_values.temp2=(int)(100*sensor.get_channel_temperature_lookup_table(1)); //get temperature from sensor *100 and convert to int
 
 
-		2) calibration method (Beta parameter equation)
 
-		thermal_values.temp1=(int)(100 * sensor.get_channel_temp_calibration(0, 9770, 3167.23));
-		thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 9895, 3124.64));
-
-		old calibration parameter
-		thermal_values.temp1=(int)(100 * sensor.get_channel_temp_calibration(0, 9890, 3196.22));
-		thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 10010, 3225.12));
 		
 
-		3) calibration method (Steinhart-Hart equation)
 
-		thermal_values.temp1=(int)(100 * sensor.get_channel_temp_Steinhart(1, 0.0008159, 0.0002485, 3.29766787739819E-07));
-		thermal_values.temp2=(int)(100 * sensor.get_channel_temp_Steinhart(3, 0.0007564, 0.0002564, 3.06324334315379E-07));
+			// get the temperature values here first, otherwise the "detected temperature" will be 0 before getting in touch with python client. The "detected temperature" < target temperature, therefore the PID temperature controller will heat accidentially. This can be dangerous.
 
-		*/
+			/* usage examples for temperature sensor
 
-		//calibration method (Beta parameter equation)
-		thermal_values.temp1=(int)(100 * sensor.get_channel_temp_calibration(0, 9770, 3167.23));
-		thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 9895, 3124.64));
-		thermal_values.temp3=666;
-		thermal_values.temp4=5;
-		thermal_values.temp5=10;
-		thermal_values.temp6=20;
-		thermal_values.flow1=1000;
-		thermal_values.flow2=0;
+			1) look up table method (data from datasheet, not from individual calibration)
+
+			thermal_values.temp1=(int)(100*sensor.get_channel_temperature_lookup_table(0)); //get temperature from sensor *100 and convert to int
+			thermal_values.temp2=(int)(100*sensor.get_channel_temperature_lookup_table(1)); //get temperature from sensor *100 and convert to int
+
+
+			2) calibration method (Beta parameter equation)
+
+			thermal_values.temp1=(int)(100 * sensor.get_channel_temp_calibration(0, 9770, 3167.23));
+			thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 9895, 3124.64));
+
+			old calibration parameter
+			thermal_values.temp1=(int)(100 * sensor.get_channel_temp_calibration(0, 9890, 3196.22));
+			thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 10010, 3225.12));
+			
+
+			3) calibration method (Steinhart-Hart equation)
+
+			thermal_values.temp1=(int)(100 * sensor.get_channel_temp_Steinhart(1, 0.0008159, 0.0002485, 3.29766787739819E-07));
+			thermal_values.temp2=(int)(100 * sensor.get_channel_temp_Steinhart(3, 0.0007564, 0.0002564, 3.06324334315379E-07));
+
+			*/
+			// read temperature sensor values
+			//calibration method (Beta parameter equation)
+			//thermal_values.temp1=(int)(100 * sensor.get_channel_temp_calibration(0, 9770, 3167.23));
+			//thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 9895, 3124.64));
+
+			thermal_values.temp1 = (int)(100*exponential_filter(
+				&sensor1_state, 
+				sensor.get_channel_temp_calibration(0, 9770, 3167.23), 
+				0.1, 
+				0.02));
+
+			thermal_values.temp2 = (int)(100*exponential_filter(
+				&sensor2_state, 
+				sensor.get_channel_temp_calibration(1, 9895, 3124.64), 
+				0.1, 
+				0.02));
+
+			thermal_values.temp3=666;
+			thermal_values.temp4=5;
+			thermal_values.temp5=10;
+			thermal_values.temp6=20;
+			thermal_values.flow1=1000;
+			thermal_values.flow2=0;
+
+
+
+		}
 
 		
 		if((sock_client = accept(sock_server, NULL, NULL)) >= 0)	{			
@@ -842,6 +1020,8 @@ int main () {
 				// printf("R4: %.2f\n", R4);
 				// float R5 = sensor.get_channel_R(5);
 				// printf("R5: %.2f\n", R5);
+
+				//printf("test the execution frequency.\n");
 			}
 			// Assume any other number is a number of bytes to receive
 			else {
