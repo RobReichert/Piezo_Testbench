@@ -2,6 +2,9 @@ import numpy as np
 from matplotlib.backends.backend_qtagg import (FigureCanvas)
 import matplotlib.figure as mpl_fig
 
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
+from matplotlib.figure import Figure
+
 def make_patch_spines_invisible(ax):
     ax.set_frame_on(True)
     ax.yaxis.set_label_position('left')
@@ -80,4 +83,13 @@ class MyFigureCanvas(FigureCanvas):
                 ax.set_ylim(np.min(data[index]), np.max(data[index]))  # Update y-axis limits
     
         self.draw() # Redraw the canvas
+
+
+# This canvas is for the temperature and heat flow curve        
+class MyFigure_thermal(FigureCanvasQTAgg):
+   def __init__(self,width=5,height=4,dpi = 100):
+      # 1. Create a figure object to draw
+      self.fig = Figure(figsize=(width,height),dpi=dpi) 
+      # 2. Activate the figure window and inherit the parent class properties
+      super(MyFigure_thermal, self).__init__(self.fig)
         

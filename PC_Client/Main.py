@@ -105,6 +105,7 @@ class Window(QtWidgets.QMainWindow):
         # for temperature log
         # thermal data
         self.temp_data_history = []  # Initialize an empty array to store historical temperature data
+        self.heat_flux_data_history = [] # Initialize an empty array to store historical heat flux data
     
         # variable to track the first entry
         self.first_entry = True
@@ -193,6 +194,46 @@ class Window(QtWidgets.QMainWindow):
         # Set the scene to the QGraphicsView widget
         self.ui.graphicsView_temp.setScene(scene)
         
+    def plot_heat_flux(self, heat_flux_data_history):
+        # to generate the realtime heat flux curve in the GUI
+        
+        F1 = MyFigure_thermal(width=5, height=4, dpi=70)
+        F1.axes1 = F1.fig.add_subplot(111)
+    
+        # Convert the heat flux data to a NumPy array for plotting
+        heat_flux_data_np = np.array(heat_flux_data_history)
+    
+        # Generate the time axis, starting from 3 to match the data skipping the first three elements
+        time_axis = np.arange(3, heat_flux_data_np.shape[0])
+    
+        # Plot the heat flux curve for each sensor, skipping the first 3 data points
+        for i in range(heat_flux_data_np.shape[1]):
+            F1.axes1.plot(time_axis, heat_flux_data_np[3:, i], label=f"Heat Flux {i+1}")
+    
+        F1.axes1.set_xlabel('Time (s)', fontsize=18)
+        F1.axes1.set_ylabel('Heat Flux (W/m²)', fontsize=18)
+        F1.axes1.set_title('Heat Flux Over Time', fontsize=20)
+        F1.axes1.legend()
+    
+        F1.fig.tight_layout()
+    
+        # Get the width and height from the graphicsView_heat_flow widget
+        width, height = self.ui.graphicsView_heat_flow.width(), self.ui.graphicsView_heat_flow.height()
+        F1.resize(width, height)
+        
+        # Create a scene and add the figure to it
+        scene = QGraphicsScene()
+        scene.addWidget(F1)
+    
+        # Disable scroll bars for the QGraphicsView widget
+        self.ui.graphicsView_heat_flow.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.ui.graphicsView_heat_flow.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        
+        # Set the scene to the QGraphicsView widget
+        self.ui.graphicsView_heat_flow.setScene(scene)
+
+
+
 
         
     def log_thermal_data(self):
@@ -218,7 +259,13 @@ class Window(QtWidgets.QMainWindow):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Retrieve temperature data from self.TempData
-        temp_data = [temp / 100 for temp in self.TempData]
+        # temp_data = [temp / 100 for temp in self.TempData]
+        
+        # first n=6 channels are for temperatur sensors and last 2 are heat flux sensors
+        # for temperature sensors: /100 to get the temparature in float in degree C
+        # for heat flux sensors: read to get value in int then -32768 to get heat flux in W/ m^2
+        n = 6
+        temp_data = [temp / 100 for temp in self.TempData[:n]] + [temp - 32768 for temp in self.TempData[n:]]
 
         # Create the log entry string
         log_entry = f"{timestamp}\t" + "\t".join(str(temp) for temp in temp_data)
@@ -259,9 +306,12 @@ class Window(QtWidgets.QMainWindow):
             self.ui.lcdNumber_Temp_3.display(temp_data[2]/100)
             self.ui.lcdNumber_Temp_4.display(temp_data[3]/100)
             self.ui.lcdNumber_Temp_5.display(temp_data[4]/100)
-            self.ui.lcdNumber_Temp_6.display(temp_data[5]/100)
-            self.ui.lcdNumber_Heat.display(temp_data[6]/100)
-            self.ui.lcdNumber_Heat_2.display(temp_data[7]/100)
+            self.ui.lcdNumber_Temp_6.display(temp_data[5]/100) # for temperature sensors: /100 to get the temparature in float
+            
+
+            
+            self.ui.lcdNumber_Heat.display(temp_data[6]-32768)
+            self.ui.lcdNumber_Heat_2.display(temp_data[7]-32768) # for heat flux sensors: read to get value in int then -32768 to get heat flux in W/ m^2
         except:
             pass
         
@@ -272,6 +322,13 @@ class Window(QtWidgets.QMainWindow):
 
         # Call the plot function and pass the temperature data
         self.plot_thermal(self.temp_data_history)
+        
+        
+        indices_heat_flux = [7]
+        
+        self.heat_flux_data_history.append([temp_data[i]-32768 for i in indices_heat_flux if 0 <= i < len(temp_data)])
+
+        self.plot_heat_flux(self.heat_flux_data_history)
         
         self.log_thermal_data()
         #print("in get thermal measurement")
@@ -521,16 +578,22 @@ class Window(QtWidgets.QMainWindow):
             self.FPGA_config["temp_mode"] = int(self.ui.inputTemp.text())
             
 
-
             
         else:
             self.ui.inputTemp.setText("0")
             self.FPGA_config["temp_mode"] = 0
+            
+        if int(self.ui.inputTemp.text()) == 0:
+            self.ui.inputT1.setText("0")                # same as default
+            self.ui.inputT2.setText("0")                # same as default
+            self.ui.labelT1.setText("Setpoint 1 [°C]")  # same as default
+            self.ui.labelT2.setText("Setpoint 2 [°C]")  # same as default
+            
+        
         
         if int(self.ui.inputTemp.text()) == 1:
-            self.ui.labelT1.setText("Setpoint 1-1 [°C]")
-            self.ui.inputT1.setText("10")
-        
+            self.ui.labelT2.setText("Heat Flux[W/m^2]")
+            self.ui.inputT1.setText("30") # default 30 degree
             
 
 ## Main Loop

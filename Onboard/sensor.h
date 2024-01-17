@@ -24,9 +24,11 @@ public:
 
     float get_channel_temp_Steinhart(int channel, float A, float B, float C); // get temperature from Steinhart-Hart equation
 
-    float get_channel_heat_flux(int channel);
+    float get_channel_heat_flux(int channel, float temperature, float V_gain, float V_out_0 = 2.5);
 
     float get_channel_R(int channel);
+
+    float get_channel_voltage(int channel);
 };
 
 #endif // SENSOR_H

@@ -133,7 +133,7 @@ void PID_Init(Temperature_PID_t *pid, double Kp, double Ki, double Kd) {
     pid->integral = 0;          // the integral is set to 0
     pid->K2 = 5.63;             // the static gain K2 is of the process (bottom plate) is 5.63 (unit: Kelvin / Watt, achieved from parameter identification) (this parameter is for prefilter to eliminate steady-state error caused by the static gain of the process)
     pid->room_temperature = 22.0; // the default room temperature is 20 degrees
-    pid->safe_temperature = 105.0; // the default safe temperature is 100 degrees
+    pid->safe_temperature = 105.0 + 1.0; // the default safe temperature is 100 degrees
 }
 
 
@@ -277,8 +277,9 @@ double PID_Update_prefilter(Temperature_PID_t *pid, int32_t setpoint, double mea
 /// @param measured_value the measured temperature (unit: degree Celsius)
 /// @param power_upper_limit the upper limit of the output power (unit: Watt) (for anti-windup)
 /// @param power_lower_limit the lower limit of the output power (unit: Watt) (for anti-windup)
+/// @param factor_for_cooling e.g. 2.0 means the integrated error will be 2*e when cooling (to cool down faster)
 /// @return the control output (unit: Watt)
-double PID_Update_conditional_integration(Temperature_PID_t *pid, int32_t setpoint, double measured_value, double power_upper_limit, double power_lower_limit) 
+double PID_Update_conditional_integration(Temperature_PID_t *pid, int32_t setpoint, double measured_value, double power_upper_limit, double power_lower_limit, double factor_for_cooling) 
 {
     static double output = 0.0; // output power u(kT) (unit: Watt)
     static double output_previous = 0.0; // previous output power u(kT-T) (unit: Watt)
@@ -288,7 +289,7 @@ double PID_Update_conditional_integration(Temperature_PID_t *pid, int32_t setpoi
     {
         // If the measured value is too high, turn off the heater
         output = 0.0;
-        pid->integral = 0; // Reset integral part
+        pid->integral += 0; // Reset integral part
         return 0;
     }
 
@@ -299,17 +300,33 @@ double PID_Update_conditional_integration(Temperature_PID_t *pid, int32_t setpoi
     if (!((output_previous > power_upper_limit && error >= 0) ||
           (output_previous < power_lower_limit && error <= 0)))
     {
-        pid->integral += error;
+		if(error >= 0) // heating
+		{
+			pid->integral += error;
+		}
+		else // cooling
+		{
+			pid->integral += factor_for_cooling * error; // to cool down faster
+		}
+        
     }
 
-    printf("power of I (w): %f\n", (pid->Ki * pid->integral));
-    printf("pid->integral: %f\n", pid->integral);
+
 
     // Calculate derivative of error
     double derivative = error - pid->pre_error;
 
     // Calculate control output
-    output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+
+	output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+
+
+	printf("power of P (w):%f\n",(pid->Kp * error));
+    printf("power of I (w): %f\n", (pid->Ki * pid->integral));
+    //printf("pid->integral: %f\n", pid->integral);
+
+	printf("total power (w): %f\n", output);
+
 
     // // Enforce power limits
     // if (output > power_upper_limit) {
@@ -485,7 +502,6 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointer
 	uint64_t time_diff_us;            // Variable to store the time difference in microseconds
 
 	current_time_us = _get_time_in_us(); // Get current time in microseconds
-
 	time_diff_us = current_time_us - last_time_us; // Calculate the time difference in microseconds
 	
 
@@ -500,47 +516,81 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointer
 
 		last_time_us = current_time_us;                // Update the last execution time
 
-/////////////// to show the time difference in 0.01ms
-
 
 		// Print the time difference in 0.01 milliseconds (10 microseconds)
 		printf("\t\t\tTime difference between two temp controls: %.2f ms\n", time_diff_us / 1000.0);
-/////////////////////////////////////////////
+
 
         
-		// control the PWM manually using keyboard
-		//change_PWM_using_keyboard(&pwm_value, system_pointers);
+		// // control the PWM manually using keyboard
+		// change_PWM_using_keyboard(&pwm_value, system_pointers);
 
-		// PID controller (temperature control)
-		static Temperature_PID_t PID_bottom_plate;
-		static int isInitialized = 0; // Static variable to store the initialization flag
-		// Check if the PID is initialized
+		// // Set the PWM value of the two heaters
+		// *(system_pointers->rx_PWM_DAC1) = 29;
+		// *(system_pointers->rx_PWM_DAC2) = 16;
 
-		if (!isInitialized) 
+		if (params_struct->mode_T==0) // temperature control mode
+		// control the temperature of 
+		// setpoint 1 (T1, bottom plate) and setpoint 2 (T2, top plate)
 		{
-			PID_Init(&PID_bottom_plate, 6, 0.002, 0.0); // Initialize the PID controller
-			isInitialized = 1; // Set the initialization flag
+			printf("temperature control mode\n");
 
+			// PID controller (temperature control)
+			static Temperature_PID_t PID_bottom_plate; // controller for bottom plate
+			static Temperature_PID_t PID_top_plate;  // controller for top plate
+			static int isInitialized = 0; // Static variable to store the initialization flag
+			// Check if the PID is initialized
+
+			if (!isInitialized) 
+			{
+				PID_Init(&PID_bottom_plate, 5, 0.004, 0.0); // Initialize the PID controller for bottom plate
+				PID_Init(&PID_top_plate, 4, 0.014, 0.0); // Initialize the PID controller for top plate
+
+				isInitialized = 1; // Set the initialization flag
+			}
+
+			double power_bottom_plate = PID_Update_conditional_integration(
+				&PID_bottom_plate, 
+				params_struct->param_T1, 					// target temperature
+				(double)thermal_values_struct->temp1/100.0, // measured temperature (unit: degree Celsius)
+				100.0, 	// upper limit of the output power for anti-windup (unit: Watt) 
+				0.0, 	// lower limit of the output power for anti-windup (unit: Watt)
+				2.0); 	// factor for cooling, 2.0 means the integrated error will be 2*e when cooling (to cool down faster)
+
+			double power_top_plate = PID_Update_conditional_integration(
+				&PID_top_plate, 
+				params_struct->param_T2, 					// target temperature
+				(double)thermal_values_struct->temp2/100.0, // measured temperature (unit: degree Celsius)
+				100.0, 	// upper limit of the output power for anti-windup (unit: Watt) 
+				0.0, 	// lower limit of the output power for anti-windup (unit: Watt)
+				2.0); 	// factor for cooling, 2.0 means the integrated error will be 2*e when cooling (to cool down faster)
+
+			*(system_pointers->rx_PWM_DAC1) = powerToPWM(power_bottom_plate, 1);
+			*(system_pointers->rx_PWM_DAC2) = powerToPWM(power_top_plate, 1);
 			
-    	}
 
-		double power_bottom_plate = PID_Update_conditional_integration(&PID_bottom_plate, params_struct->param_T1, (double)thermal_values_struct->temp1/100.0, 100.0, 0.0); 
-		*(system_pointers->rx_PWM_DAC1) = powerToPWM(power_bottom_plate, 1);
+
+
+			// toggle synchronization signal for FPGA PWM DAC to enter a new PWM period (every 1s)
+			*(system_pointers->rx_com) ^= (1 << 3); // toggle bit 3 every 1s (PWM DAC1 change indicator)
+			*(system_pointers->rx_com) ^= (1 << 4); // toggle bit 4 every 1s (PWM DAC2 change indicator)
+
+		}
+
+		if (params_struct->mode_T==1) // heat flux control mode
+		// control the temperature of setpoint 1 (T1, bottom plate)
+		// and the the heat flux of 
+		{
+
+		}
+
 		
-		// // test PID controller
-		// printf("\t\t\ttarget temperature in control: %d\n", params_struct->param_T1);
-		// printf("\t\t\tmeasured temperature in control: %.2f\n", (double)thermal_values_struct->temp1/100.0);
-		// printf("\t\t\tpower_bottom_plate: %.2f\n", power_bottom_plate);
-
-
-		// toggle synchronization signal for FPGA PWM DAC to enter a new PWM period (every 1s)
-		*(system_pointers->rx_com) ^= (1 << 3); // toggle bit 3 every 1s (PWM DAC1 change indicator)
-		*(system_pointers->rx_com) ^= (1 << 4); // toggle bit 4 every 1s (PWM DAC2 change indicator)
 
 		// Perform control and print information
 
 		//printf("\t\t\tCurrent PWM value (0-255): %u\n", pwm_value);
-		printf("\t\t\tCurrent PWM value (0-255): %u\n", *(system_pointers->rx_PWM_DAC1));
+		printf("\t\t\tCurrent PWM 1 value (0-255): %u\n", *(system_pointers->rx_PWM_DAC1));
+		printf("\t\t\tCurrent PWM 2 value (0-255): %u\n", *(system_pointers->rx_PWM_DAC2));
 
 
 
@@ -902,6 +952,8 @@ int main () {
     ExponentialFilterState sensor1_state = {20.0}; // Initial temperature is 20 degree Celsius for exponential filter
     ExponentialFilterState sensor2_state = {20.0}; // Initial temperature is 20 degree Celsius for exponential filter
 
+	ExponentialFilterState heat_flux_state = {0.0}; // Initial heat flux is 0 W/m^2 for exponential filter
+
 //// Main Loop
 	while(!interrupted)	{
 		// Stop measurement
@@ -959,23 +1011,63 @@ int main () {
 			//thermal_values.temp2=(int)(100 * sensor.get_channel_temp_calibration(1, 9895, 3124.64));
 
 			thermal_values.temp1 = (int)(100*exponential_filter(
-				&sensor1_state, 
-				sensor.get_channel_temp_calibration(0, 9770, 3167.23), 
-				0.1, 
-				0.02));
+				&sensor1_state,  // pointer which stores the previous filtered value
+
+				// read temperature in degree Celsius
+				sensor.get_channel_temp_calibration(0,  		// channel number
+													9770,  		// R0
+													3167.23),  	// Beta parameter
+				0.1, 			// sampling interval (s)
+				0.1));			// time constant of the lowpass filter (s)
+
+				
 
 			thermal_values.temp2 = (int)(100*exponential_filter(
-				&sensor2_state, 
-				sensor.get_channel_temp_calibration(1, 9895, 3124.64), 
-				0.1, 
-				0.02));
+				&sensor2_state,  // pointer which stores the previous filtered value
+
+				// read temperature in degree Celsius
+				sensor.get_channel_temp_calibration(1,  		// channel number
+													9895,  		// R0
+													3124.64),  	// Beta parameter
+				0.1, 			// sampling interval (s)
+				0.1));			// time constant of the lowpass filter (s)
 
 			thermal_values.temp3=666;
 			thermal_values.temp4=5;
 			thermal_values.temp5=10;
 			thermal_values.temp6=20;
 			thermal_values.flow1=1000;
-			thermal_values.flow2=0;
+
+			// this value will be sent to PC client in Python GUI
+			// but this value is not used for the control, because the range here is limitted to -32768 to 32767 W/ m^2, because the type of flow 2 is int16_t.
+
+			// // !!! notice that in this case, the value range of heat flux sensor (including the value transferd to PC client in Python GUI) is limitted to -32768 to 32767 W/ m^2, because the type of flow 2 is int16_t.
+
+			// thermal_values.flow2=32768 + (int16_t)(1*sensor.get_channel_heat_flux(
+			// 	7,												// channel number
+			// 	(float)thermal_values.temp1/100.0,	// temperature of the heat flux sensor (unit: degree Celsius)
+			// 	11.9,								// the gain of the amplifier (unit: V/V)									
+			// 	2.42));								// the output voltage of the heat flux sensor when the heat flux is 0 (W/m^2) (unit: V)
+
+
+			// thermal_values.flow2 = 32768 + (int16_t)(exponential_filter(
+			// 	&heat_flux_state,  // pointer which stores the previous filtered value
+
+			// 	// read heat flux in W/m^2
+			// 	sensor.get_channel_heat_flux(7,												// channel number
+			// 									(float)thermal_values.temp1/100.0,	// temperature of the heat flux sensor (unit: degree Celsius)
+			// 									11.9,								// the gain of the amplifier (unit: V/V)									
+			// 									2.42),								// the output voltage of the heat flux sensor when the heat flux is 0 (W/m^2) (unit: V)
+			// 	0.1, 			// sampling interval (s)
+			// 	0.1));			// time constant of the lowpass filter (s)
+			
+
+
+
+
+
+		// printf("flow2-32768: %d\n", thermal_values.flow2-32768);
+
 
 
 
@@ -1022,6 +1114,27 @@ int main () {
 				// printf("R5: %.2f\n", R5);
 
 				//printf("test the execution frequency.\n");
+
+				// // read voltage on channel 7
+				// float voltage_7 = sensor.get_channel_voltage(7);
+
+				// printf("voltage on channel 7: %.2f\n", voltage_7);
+
+				// !!! notice that in this case, the value range of heat flux sensor (including the value transferd to PC client in Python GUI) is limitted to -32768 to 32767 W/ m^2, because the type of flow 2 is int16_t.
+
+				float heat_flux_origin_in_float = sensor.get_channel_heat_flux(
+					7,												// channel number
+					(float)thermal_values.temp1/100.0,	// temperature of the heat flux sensor (unit: degree Celsius)
+					11.9,								// the gain of the amplifier (unit: V/V)									
+					2.42);								// the output voltage of the heat flux sensor when the heat flux is 0 (W/m^2) (unit: V)
+
+				printf("	heat_flux_origin_in_float: %.2f W/ m^2\n", heat_flux_origin_in_float);
+
+				thermal_values.flow2=32768 + (int16_t)heat_flux_origin_in_float;
+
+				
+
+
 			}
 			// Assume any other number is a number of bytes to receive
 			else {

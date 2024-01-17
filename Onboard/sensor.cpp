@@ -228,18 +228,61 @@ float Sensor::get_channel_temp_Steinhart(int channel, float A, float B, float C)
 }
 
 
-float Sensor::get_channel_heat_flux(int channel)
-{
-    // Ensure channel is within a valid range
+/// @brief Get the heat flux of a given channel
+/// @param channel The channel number of heat flux sensor (6-7)
+/// @param temperature The temperature of the heat flux sensor in degree Celsius
+/// @param V_out_0 The output voltage of the heat flux sensor at 0 W/m^2 (default: 2.5)
+/// @param V_gain the gain of the amplifier (unit: V/V). channel voltage = V_gain * heat_flux_sensor_voltage + V_out_0
+/// @return the heat flux in W/m^2
+float Sensor::get_channel_heat_flux(int channel, float temperature, float V_gain, float V_out_0) {
+    // Constants
+    const float S_calib = 1.32e-6; // Sensitivity at 25°C in V/(W/m^2)
+    const float max_heat_flux = 150000; // Maximum heat flux in W/m^2
+    const float min_heat_flux = -150000; // Minimum heat flux in W/m^2
+
+        
+    const float temperature_coefficient = 0.00334; // Temperature coefficient of heat flux sensor to adjust sensitivity S_Tc
+
+
+
+    // Check if the channel is within the valid range
     if (channel < 6 || channel > 7) {
         std::cerr << "Error: Invalid channel value for heat flux. Please provide a value between 6 and 7." << std::endl;
-        // return a special value -100.0 to indicate an error
         return -999.0;
     }
 
-    // to be implemented in the future
+    // Check if the temperature of the heat flux sensor is within the valid range in the data sheet
+    if (temperature < -50 || temperature > 120) {
+        std::cerr << "Error: Invalid temperature value for heat flux. Please provide a value between -50 and 120." << std::endl;
+        return -999.0;
+    }
+
+    // Read the ADC value from the specified channel
+    int ad_value = this->adc.read_channel(channel);
+    // Convert ADC value to voltage
+    float voltage = _AD_to_voltage(ad_value);
+
+    // Calculate the sensitivity at the current temperature
+    float S_Tc = (temperature_coefficient * temperature + 0.917) * S_calib; // Sensitivity at current temperature
+
+    // Convert voltage to heat flux
+    float heat_flux = ((voltage - V_out_0)/V_gain) / S_Tc;
+
+
+
+    // Check if the heat flux is within the valid range
+    if (heat_flux > max_heat_flux || heat_flux < min_heat_flux) {
+        std::cout << "Warning: Heat flux out of range: " << heat_flux << " W/m^2" << std::endl;
+    }
+
+    // printf("Heat flux on channel %d is %f W/m^2\n", channel, heat_flux);
+
+    return heat_flux;
 }
 
+/// @brief Get the resistance of a given channel (notice: the series resistance is 3.9K ohm)
+/// @param channel The channel number of temperature sensor (0-5)
+/// @return the resistance in ohm
 float Sensor::get_channel_R(int channel)
 {
     // Ensure channel is within a valid range
@@ -254,4 +297,22 @@ float Sensor::get_channel_R(int channel)
     float resistance = _voltage_to_temp_resistance(voltage);
 
     return resistance;
+}
+
+/// @brief Get the voltage of a given channel
+/// @param channel The channel number of temperature sensor (0-7)
+/// @return the voltage in volt
+float Sensor::get_channel_voltage(int channel)
+{
+    // Ensure channel is within a valid range
+    if (channel < 0 || channel > 7) {
+        std::cerr << "Error: Invalid channel value for temperature. Please provide a value between 0 and 5." << std::endl;
+        // return a special value -100.0 to indicate an error
+        return -999.0;
+    }
+
+    int ad_value = this->adc.read_channel(channel);
+    float voltage = _AD_to_voltage(ad_value);
+
+    return voltage;
 }
