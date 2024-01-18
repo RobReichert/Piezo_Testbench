@@ -106,7 +106,9 @@ typedef struct temp_PID{
     double Kp;         // Proportional coefficient
     double Ki;         // Integral coefficient
     double Kd;         // Derivative coefficient
-    double pre_error;  // Previous error
+	double pre_error;  // Previous error
+    double output;  // Previous error
+	double output_previous;  // Previous error
     double integral;   // Error integral
     double K2;         // Static gain of the controlled process (default 5.63)
     double room_temperature; // Room temperature (default 20 degrees)
@@ -125,15 +127,17 @@ typedef struct {
 /// @param Kp the proportional coefficient
 /// @param Ki the integral coefficient
 /// @param Kd the derivative coefficient
-void PID_Init(Temperature_PID_t *pid, double Kp, double Ki, double Kd) {
+void Temp_PID_Init(Temperature_PID_t *pid, double Kp, double Ki, double Kd) {
     pid->Kp = Kp;
     pid->Ki = Ki;
     pid->Kd = Kd;
-    pid->pre_error = 0;         // the previous error is set to 0
-    pid->integral = 0;          // the integral is set to 0
+	pid->pre_error = 0.0;         // the previous error is set to 0
+    pid->output = 0.0;         // the previous error is set to 0
+	pid->output_previous = 0.0;         // the previous error is set to 0
+    pid->integral = 0.0;          // the integral is set to 0
     pid->K2 = 5.63;             // the static gain K2 is of the process (bottom plate) is 5.63 (unit: Kelvin / Watt, achieved from parameter identification) (this parameter is for prefilter to eliminate steady-state error caused by the static gain of the process)
     pid->room_temperature = 22.0; // the default room temperature is 20 degrees
-    pid->safe_temperature = 105.0 + 1.0; // the default safe temperature is 100 degrees
+    pid->safe_temperature = 105.0 + 2.0; // the default safe temperature is 100 degrees
 }
 
 
@@ -219,14 +223,14 @@ void PID_Init(Temperature_PID_t *pid, double Kp, double Ki, double Kd) {
 /// @param setpoint the target value (unit: degree Celsius)
 /// @param measured_value the measured value (unit: degree Celsius)
 /// @return the control output (unit: Watt)
-double PID_Update_prefilter(Temperature_PID_t *pid, int32_t setpoint, double measured_value) 
+double Temp_PID_Update_prefilter(Temperature_PID_t *pid, int32_t setpoint, double measured_value) 
 {
-	static double output = 0.0; // output power (unit: Watt)
+	//static double output = 0.0; // output power (unit: Watt)
     // Check if the measured value is within the safe temperature range
     if (measured_value > pid->safe_temperature) 
     {
         // If the measured value is too high, turn off the heater
-        output = 0.0;
+        pid->output = 0.0;
 
         return 0;
     }
@@ -258,15 +262,15 @@ double PID_Update_prefilter(Temperature_PID_t *pid, int32_t setpoint, double mea
 
     // Calculate control output
     //output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
-	output = 0.0;
+	pid->output = 0.0;
 
-	output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+	pid->output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
 
 
     // Update previous error
     pid->pre_error = error;
 
-    return output;
+    return pid->output;
 }
 
 
@@ -279,16 +283,16 @@ double PID_Update_prefilter(Temperature_PID_t *pid, int32_t setpoint, double mea
 /// @param power_lower_limit the lower limit of the output power (unit: Watt) (for anti-windup)
 /// @param factor_for_cooling e.g. 2.0 means the integrated error will be 2*e when cooling (to cool down faster)
 /// @return the control output (unit: Watt)
-double PID_Update_conditional_integration(Temperature_PID_t *pid, int32_t setpoint, double measured_value, double power_upper_limit, double power_lower_limit, double factor_for_cooling) 
+double Temp_PID_Update_conditional_integration(Temperature_PID_t *pid, int32_t setpoint, double measured_value, double power_upper_limit, double power_lower_limit, double factor_for_cooling) 
 {
-    static double output = 0.0; // output power u(kT) (unit: Watt)
-    static double output_previous = 0.0; // previous output power u(kT-T) (unit: Watt)
+    //static double output = 0.0; // output power u(kT) (unit: Watt)
+    //static double output_previous = 0.0; // previous output power u(kT-T) (unit: Watt)
 
     // Check if the measured value is within the safe temperature range
     if (measured_value > pid->safe_temperature) 
     {
         // If the measured value is too high, turn off the heater
-        output = 0.0;
+        pid->output = 0.0;
         pid->integral += 0; // Reset integral part
         return 0;
     }
@@ -297,8 +301,8 @@ double PID_Update_conditional_integration(Temperature_PID_t *pid, int32_t setpoi
 
     // Conditional integration to prevent windup
 	// if (u(kT-T) > u_max and e(kT) >= 0) or (u(kT-T) < u_min and e(kT) <= 0), then do not integrate
-    if (!((output_previous > power_upper_limit && error >= 0) ||
-          (output_previous < power_lower_limit && error <= 0)))
+    if (!((pid->output_previous > power_upper_limit && error >= 0) ||
+          (pid->output_previous < power_lower_limit && error <= 0)))
     {
 		if(error >= 0) // heating
 		{
@@ -308,6 +312,7 @@ double PID_Update_conditional_integration(Temperature_PID_t *pid, int32_t setpoi
 		{
 			pid->integral += factor_for_cooling * error; // to cool down faster
 		}
+		printf("					integrated\n");
         
     }
 
@@ -318,14 +323,18 @@ double PID_Update_conditional_integration(Temperature_PID_t *pid, int32_t setpoi
 
     // Calculate control output
 
-	output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
+	pid->output = (pid->Kp * error) + (pid->Ki * pid->integral) + (pid->Kd * derivative);
 
 
 	printf("power of P (w):%f\n",(pid->Kp * error));
     printf("power of I (w): %f\n", (pid->Ki * pid->integral));
     //printf("pid->integral: %f\n", pid->integral);
 
-	printf("total power (w): %f\n", output);
+	printf("total power (w): %f\n", pid->output);
+
+	printf("					output_previous: %f\n", pid->output_previous);
+
+	printf("					error: %f\n", error);
 
 
     // // Enforce power limits
@@ -337,9 +346,9 @@ double PID_Update_conditional_integration(Temperature_PID_t *pid, int32_t setpoi
 
     // Update previous error and output
     pid->pre_error = error;
-    output_previous = output;
+    pid->output_previous = pid->output;
 
-    return output;
+    return pid->output;
 }
 
 
@@ -531,7 +540,7 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointer
 
 		if (params_struct->mode_T==0) // temperature control mode
 		// control the temperature of 
-		// setpoint 1 (T1, bottom plate) and setpoint 2 (T2, top plate)
+		// setpoint 1 (int32_t param_T1, bottom plate) and setpoint 2 (int32_t param_T2, top plate)
 		{
 			printf("temperature control mode\n");
 
@@ -543,13 +552,13 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointer
 
 			if (!isInitialized) 
 			{
-				PID_Init(&PID_bottom_plate, 5, 0.004, 0.0); // Initialize the PID controller for bottom plate
-				PID_Init(&PID_top_plate, 4, 0.014, 0.0); // Initialize the PID controller for top plate
+				Temp_PID_Init(&PID_bottom_plate, 5, 0.004, 0.0); // Initialize the PID controller for bottom plate
+				Temp_PID_Init(&PID_top_plate, 4, 0.014, 0.0); // Initialize the PID controller for top plate
 
 				isInitialized = 1; // Set the initialization flag
 			}
 
-			double power_bottom_plate = PID_Update_conditional_integration(
+			double power_bottom_plate = Temp_PID_Update_conditional_integration(
 				&PID_bottom_plate, 
 				params_struct->param_T1, 					// target temperature
 				(double)thermal_values_struct->temp1/100.0, // measured temperature (unit: degree Celsius)
@@ -557,7 +566,7 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointer
 				0.0, 	// lower limit of the output power for anti-windup (unit: Watt)
 				2.0); 	// factor for cooling, 2.0 means the integrated error will be 2*e when cooling (to cool down faster)
 
-			double power_top_plate = PID_Update_conditional_integration(
+			double power_top_plate = Temp_PID_Update_conditional_integration(
 				&PID_top_plate, 
 				params_struct->param_T2, 					// target temperature
 				(double)thermal_values_struct->temp2/100.0, // measured temperature (unit: degree Celsius)
@@ -578,9 +587,10 @@ uint32_t temp_control(params_t* params_struct, system_pointers_t* system_pointer
 		}
 
 		if (params_struct->mode_T==1) // heat flux control mode
-		// control the temperature of setpoint 1 (T1, bottom plate)
-		// and the the heat flux of 
+		// control the temperature of setpoint 1 (int32_t param_T1, bottom plate)
+		// and the the heat flux of the heat flux at the surface of bottom plate (int32_t param_T2, bottom plate)
 		{
+			printf("heat flux control mode\n");
 
 		}
 
