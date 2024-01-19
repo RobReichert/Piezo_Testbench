@@ -266,6 +266,7 @@ class Window(QtWidgets.QMainWindow):
         # for heat flux sensors: read to get value in int then -32768 to get heat flux in W/ m^2
         n = 6
         temp_data = [temp / 100 for temp in self.TempData[:n]] + [temp - 32768 for temp in self.TempData[n:]]
+        
 
         # Create the log entry string
         log_entry = f"{timestamp}\t" + "\t".join(str(temp) for temp in temp_data)
@@ -312,6 +313,8 @@ class Window(QtWidgets.QMainWindow):
             
             self.ui.lcdNumber_Heat.display(temp_data[6]-32768)
             self.ui.lcdNumber_Heat_2.display(temp_data[7]-32768) # for heat flux sensors: read to get value in int then -32768 to get heat flux in W/ m^2
+        
+        
         except:
             pass
         
@@ -327,6 +330,8 @@ class Window(QtWidgets.QMainWindow):
         indices_heat_flux = [7]
         
         self.heat_flux_data_history.append([temp_data[i]-32768 for i in indices_heat_flux if 0 <= i < len(temp_data)])
+        
+
 
         self.plot_heat_flux(self.heat_flux_data_history)
         
@@ -472,6 +477,9 @@ class Window(QtWidgets.QMainWindow):
         if int(self.ui.inputTemp.text()) == 0:
             self.FPGA_config["param_T1"] = int(self.ui.inputT1.text())
             self.FPGA_config["param_T2"] = int(self.ui.inputT2.text())
+        elif int(self.ui.inputTemp.text()) == 1:
+            self.FPGA_config["param_T1"] = int(self.ui.inputT1.text())
+            self.FPGA_config["param_T2"] = int(self.ui.inputT2.text())
         elif int(self.ui.inputTemp.text()) == 3:
             self.FPGA_config["param_T1"] = int(float(self.ui.inputT1.text())*1000)
             self.FPGA_config["param_T2"] = int(float(self.ui.inputT2.text())*1000)
@@ -584,8 +592,8 @@ class Window(QtWidgets.QMainWindow):
             self.FPGA_config["temp_mode"] = 0
             
         if int(self.ui.inputTemp.text()) == 0:
-            self.ui.inputT1.setText("0")                # same as default
-            self.ui.inputT2.setText("0")                # same as default
+            self.ui.inputT1.setText("20")                # same as default
+            self.ui.inputT2.setText("20")                # same as default
             self.ui.labelT1.setText("Setpoint 1 [°C]")  # same as default
             self.ui.labelT2.setText("Setpoint 2 [°C]")  # same as default
             
@@ -593,7 +601,8 @@ class Window(QtWidgets.QMainWindow):
         
         if int(self.ui.inputTemp.text()) == 1:
             self.ui.labelT2.setText("Heat Flux[W/m^2]")
-            self.ui.inputT1.setText("30") # default 30 degree
+            self.ui.inputT1.setText("40") # default T_bottom = 30 degree
+            self.ui.inputT2.setText("3000") # default heat flux = 4000 W/M^2
             
 
 ## Main Loop
