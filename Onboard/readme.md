@@ -45,7 +45,7 @@ or follow this steps
 - Type ``./feedback_server`` to start the server
 - Press ``strg+c`` to kill the server
 - If i2c comunication is used coppy ``wire.cpp`` and ``wire.h`` to ``/usr/src`` and type ``gcc -o i2c -g -O3 -march=armv7-a -mtune=cortex-a9 -D_GNU_SOURCE /usr/src/feedback_server.cpp /usr/src/wire.cpp -lm`` for compiling
-- To complie `feedbackserver.cpp`, copy `wire.cpp`, `wire.h`, `sensor.cpp`, `sensor.h` and `feedback_server.cpp` to `/usr/src`, and use command `gcc -o feedback_server -g -O3 -march=armv7-a -mtune=cortex-a9 -D_GNU_SOURCE /usr/src/wire.cpp /usr/src/adc128d818.cpp /usr/src/sensor.cpp /usr/src/feedback_server.cpp -lm -lstdc++` to compile
+- To complie `feedbackserver.cpp`, copy `wire.cpp`, `wire.h`, `adc128d818.cpp`, `adc128d818.h`, `sensor.cpp`, `sensor.h` and `feedback_server.cpp` to `/usr/src`, and use command `gcc -o feedback_server -g -O3 -march=armv7-a -mtune=cortex-a9 -D_GNU_SOURCE /usr/src/wire.cpp /usr/src/adc128d818.cpp /usr/src/sensor.cpp /usr/src/feedback_server.cpp -lm -lstdc++` to compile
 
 ### Auto run @ reboot
 - Compile like for single run
